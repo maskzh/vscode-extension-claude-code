@@ -1,0 +1,133 @@
+{
+  "name": "claude-code-terminal",
+  "displayName": "Claude Code Terminal",
+  "description": "VS Code extension for Claude Code integration",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "colors": [
+      {
+        "id": "claudeCodeTerminal.icon",
+        "description": "Icon color for Claude Code Terminal extension",
+        "defaults": {
+          "dark": "#FFFFFF",
+          "light": "#000000",
+          "highContrast": "#FFFFFF"
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "claude-code-terminal.claude",
+        "title": "Claude Code",
+        "icon": {
+          "light": "./icons/claude.svg",
+          "dark": "./icons/claude.svg"
+        }
+      },
+      {
+        "command": "claude-code-terminal.qwen",
+        "title": "Qwen Code",
+        "icon": {
+          "light": "./icons/qwen.svg",
+          "dark": "./icons/qwen.svg"
+        }
+      },
+      {
+        "command": "claude-code-terminal.kimi",
+        "title": "Kimi Code",
+        "icon": {
+          "light": "./icons/kimi.svg",
+          "dark": "./icons/kimi.svg"
+        }
+      },
+      {
+        "command": "claude-code-terminal.custom",
+        "title": "Custom Code",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "claude-code-terminal.configureTerminals",
+        "title": "Configure Terminals",
+        "icon": "$(gear)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "claude-code-terminal.claude",
+          "when": "resourceExtname != '' && claudeExtension.claude.visible",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.qwen",
+          "when": "resourceExtname != '' && claudeExtension.qwen.visible",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.kimi",
+          "when": "resourceExtname != '' && claudeExtension.kimi.visible",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.custom",
+          "when": "resourceExtname != '' && claudeExtension.custom.visible",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.configureTerminals",
+          "when": "resourceExtname != ''",
+          "group": "1_run"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Claude Code Terminal",
+      "properties": {
+        "ClaudeCodeTerminal.qwen.baseUrl": {
+          "type": "string",
+          "default": "https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy",
+          "description": "Qwen API base URL",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.kimi.baseUrl": {
+          "type": "string",
+          "default": "https://api.moonshot.cn/anthropic",
+          "description": "Kimi API base URL",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.custom.baseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Custom API base URL",
+          "scope": "window"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.102.0",
+    "@types/node": "24.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "eslint": "^9.32.0",
+    "typescript": "^5.8.3"
+  }
+}
