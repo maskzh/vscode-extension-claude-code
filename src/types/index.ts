@@ -1,3 +1,5 @@
+export type ServiceType = 'claude' | 'qwen' | 'kimi' | 'custom';
+
 export interface TerminalCommand {
   id: string;
   title: string;

@@ -2,14 +2,17 @@ import * as vscode from 'vscode';
 import { TerminalCommand } from '../types';
 import { ConfigManager, ServiceType } from './configManager';
 import { i18n } from './i18n';
+import { IconManager } from './iconManager';
 
 export class TerminalManager {
   private static instance: TerminalManager;
   private terminalCommands: Map<string, TerminalCommand> = new Map();
   private configManager: ConfigManager;
+  public iconManager: IconManager;
 
   private constructor() {
     this.configManager = ConfigManager.getInstance();
+    this.iconManager = IconManager.getInstance();
   }
 
   initialize(context: vscode.ExtensionContext): void {
@@ -136,6 +139,7 @@ export class TerminalManager {
     try {
       const terminal = vscode.window.createTerminal({
         name: command.title,
+        iconPath: this.iconManager.getIconPath(id as ServiceType),
         location: { viewColumn: vscode.ViewColumn.Beside },
       });
 

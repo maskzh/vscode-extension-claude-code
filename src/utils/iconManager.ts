@@ -1,6 +1,6 @@
+import { join } from 'path';
 import * as vscode from 'vscode';
-
-export type ServiceType = 'claude' | 'qwen' | 'kimi';
+import { ServiceType } from '../types';
 
 export class IconManager {
   private static instance: IconManager;
@@ -19,24 +19,32 @@ export class IconManager {
     return config.get<boolean>('useColorIcons', false);
   }
 
-  getIconPath(serviceType: ServiceType): { light: string; dark: string } {
+  getIconPath(
+    serviceType: ServiceType
+  ): { light: vscode.Uri; dark: vscode.Uri } | vscode.ThemeIcon {
+    if (serviceType === 'custom') {
+      return new vscode.ThemeIcon('terminal');
+    }
+
     const useColorIcons = this.getUseColorIcons();
 
     if (useColorIcons) {
-      const colorIconPath = `./icons/${serviceType}-color.svg`;
-      return {
-        light: colorIconPath,
-        dark: colorIconPath,
-      };
+      const colorIconPath = vscode.Uri.file(
+        join(__dirname, `../../icons/${serviceType}-color.svg`)
+      );
+      return { light: colorIconPath, dark: colorIconPath };
     } else {
       return {
-        light: `./icons/${serviceType}.svg`,
-        dark: `./icons/${serviceType}-dark.svg`,
+        light: vscode.Uri.file(
+          join(__dirname, `../../icons/${serviceType}.svg`)
+        ),
+        dark: vscode.Uri.file(
+          join(__dirname, `../../icons/${serviceType}-dark.svg`)
+        ),
       };
     }
   }
 
-  /** 监听配置变更事件 */
   onConfigurationChanged(callback: () => void): vscode.Disposable {
     return vscode.workspace.onDidChangeConfiguration((event) => {
       if (event.affectsConfiguration('ClaudeCodeTerminal.useColorIcons')) {
