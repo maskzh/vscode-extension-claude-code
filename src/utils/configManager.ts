@@ -1,10 +1,54 @@
 import * as vscode from 'vscode';
+import { i18n } from './i18n';
+
+/** 服务类型 */
+export type ServiceType = 'qwen' | 'kimi' | 'custom';
+
+/** 服务配置 */
+type ServiceConfig = {
+  /** 默认 Base URL */
+  defaultBaseUrl: string;
+  /** 默认命令 */
+  defaultCommand: string;
+  /** 服务显示名称 */
+  displayName: string;
+  /** API Key 存储键 */
+  secretKey: string;
+  /** 配置键前缀 */
+  configPrefix: string;
+};
+
+/** 服务配置映射 */
+const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
+  qwen: {
+    defaultBaseUrl: 'https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy',
+    defaultCommand: 'claude',
+    displayName: 'Qwen',
+    secretKey: 'ClaudeCodeTerminal.qwen.apiKey',
+    configPrefix: 'qwen'
+  },
+  kimi: {
+    defaultBaseUrl: 'https://api.moonshot.cn/anthropic',
+    defaultCommand: 'claude',
+    displayName: 'Kimi',
+    secretKey: 'ClaudeCodeTerminal.kimi.apiKey',
+    configPrefix: 'kimi'
+  },
+  custom: {
+    defaultBaseUrl: '',
+    defaultCommand: 'claude',
+    displayName: 'Custom',
+    secretKey: 'ClaudeCodeTerminal.custom.apiKey',
+    configPrefix: 'custom'
+  }
+};
 
 /** 配置管理器 */
 export class ConfigManager {
   private static instance: ConfigManager;
   private readonly configSection = 'ClaudeCodeTerminal';
   private context: vscode.ExtensionContext | null = null;
+  private secretsChangeCallbacks: (() => void)[] = [];
 
   /** 获取单例实例 */
   static getInstance(): ConfigManager {
@@ -19,91 +63,87 @@ export class ConfigManager {
     this.context = context;
   }
 
-  /** 获取 Qwen API Key */
-  async getQwenApiKey(): Promise<string> {
+  /** 获取服务 Base URL */
+  getBaseUrl(service: ServiceType): string {
+    const config = vscode.workspace.getConfiguration(this.configSection);
+    const serviceConfig = SERVICE_CONFIGS[service];
+    return config.get<string>(
+      `${serviceConfig.configPrefix}.baseUrl`,
+      serviceConfig.defaultBaseUrl
+    );
+  }
+
+  /** 获取服务命令 */
+  getCommand(service: ServiceType): string {
+    const config = vscode.workspace.getConfiguration(this.configSection);
+    const serviceConfig = SERVICE_CONFIGS[service];
+    return config.get<string>(
+      `${serviceConfig.configPrefix}.command`,
+      serviceConfig.defaultCommand
+    );
+  }
+
+  /** 获取服务 API Key */
+  async getApiKey(service: ServiceType): Promise<string> {
     if (!this.context) {
-      console.warn('ConfigManager not initialized with context');
+      console.warn(i18n.t('config.notInitialized'));
       return '';
     }
-    return (
-      (await this.context.secrets.get('ClaudeCodeTerminal.qwen.apiKey')) || ''
-    );
+    const serviceConfig = SERVICE_CONFIGS[service];
+    return (await this.context.secrets.get(serviceConfig.secretKey)) || '';
   }
 
-  /** 获取 Kimi API Key */
-  async getKimiApiKey(): Promise<string> {
+  /** 设置服务 API Key */
+  async setApiKey(service: ServiceType, apiKey: string): Promise<void> {
     if (!this.context) {
-      console.warn('ConfigManager not initialized with context');
-      return '';
-    }
-    return (
-      (await this.context.secrets.get('ClaudeCodeTerminal.kimi.apiKey')) || ''
-    );
-  }
-
-  /** 获取 Qwen Base URL */
-  getQwenBaseUrl(): string {
-    const config = vscode.workspace.getConfiguration(this.configSection);
-    return config.get<string>(
-      'qwen.baseUrl',
-      'https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy'
-    );
-  }
-
-  /** 获取 Kimi Base URL */
-  getKimiBaseUrl(): string {
-    const config = vscode.workspace.getConfiguration(this.configSection);
-    return config.get<string>(
-      'kimi.baseUrl',
-      'https://api.moonshot.cn/anthropic'
-    );
-  }
-
-  /** 设置 Qwen API Key */
-  async setQwenApiKey(apiKey: string): Promise<void> {
-    if (!this.context) {
-      console.warn('ConfigManager not initialized with context');
+      console.warn(i18n.t('config.notInitialized'));
       return;
     }
+    const serviceConfig = SERVICE_CONFIGS[service];
     if (apiKey.trim()) {
-      await this.context.secrets.store(
-        'ClaudeCodeTerminal.qwen.apiKey',
-        apiKey
-      );
+      await this.context.secrets.store(serviceConfig.secretKey, apiKey);
     } else {
-      await this.context.secrets.delete('ClaudeCodeTerminal.qwen.apiKey');
+      await this.context.secrets.delete(serviceConfig.secretKey);
     }
+    this.triggerSecretsChangeCallbacks();
   }
 
-  /** 设置 Kimi API Key */
-  async setKimiApiKey(apiKey: string): Promise<void> {
-    if (!this.context) {
-      console.warn('ConfigManager not initialized with context');
-      return;
-    }
-    if (apiKey.trim()) {
-      await this.context.secrets.store(
-        'ClaudeCodeTerminal.kimi.apiKey',
-        apiKey
-      );
-    } else {
-      await this.context.secrets.delete('ClaudeCodeTerminal.kimi.apiKey');
-    }
+  /** 检查服务是否已配置 */
+  async isServiceConfigured(service: ServiceType): Promise<boolean> {
+    const apiKey = await this.getApiKey(service);
+    const command = this.getCommand(service);
+    return this.isValidApiKey(apiKey) || this.isValidCommand(command);
   }
 
-  /** 设置 Custom API Key */
-  async setCustomApiKey(apiKey: string): Promise<void> {
-    if (!this.context) {
-      console.warn('ConfigManager not initialized with context');
-      return;
-    }
-    if (apiKey.trim()) {
-      await this.context.secrets.store(
-        'ClaudeCodeTerminal.custom.apiKey',
-        apiKey
-      );
-    } else {
-      await this.context.secrets.delete('ClaudeCodeTerminal.custom.apiKey');
+  /** 配置服务 API Key */
+  async configureApiKey(service: ServiceType): Promise<void> {
+    const serviceConfig = SERVICE_CONFIGS[service];
+    const currentKey = await this.getApiKey(service);
+    const maskedKey = currentKey
+      ? `${currentKey.substring(0, 8)}${'*'.repeat(
+          Math.max(0, currentKey.length - 8)
+        )}`
+      : '';
+
+    const apiKey = await vscode.window.showInputBox({
+      prompt: i18n.t('config.inputApiKey', serviceConfig.displayName),
+      value: '',
+      placeHolder: maskedKey || 'sk-xxxxxxxxxxxxxxxxxxxx',
+      password: true,
+      ignoreFocusOut: true,
+    });
+
+    if (apiKey !== undefined) {
+      await this.setApiKey(service, apiKey);
+      if (apiKey.trim()) {
+        vscode.window.showInformationMessage(
+          i18n.t('config.apiKeySaved', serviceConfig.displayName)
+        );
+      } else {
+        vscode.window.showInformationMessage(
+          i18n.t('config.apiKeyCleared', serviceConfig.displayName)
+        );
+      }
     }
   }
 
@@ -117,148 +157,26 @@ export class ConfigManager {
     return command.trim().length > 0 && command !== 'claude';
   }
 
-  /** 检查 Qwen 是否已配置 */
-  async isQwenConfigured(): Promise<boolean> {
-    const apiKey = await this.getQwenApiKey();
-    const command = this.getQwenCommand();
-    return this.isValidApiKey(apiKey) || this.isValidCommand(command);
-  }
-
-  /** 检查 Kimi 是否已配置 */
-  async isKimiConfigured(): Promise<boolean> {
-    const apiKey = await this.getKimiApiKey();
-    const command = this.getKimiCommand();
-    return this.isValidApiKey(apiKey) || this.isValidCommand(command);
-  }
-
-  /** 检查 Custom 是否已配置 */
-  async isCustomConfigured(): Promise<boolean> {
-    const apiKey = await this.getCustomApiKey();
-    const command = this.getCustomCommand();
-    return this.isValidApiKey(apiKey) || this.isValidCommand(command);
-  }
-
-  /** 配置 Qwen API Key */
-  async configureQwenApiKey(): Promise<void> {
-    const currentKey = await this.getQwenApiKey();
-    const maskedKey = currentKey
-      ? `${currentKey.substring(0, 8)}${'*'.repeat(
-          Math.max(0, currentKey.length - 8)
-        )}`
-      : '';
-
-    const apiKey = await vscode.window.showInputBox({
-      prompt: '🔐 输入 Qwen API Key (输入内容将被隐藏)',
-      value: '',
-      placeHolder: maskedKey || 'sk-xxxxxxxxxxxxxxxxxxxx',
-      password: true,
-      ignoreFocusOut: true,
-    });
-
-    if (apiKey !== undefined) {
-      await this.setQwenApiKey(apiKey);
-      if (apiKey.trim()) {
-        vscode.window.showInformationMessage('Qwen API Key 已保存');
-      } else {
-        vscode.window.showInformationMessage('Qwen API Key 已清空');
-      }
-    }
-  }
-
-  /** 配置 Kimi API Key */
-  async configureKimiApiKey(): Promise<void> {
-    const currentKey = await this.getKimiApiKey();
-    const maskedKey = currentKey
-      ? `${currentKey.substring(0, 8)}${'*'.repeat(
-          Math.max(0, currentKey.length - 8)
-        )}`
-      : '';
-
-    const apiKey = await vscode.window.showInputBox({
-      prompt: '🔐 输入 Kimi API Key (输入内容将被隐藏)',
-      value: '',
-      placeHolder: maskedKey || 'sk-xxxxxxxxxxxxxxxxxxxx',
-      password: true,
-      ignoreFocusOut: true,
-    });
-
-    if (apiKey !== undefined) {
-      await this.setKimiApiKey(apiKey);
-      if (apiKey.trim()) {
-        vscode.window.showInformationMessage('Kimi API Key 已保存');
-      } else {
-        vscode.window.showInformationMessage('Kimi API Key 已清空');
-      }
-    }
-  }
-
-  /** 配置 Custom API Key */
-  async configureCustomApiKey(): Promise<void> {
-    const currentKey = await this.getCustomApiKey();
-    const maskedKey = currentKey
-      ? `${currentKey.substring(0, 8)}${'*'.repeat(
-          Math.max(0, currentKey.length - 8)
-        )}`
-      : '';
-
-    const apiKey = await vscode.window.showInputBox({
-      prompt: '🔐 输入 Custom API Key (输入内容将被隐藏)',
-      value: '',
-      placeHolder: maskedKey || 'sk-xxxxxxxxxxxxxxxxxxxx',
-      password: true,
-      ignoreFocusOut: true,
-    });
-
-    if (apiKey !== undefined) {
-      await this.setCustomApiKey(apiKey);
-      if (apiKey.trim()) {
-        vscode.window.showInformationMessage('Custom API Key 已保存');
-      } else {
-        vscode.window.showInformationMessage('Custom API Key 已清空');
-      }
-    }
-  }
-
-  /** 获取 Custom API Key */
-  async getCustomApiKey(): Promise<string> {
-    if (!this.context) {
-      console.warn('ConfigManager not initialized with context');
-      return '';
-    }
-    return (
-      (await this.context.secrets.get('ClaudeCodeTerminal.custom.apiKey')) || ''
-    );
-  }
-
-  /** 获取 Custom Base URL */
-  getCustomBaseUrl(): string {
-    const config = vscode.workspace.getConfiguration(this.configSection);
-    return config.get<string>('custom.baseUrl', '');
-  }
-
-  /** 获取 Qwen Command */
-  getQwenCommand(): string {
-    const config = vscode.workspace.getConfiguration(this.configSection);
-    return config.get<string>('qwen.command', 'claude');
-  }
-
-  /** 获取 Kimi Command */
-  getKimiCommand(): string {
-    const config = vscode.workspace.getConfiguration(this.configSection);
-    return config.get<string>('kimi.command', 'claude');
-  }
-
-  /** 获取 Custom Command */
-  getCustomCommand(): string {
-    const config = vscode.workspace.getConfiguration(this.configSection);
-    return config.get<string>('custom.command', 'claude');
-  }
-
   /** 监听配置变化 */
   onConfigurationChanged(callback: () => void): vscode.Disposable {
+    // 添加到 secrets 变化回调列表
+    this.secretsChangeCallbacks.push(callback);
+
+    // 返回 workspace 配置变化的监听器
     return vscode.workspace.onDidChangeConfiguration((event) => {
       if (event.affectsConfiguration(this.configSection)) {
         callback();
+      }
+    });
+  }
+
+  /** 触发 secrets 变化回调 */
+  private triggerSecretsChangeCallbacks(): void {
+    this.secretsChangeCallbacks.forEach((callback) => {
+      try {
+        callback();
+      } catch (error) {
+        console.error(i18n.t('config.configCallbackFailed'), error);
       }
     });
   }

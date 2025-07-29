@@ -4,12 +4,6 @@ export interface TerminalCommand {
   id: string;
   /** 显示名称 */
   title: string;
-  /** 图标名称 */
-  icon: string;
-  /** 要执行的命令 */
-  command: string;
-  /** 终端名称 */
-  terminalName?: string;
   /** 是否启用 */
   enabled: boolean;
   /** 排序权重 */
