@@ -1,15 +1,11 @@
 import * as vscode from 'vscode';
 
-/** 语言键类型 */
 type I18nKey =
-  // 通用
   | 'common.alwaysAvailable'
   | 'common.configured'
   | 'common.notConfigured'
   | 'common.clickToReconfigure'
   | 'common.clickToConfigure'
-
-  // 终端管理器
   | 'terminal.initializingCommands'
   | 'terminal.addingFixedCommand'
   | 'terminal.totalCommandsAdded'
@@ -23,20 +19,16 @@ type I18nKey =
   | 'terminal.openSettings'
   | 'terminal.viewConfigOptions'
   | 'terminal.selectTerminalToConfigure'
-
-  // 配置管理器
   | 'config.notInitialized'
   | 'config.inputApiKey'
   | 'config.apiKeySaved'
   | 'config.apiKeyCleared'
   | 'config.configCallbackFailed';
 
-/** 语言包接口 */
 interface I18nMessages {
   [key: string]: string;
 }
 
-/** i18n 管理器 */
 export class I18nManager {
   private static instance: I18nManager;
   private messages: I18nMessages = {};
@@ -47,7 +39,6 @@ export class I18nManager {
     this.loadMessages();
   }
 
-  /** 获取单例实例 */
   static getInstance(): I18nManager {
     if (!I18nManager.instance) {
       I18nManager.instance = new I18nManager();
@@ -55,24 +46,20 @@ export class I18nManager {
     return I18nManager.instance;
   }
 
-  /** 检测当前语言环境 */
   private detectLocale(): void {
     const locale = vscode.env.language;
     this.currentLocale = locale.startsWith('zh') ? 'zh-cn' : 'en';
   }
 
-  /** 加载语言包 */
   private loadMessages(): void {
     if (this.currentLocale === 'zh-cn') {
       this.messages = {
-        // 通用
         'common.alwaysAvailable': '始终可用',
         'common.configured': '已配置 API Key，点击重新配置',
         'common.notConfigured': '点击配置 API Key',
         'common.clickToReconfigure': '点击重新配置',
         'common.clickToConfigure': '点击配置 API Key',
 
-        // 终端管理器
         'terminal.initializingCommands': '初始化默认终端命令...',
         'terminal.addingFixedCommand': '添加固定命令',
         'terminal.totalCommandsAdded': '总共添加了',
@@ -87,7 +74,6 @@ export class I18nManager {
         'terminal.viewConfigOptions': '查看配置选项',
         'terminal.selectTerminalToConfigure': '选择要配置或查看的终端',
 
-        // 配置管理器
         'config.notInitialized': 'ConfigManager not initialized with context',
         'config.inputApiKey': '🔐 输入 {0} API Key (输入内容将被隐藏)',
         'config.apiKeySaved': '{0} API Key 已保存',
@@ -96,14 +82,12 @@ export class I18nManager {
       };
     } else {
       this.messages = {
-        // 通用
         'common.alwaysAvailable': 'Always Available',
         'common.configured': 'API Key configured, click to reconfigure',
         'common.notConfigured': 'Click to configure API Key',
         'common.clickToReconfigure': 'Click to reconfigure',
         'common.clickToConfigure': 'Click to configure API Key',
 
-        // 终端管理器
         'terminal.initializingCommands':
           'Initializing default terminal commands...',
         'terminal.addingFixedCommand': 'Adding fixed command',
@@ -121,7 +105,6 @@ export class I18nManager {
         'terminal.selectTerminalToConfigure':
           'Select terminal to configure or view',
 
-        // 配置管理器
         'config.notInitialized': 'ConfigManager not initialized with context',
         'config.inputApiKey': '🔐 Enter {0} API Key (input will be hidden)',
         'config.apiKeySaved': '{0} API Key saved',
@@ -131,11 +114,9 @@ export class I18nManager {
     }
   }
 
-  /** 获取本地化文本 */
   t(key: I18nKey, ...args: string[]): string {
     let message = this.messages[key] || key;
 
-    // 简单的参数替换
     args.forEach((arg, index) => {
       message = message.replace(`{${index}}`, arg);
     });
@@ -143,11 +124,9 @@ export class I18nManager {
     return message;
   }
 
-  /** 获取当前语言环境 */
   getCurrentLocale(): string {
     return this.currentLocale;
   }
 }
 
-/** 导出全局 i18n 实例 */
 export const i18n = I18nManager.getInstance();
