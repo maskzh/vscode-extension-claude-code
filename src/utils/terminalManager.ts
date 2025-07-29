@@ -53,7 +53,7 @@ export class TerminalManager {
         id: 'qwen',
         title: 'Qwen Code',
         icon: 'qwen', // 使用自定义SVG图标
-        command: 'claude',
+        command: this.configManager.getQwenCommand(),
         terminalName: 'Qwen Code',
         enabled: qwenConfigured, // 根据API Key决定
         order: 2,
@@ -62,7 +62,7 @@ export class TerminalManager {
         id: 'kimi',
         title: 'Kimi Code',
         icon: 'kimi', // 使用自定义SVG图标
-        command: 'claude',
+        command: this.configManager.getKimiCommand(),
         terminalName: 'Kimi Code',
         enabled: kimiConfigured, // 根据API Key决定
         order: 3,
@@ -71,7 +71,7 @@ export class TerminalManager {
         id: 'custom',
         title: 'Custom Code',
         icon: '$(terminal)', // 使用codicon图标
-        command: 'claude',
+        command: this.configManager.getCustomCommand(),
         terminalName: 'Custom Code',
         enabled: customConfigured, // 根据API Key决定
         order: 4,
@@ -218,23 +218,23 @@ export class TerminalManager {
 
       // 根据终端类型构造带环境变量的命令
       let fullCommand = command.command;
+      let _baseUrl = '';
+      let _apiKey = '';
+      let _command = '';
       if (id === 'qwen') {
-        const baseUrl = this.configManager.getQwenBaseUrl();
-        const apiKey = await this.configManager.getQwenApiKey();
-        fullCommand = `export ANTHROPIC_BASE_URL=${baseUrl} && export ANTHROPIC_AUTH_TOKEN=${apiKey} && ${command.command}`;
+        _baseUrl = this.configManager.getQwenBaseUrl();
+        _apiKey = await this.configManager.getQwenApiKey();
+        _command = this.configManager.getQwenCommand();
       } else if (id === 'kimi') {
-        const baseUrl = this.configManager.getKimiBaseUrl();
-        const apiKey = await this.configManager.getKimiApiKey();
-        fullCommand = `export ANTHROPIC_BASE_URL=${baseUrl} && export ANTHROPIC_AUTH_TOKEN=${apiKey} && ${command.command}`;
+        _baseUrl = this.configManager.getKimiBaseUrl();
+        _apiKey = await this.configManager.getKimiApiKey();
+        _command = this.configManager.getKimiCommand();
       } else if (id === 'custom') {
-        const baseUrl = this.configManager.getCustomBaseUrl();
-        const apiKey = await this.configManager.getCustomApiKey();
-        if (baseUrl && apiKey) {
-          fullCommand = `export ANTHROPIC_BASE_URL=${baseUrl} && export ANTHROPIC_AUTH_TOKEN=${apiKey} && ${command.command}`;
-        }
+        _baseUrl = this.configManager.getCustomBaseUrl();
+        _apiKey = await this.configManager.getCustomApiKey();
+        _command = this.configManager.getCustomCommand();
       }
-      // Claude 终端使用默认命令
-
+      fullCommand = [...(_apiKey ? [`export ANTHROPIC_BASE_URL=${_baseUrl}`, `export ANTHROPIC_AUTH_TOKEN=${_apiKey}`] : []), _command].join(' && ');
       terminal.sendText(fullCommand);
 
       console.log(`执行终端命令: ${command.title} - ${fullCommand}`);
@@ -269,20 +269,10 @@ export class TerminalManager {
     const items: vscode.QuickPickItem[] = [
       {
         label: '$(gear) 打开设置页面',
-        description: '查看配置选项（API Key 为只读）',
-        detail: 'Open VS Code Settings (API Keys are read-only)',
-      },
-      {
-        label: '$(key) 快速配置 API Key',
-        description: '快速设置 Qwen、Kimi 和 Custom 的 API Key',
-        detail: 'Quick API Key Setup',
+        description: '查看配置选项',
+        detail: 'Open VS Code Settings',
       },
       { label: '', kind: vscode.QuickPickItemKind.Separator },
-      {
-        label: '$(info) 终端状态',
-        description: '查看所有终端的当前状态',
-        detail: 'View Terminal Status',
-      },
     ];
 
     // 添加所有终端命令的状态显示
@@ -294,22 +284,22 @@ export class TerminalManager {
 
         if (cmd.id === 'claude') {
           statusIcon = '$(check)';
-          detail = 'Claude 终端 - 始终可用';
+          detail = '始终可用';
         } else if (cmd.id === 'qwen') {
           statusIcon = cmd.enabled ? '$(check)' : '$(key)';
           detail = cmd.enabled
-            ? 'Qwen 终端 - 已配置 API Key'
-            : 'Qwen 终端 - 需要配置 API Key';
+            ? '已配置 API Key，点击重新配置'
+            : '点击配置 API Key';
         } else if (cmd.id === 'kimi') {
           statusIcon = cmd.enabled ? '$(check)' : '$(key)';
           detail = cmd.enabled
-            ? 'Kimi 终端 - 已配置 API Key'
-            : 'Kimi 终端 - 需要配置 API Key';
+            ? '已配置 API Key，点击重新配置'
+            : '点击配置 API Key';
         } else if (cmd.id === 'custom') {
           statusIcon = cmd.enabled ? '$(check)' : '$(key)';
           detail = cmd.enabled
-            ? 'Custom 终端 - 已配置 API Key'
-            : 'Custom 终端 - 需要配置 API Key';
+            ? '已配置 API Key，点击重新配置'
+            : '点击配置 API Key';
         }
 
         return {
@@ -322,7 +312,7 @@ export class TerminalManager {
     );
 
     const selection = await vscode.window.showQuickPick(items, {
-      placeHolder: '选择配置选项',
+      placeHolder: '选择要配置或查看的终端',
     });
 
     if (!selection) return;
@@ -332,76 +322,28 @@ export class TerminalManager {
         'workbench.action.openSettings',
         'ClaudeCodeTerminal'
       );
-    } else if (selection.label.includes('快速配置 API Key')) {
-      await this.configManager.showApiKeyConfiguration();
-    } else if (selection.label.includes('终端状态')) {
-      await this.showTerminalStatus();
     } else {
       const item = selection as vscode.QuickPickItem & {
         command: TerminalCommand;
       };
       if (item.command) {
-        await this.showTerminalInfo(item.command);
+        await this.showTerminalConfiguration(item.command);
       }
     }
   }
 
-  /** 显示终端状态概览 */
-  private async showTerminalStatus(): Promise<void> {
-    const commands = this.getAllCommands();
-    let statusInfo = '**终端状态概览**\n\n';
-
-    commands.forEach((cmd) => {
-      const status = cmd.enabled ? '✅ 启用' : '❌ 禁用';
-      statusInfo += `• **${cmd.title}**: ${status}\n`;
-      statusInfo += `  - 命令: \`${cmd.command}\`\n`;
-
-      if (cmd.id === 'qwen' && !cmd.enabled) {
-        statusInfo += `  - 需要配置 Qwen API Key\n`;
-      } else if (cmd.id === 'kimi' && !cmd.enabled) {
-        statusInfo += `  - 需要配置 Kimi API Key\n`;
-      } else if (cmd.id === 'custom' && !cmd.enabled) {
-        statusInfo += `  - 需要配置 Custom API Key\n`;
-      }
-      statusInfo += '\n';
-    });
-
-    statusInfo += '\n💡 **提示**: 点击"打开设置页面"可以配置所有选项';
-
-    await vscode.window.showInformationMessage(statusInfo, { modal: true });
-  }
-
-  /** 显示终端信息 */
-  private async showTerminalInfo(command: TerminalCommand): Promise<void> {
-    let info = `**${command.title}**\n\n`;
-    info += `• 命令: \`${command.command}\`\n`;
-    info += `• 状态: ${command.enabled ? '✅ 启用' : '❌ 禁用'}\n`;
-
-    if (command.id === 'claude') {
-      info += `• 说明: Claude 终端始终可用，无需额外配置\n`;
-    } else if (command.id === 'qwen') {
-      const qwenConfigured = await this.configManager.isQwenConfigured();
-      info += `• 说明: Qwen 终端需要配置 API Key 才能显示\n`;
-      info += `• API Key: ${qwenConfigured ? '✅ 已配置' : '❌ 未配置'}\n`;
-      if (!qwenConfigured) {
-        info += `\n💡 点击"快速配置 API Key"设置 Qwen API Key`;
-      }
+  /** 显示终端配置界面 */
+  private async showTerminalConfiguration(
+    command: TerminalCommand
+  ): Promise<void> {
+    if (command.id === 'claude') return;
+    // 对于其他终端，直接进行 API Key 配置
+    if (command.id === 'qwen') {
+      await this.configManager.configureQwenApiKey();
     } else if (command.id === 'kimi') {
-      const kimiConfigured = await this.configManager.isKimiConfigured();
-      info += `• 说明: Kimi 终端需要配置 API Key 才能显示\n`;
-      info += `• API Key: ${kimiConfigured ? '✅ 已配置' : '❌ 未配置'}\n`;
-      if (!kimiConfigured) {
-        info += `\n💡 点击"快速配置 API Key"设置 Kimi API Key`;
-      }
+      await this.configManager.configureKimiApiKey();
     } else if (command.id === 'custom') {
-      const customConfigured = await this.configManager.isCustomConfigured();
-      info += `• 说明: Custom 终端需要配置 API Key 才能显示\n`;
-      info += `• API Key: ${customConfigured ? '✅ 已配置' : '❌ 未配置'}\n`;
-      if (!customConfigured) {
-        info += `\n💡 点击"快速配置 API Key"设置 Custom API Key`;
-      }
+      await this.configManager.configureCustomApiKey();
     }
-
-    await vscode.window.showInformationMessage(info, { modal: true });
   }
 }

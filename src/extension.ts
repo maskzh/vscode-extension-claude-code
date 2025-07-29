@@ -32,7 +32,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // 注册配置命令
   const configureDisposable = vscode.commands.registerCommand(
-    'claude-code-terminal.configureTerminals',
+    'claude-code-terminal.configure',
     async () => {
       await terminalManager.showConfiguration();
     }

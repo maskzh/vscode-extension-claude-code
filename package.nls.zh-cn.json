@@ -1,0 +1,16 @@
+{
+  "extension.displayName": "Claude Code 终端",
+  "extension.description": "Claude Code 集成的 VS Code 扩展",
+  "command.claude.title": "Claude Code",
+  "command.qwen.title": "通义千问 Code",
+  "command.kimi.title": "月之暗面 Code",
+  "command.custom.title": "自定义 Code",
+  "command.configure.title": "配置 Claude Code 终端",
+  "configuration.title": "Claude Code 终端",
+  "configuration.qwen.baseUrl.description": "通义千问 API 基础 URL",
+  "configuration.kimi.baseUrl.description": "月之暗面 API 基础 URL",
+  "configuration.custom.baseUrl.description": "自定义 API 基础 URL",
+  "configuration.qwen.command.description": "通义千问终端执行的命令",
+  "configuration.kimi.command.description": "月之暗面终端执行的命令",
+  "configuration.custom.command.description": "自定义终端执行的命令"
+}

@@ -91,84 +91,55 @@ export class ConfigManager {
     }
   }
 
-  /** 检查 API Key 是否有效（简单非空检查） */
+  /** 设置 Custom API Key */
+  async setCustomApiKey(apiKey: string): Promise<void> {
+    if (!this.context) {
+      console.warn('ConfigManager not initialized with context');
+      return;
+    }
+    if (apiKey.trim()) {
+      await this.context.secrets.store(
+        'ClaudeCodeTerminal.custom.apiKey',
+        apiKey
+      );
+    } else {
+      await this.context.secrets.delete('ClaudeCodeTerminal.custom.apiKey');
+    }
+  }
+
+  /** 检查 API Key 是否有效 */
   isValidApiKey(apiKey: string): boolean {
     return apiKey.trim().length > 0;
+  }
+
+  /** 检查 Command 是否有效 */
+  isValidCommand(command: string): boolean {
+    return command.trim().length > 0 && command !== 'claude';
   }
 
   /** 检查 Qwen 是否已配置 */
   async isQwenConfigured(): Promise<boolean> {
     const apiKey = await this.getQwenApiKey();
-    return this.isValidApiKey(apiKey);
+    const command = this.getQwenCommand();
+    return this.isValidApiKey(apiKey) || this.isValidCommand(command);
   }
 
   /** 检查 Kimi 是否已配置 */
   async isKimiConfigured(): Promise<boolean> {
     const apiKey = await this.getKimiApiKey();
-    return this.isValidApiKey(apiKey);
+    const command = this.getKimiCommand();
+    return this.isValidApiKey(apiKey) || this.isValidCommand(command);
   }
 
-  /** 显示配置 API Key 的界面 */
-  async showApiKeyConfiguration(): Promise<void> {
-    const [qwenConfigured, kimiConfigured, customConfigured] =
-      await Promise.all([
-        this.isQwenConfigured(),
-        this.isKimiConfigured(),
-        this.isCustomConfigured(),
-      ]);
-
-    const options = [
-      {
-        label: `$(key) 配置 Qwen API Key ${qwenConfigured ? '✅' : '❌'}`,
-        value: 'qwen',
-        detail: '通过安全输入框配置 Qwen API Key',
-      },
-      {
-        label: `$(key) 配置 Kimi API Key ${kimiConfigured ? '✅' : '❌'}`,
-        value: 'kimi',
-        detail: '通过安全输入框配置 Kimi API Key',
-      },
-      {
-        label: `$(key) 配置 Custom API Key ${customConfigured ? '✅' : '❌'}`,
-        value: 'custom',
-        detail: '通过安全输入框配置 Custom API Key',
-      },
-      { label: '', kind: vscode.QuickPickItemKind.Separator },
-      {
-        label: '$(gear) 打开设置页面',
-        value: 'settings',
-        detail:
-          '查看其他配置选项（API Key 已从设置页面移除，仅能通过上述安全方式配置）',
-      },
-    ];
-
-    const selection = await vscode.window.showQuickPick(options, {
-      placeHolder: '选择要配置的 API Key',
-    });
-
-    if (!selection) return;
-
-    switch (selection.value) {
-      case 'qwen':
-        await this.configureQwenApiKey();
-        break;
-      case 'kimi':
-        await this.configureKimiApiKey();
-        break;
-      case 'custom':
-        await this.configureCustomApiKey();
-        break;
-      case 'settings':
-        await vscode.commands.executeCommand(
-          'workbench.action.openSettings',
-          'ClaudeCodeTerminal'
-        );
-        break;
-    }
+  /** 检查 Custom 是否已配置 */
+  async isCustomConfigured(): Promise<boolean> {
+    const apiKey = await this.getCustomApiKey();
+    const command = this.getCustomCommand();
+    return this.isValidApiKey(apiKey) || this.isValidCommand(command);
   }
 
   /** 配置 Qwen API Key */
-  private async configureQwenApiKey(): Promise<void> {
+  async configureQwenApiKey(): Promise<void> {
     const currentKey = await this.getQwenApiKey();
     const maskedKey = currentKey
       ? `${currentKey.substring(0, 8)}${'*'.repeat(
@@ -195,7 +166,7 @@ export class ConfigManager {
   }
 
   /** 配置 Kimi API Key */
-  private async configureKimiApiKey(): Promise<void> {
+  async configureKimiApiKey(): Promise<void> {
     const currentKey = await this.getKimiApiKey();
     const maskedKey = currentKey
       ? `${currentKey.substring(0, 8)}${'*'.repeat(
@@ -222,7 +193,7 @@ export class ConfigManager {
   }
 
   /** 配置 Custom API Key */
-  private async configureCustomApiKey(): Promise<void> {
+  async configureCustomApiKey(): Promise<void> {
     const currentKey = await this.getCustomApiKey();
     const maskedKey = currentKey
       ? `${currentKey.substring(0, 8)}${'*'.repeat(
@@ -265,26 +236,22 @@ export class ConfigManager {
     return config.get<string>('custom.baseUrl', '');
   }
 
-  /** 设置 Custom API Key */
-  async setCustomApiKey(apiKey: string): Promise<void> {
-    if (!this.context) {
-      console.warn('ConfigManager not initialized with context');
-      return;
-    }
-    if (apiKey.trim()) {
-      await this.context.secrets.store(
-        'ClaudeCodeTerminal.custom.apiKey',
-        apiKey
-      );
-    } else {
-      await this.context.secrets.delete('ClaudeCodeTerminal.custom.apiKey');
-    }
+  /** 获取 Qwen Command */
+  getQwenCommand(): string {
+    const config = vscode.workspace.getConfiguration(this.configSection);
+    return config.get<string>('qwen.command', 'claude');
   }
 
-  /** 检查 Custom 是否已配置 */
-  async isCustomConfigured(): Promise<boolean> {
-    const apiKey = await this.getCustomApiKey();
-    return this.isValidApiKey(apiKey);
+  /** 获取 Kimi Command */
+  getKimiCommand(): string {
+    const config = vscode.workspace.getConfiguration(this.configSection);
+    return config.get<string>('kimi.command', 'claude');
+  }
+
+  /** 获取 Custom Command */
+  getCustomCommand(): string {
+    const config = vscode.workspace.getConfiguration(this.configSection);
+    return config.get<string>('custom.command', 'claude');
   }
 
   /** 监听配置变化 */

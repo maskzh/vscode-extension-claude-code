@@ -1,7 +1,7 @@
 {
   "name": "claude-code-terminal",
-  "displayName": "Claude Code Terminal",
-  "description": "VS Code extension for Claude Code integration",
+  "displayName": "%extension.displayName%",
+  "description": "%extension.description%",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.102.0"
@@ -14,39 +14,45 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "zh-cn",
+        "path": "./package.nls.zh-cn.json"
+      }
+    ],
     "commands": [
       {
         "command": "claude-code-terminal.claude",
-        "title": "Claude Code",
+        "title": "%command.claude.title%",
         "icon": {
           "light": "./icons/claude.svg",
-          "dark": "./icons/claude.svg"
+          "dark": "./icons/claude-dark.svg"
         }
       },
       {
         "command": "claude-code-terminal.qwen",
-        "title": "Qwen Code",
+        "title": "%command.qwen.title%",
         "icon": {
           "light": "./icons/qwen.svg",
-          "dark": "./icons/qwen.svg"
+          "dark": "./icons/qwen-dark.svg"
         }
       },
       {
         "command": "claude-code-terminal.kimi",
-        "title": "Kimi Code",
+        "title": "%command.kimi.title%",
         "icon": {
           "light": "./icons/kimi.svg",
-          "dark": "./icons/kimi.svg"
+          "dark": "./icons/kimi-dark.svg"
         }
       },
       {
         "command": "claude-code-terminal.custom",
-        "title": "Custom Code",
+        "title": "%command.custom.title%",
         "icon": "$(terminal)"
       },
       {
-        "command": "claude-code-terminal.configureTerminals",
-        "title": "Configure Terminals",
+        "command": "claude-code-terminal.configure",
+        "title": "%command.configure.title%",
         "icon": "$(gear)"
       }
     ],
@@ -73,31 +79,46 @@
           "group": "navigation"
         },
         {
-          "command": "claude-code-terminal.configureTerminals",
+          "command": "claude-code-terminal.configure",
           "when": "resourceExtname != ''",
           "group": "1_run"
         }
       ]
     },
     "configuration": {
-      "title": "Claude Code Terminal",
+      "title": "%configuration.title%",
       "properties": {
         "ClaudeCodeTerminal.qwen.baseUrl": {
           "type": "string",
           "default": "https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy",
-          "description": "Qwen API base URL",
+          "description": "%configuration.qwen.baseUrl.description%",
           "scope": "window"
         },
         "ClaudeCodeTerminal.kimi.baseUrl": {
           "type": "string",
           "default": "https://api.moonshot.cn/anthropic",
-          "description": "Kimi API base URL",
+          "description": "%configuration.kimi.baseUrl.description%",
           "scope": "window"
         },
         "ClaudeCodeTerminal.custom.baseUrl": {
           "type": "string",
           "default": "",
-          "description": "Custom API base URL",
+          "description": "%configuration.custom.baseUrl.description%",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.qwen.command": {
+          "type": "string",
+          "description": "%configuration.qwen.command.description%",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.kimi.command": {
+          "type": "string",
+          "description": "%configuration.kimi.command.description%",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.custom.command": {
+          "type": "string",
+          "description": "%configuration.custom.command.description%",
           "scope": "window"
         }
       }
