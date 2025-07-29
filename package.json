@@ -13,6 +13,10 @@
     "*"
   ],
   "main": "./out/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maskzh/vscode-extension-claude-code.git"
+  },
   "contributes": {
     "languages": [
       {
@@ -166,7 +170,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
   },
   "devDependencies": {
     "@types/vscode": "^1.102.0",
