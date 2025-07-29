@@ -1,7 +1,6 @@
 {
   "extension.displayName": "Claude Code 终端",
   "extension.description": "Claude Code 集成的 VS Code 扩展",
-  "command.claude.title": "Claude Code",
   "command.qwen.title": "通义千问 Code",
   "command.kimi.title": "月之暗面 Code",
   "command.custom.title": "自定义 Code",

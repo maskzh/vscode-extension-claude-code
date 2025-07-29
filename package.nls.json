@@ -1,7 +1,6 @@
 {
   "extension.displayName": "Claude Code Terminal",
   "extension.description": "VS Code extension for Claude Code integration",
-  "command.claude.title": "Claude Code",
   "command.qwen.title": "Qwen Code",
   "command.kimi.title": "Kimi Code",
   "command.custom.title": "Custom Code",

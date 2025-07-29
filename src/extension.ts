@@ -12,15 +12,6 @@ export async function activate(context: vscode.ExtensionContext) {
   await terminalManager.initializeDefaultCommands();
 
   const terminalDisposables = [
-    vscode.commands.registerCommand('claude-code-terminal.claude', async () => {
-      await terminalManager.executeTerminalCommand('claude');
-    }),
-    vscode.commands.registerCommand(
-      'claude-code-terminal.claude.color',
-      async () => {
-        await terminalManager.executeTerminalCommand('claude');
-      }
-    ),
     vscode.commands.registerCommand('claude-code-terminal.qwen', async () => {
       await terminalManager.executeTerminalCommand('qwen');
     }),

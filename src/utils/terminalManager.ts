@@ -38,28 +38,22 @@ export class TerminalManager {
 
     const fixedCommands: TerminalCommand[] = [
       {
-        id: 'claude',
-        title: 'Claude Code',
-        enabled: true,
-        order: 1,
-      },
-      {
         id: 'qwen',
         title: 'Qwen Code',
         enabled: qwenConfigured,
-        order: 2,
+        order: 1,
       },
       {
         id: 'kimi',
         title: 'Kimi Code',
         enabled: kimiConfigured,
-        order: 3,
+        order: 2,
       },
       {
         id: 'custom',
         title: 'Custom Code',
         enabled: customConfigured,
-        order: 4,
+        order: 3,
       },
     ];
 
@@ -180,7 +174,7 @@ export class TerminalManager {
 
   private updateContexts() {
     console.log(i18n.t('terminal.updatingContexts'));
-    const terminalIds = ['claude', 'qwen', 'kimi', 'custom'];
+    const terminalIds = ['qwen', 'kimi', 'custom'];
 
     terminalIds.forEach((terminalId) => {
       const command = this.terminalCommands.get(terminalId);
@@ -215,15 +209,10 @@ export class TerminalManager {
         let statusIcon = '$(circle-outline)';
         let detail = '';
 
-        if (cmd.id === 'claude') {
-          statusIcon = '$(check)';
-          detail = i18n.t('common.alwaysAvailable');
-        } else {
-          statusIcon = cmd.enabled ? '$(check)' : '$(key)';
-          detail = cmd.enabled
-            ? i18n.t('common.configured')
-            : i18n.t('common.notConfigured');
-        }
+        statusIcon = cmd.enabled ? '$(check)' : '$(key)';
+        detail = cmd.enabled
+          ? i18n.t('common.configured')
+          : i18n.t('common.notConfigured');
 
         return {
           label: `${statusIcon} ${cmd.title}`,
@@ -258,7 +247,6 @@ export class TerminalManager {
   private async showTerminalConfiguration(
     command: TerminalCommand
   ): Promise<void> {
-    if (command.id === 'claude') return;
     await this.configManager.configureApiKey(command.id as ServiceType);
   }
 }

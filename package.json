@@ -26,19 +26,6 @@
     ],
     "commands": [
       {
-        "command": "claude-code-terminal.claude",
-        "title": "%command.claude.title%",
-        "icon": {
-          "light": "./icons/claude.svg",
-          "dark": "./icons/claude-dark.svg"
-        }
-      },
-      {
-        "command": "claude-code-terminal.claude.color",
-        "title": "%command.claude.title%",
-        "icon": "./icons/claude-color.svg"
-      },
-      {
         "command": "claude-code-terminal.qwen",
         "title": "%command.qwen.title%",
         "icon": {
@@ -77,16 +64,6 @@
     ],
     "menus": {
       "editor/title": [
-        {
-          "command": "claude-code-terminal.claude",
-          "when": "resourceExtname != '' && claudeExtension.claude.visible && !claudeExtension.useColorIcons",
-          "group": "navigation"
-        },
-        {
-          "command": "claude-code-terminal.claude.color",
-          "when": "resourceExtname != '' && claudeExtension.claude.visible && claudeExtension.useColorIcons",
-          "group": "navigation"
-        },
         {
           "command": "claude-code-terminal.qwen",
           "when": "resourceExtname != '' && claudeExtension.qwen.visible && !claudeExtension.useColorIcons",
