@@ -30,6 +30,11 @@
         }
       },
       {
+        "command": "claude-code-terminal.claude.color",
+        "title": "%command.claude.title%",
+        "icon": "./icons/claude-color.svg"
+      },
+      {
         "command": "claude-code-terminal.qwen",
         "title": "%command.qwen.title%",
         "icon": {
@@ -38,12 +43,22 @@
         }
       },
       {
+        "command": "claude-code-terminal.qwen.color",
+        "title": "%command.qwen.title%",
+        "icon": "./icons/qwen-color.svg"
+      },
+      {
         "command": "claude-code-terminal.kimi",
         "title": "%command.kimi.title%",
         "icon": {
           "light": "./icons/kimi.svg",
           "dark": "./icons/kimi-dark.svg"
         }
+      },
+      {
+        "command": "claude-code-terminal.kimi.color",
+        "title": "%command.kimi.title%",
+        "icon": "./icons/kimi-color.svg"
       },
       {
         "command": "claude-code-terminal.custom",
@@ -60,17 +75,32 @@
       "editor/title": [
         {
           "command": "claude-code-terminal.claude",
-          "when": "resourceExtname != '' && claudeExtension.claude.visible",
+          "when": "resourceExtname != '' && claudeExtension.claude.visible && !claudeExtension.useColorIcons",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.claude.color",
+          "when": "resourceExtname != '' && claudeExtension.claude.visible && claudeExtension.useColorIcons",
           "group": "navigation"
         },
         {
           "command": "claude-code-terminal.qwen",
-          "when": "resourceExtname != '' && claudeExtension.qwen.visible",
+          "when": "resourceExtname != '' && claudeExtension.qwen.visible && !claudeExtension.useColorIcons",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.qwen.color",
+          "when": "resourceExtname != '' && claudeExtension.qwen.visible && claudeExtension.useColorIcons",
           "group": "navigation"
         },
         {
           "command": "claude-code-terminal.kimi",
-          "when": "resourceExtname != '' && claudeExtension.kimi.visible",
+          "when": "resourceExtname != '' && claudeExtension.kimi.visible && !claudeExtension.useColorIcons",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.kimi.color",
+          "when": "resourceExtname != '' && claudeExtension.kimi.visible && claudeExtension.useColorIcons",
           "group": "navigation"
         },
         {
@@ -119,6 +149,12 @@
         "ClaudeCodeTerminal.custom.command": {
           "type": "string",
           "description": "%configuration.custom.command.description%",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.useColorIcons": {
+          "type": "boolean",
+          "default": false,
+          "description": "%configuration.useColorIcons.description%",
           "scope": "window"
         }
       }

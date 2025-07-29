@@ -12,5 +12,6 @@
   "configuration.custom.baseUrl.description": "Custom API base URL",
   "configuration.qwen.command.description": "Command to execute for Qwen terminal",
   "configuration.kimi.command.description": "Command to execute for Kimi terminal",
-  "configuration.custom.command.description": "Command to execute for Custom terminal"
+  "configuration.custom.command.description": "Command to execute for Custom terminal",
+  "configuration.useColorIcons.description": "Use colored icons instead of monochrome icons"
 }
