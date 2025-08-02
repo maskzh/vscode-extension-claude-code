@@ -11,6 +11,5 @@
   "configuration.custom.baseUrl.description": "自定义 API 基础 URL",
   "configuration.qwen.command.description": "通义千问终端执行的命令",
   "configuration.kimi.command.description": "月之暗面终端执行的命令",
-  "configuration.custom.command.description": "自定义终端执行的命令",
-  "configuration.useColorIcons.description": "使用彩色图标而不是单色图标"
+  "configuration.custom.command.description": "自定义终端执行的命令"
 }

@@ -71,10 +71,6 @@ export class ConfigManager {
     );
   }
 
-  getUseColorIcons(): boolean {
-    const config = vscode.workspace.getConfiguration(this.configSection);
-    return config.get<boolean>('useColorIcons', false);
-  }
 
   async getApiKey(service: ServiceType): Promise<string> {
     if (!this.context) {

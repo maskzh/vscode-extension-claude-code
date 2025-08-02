@@ -34,22 +34,12 @@
         }
       },
       {
-        "command": "claude-code-terminal.qwen.color",
-        "title": "%command.qwen.title%",
-        "icon": "./icons/qwen-color.svg"
-      },
-      {
         "command": "claude-code-terminal.kimi",
         "title": "%command.kimi.title%",
         "icon": {
           "light": "./icons/kimi.svg",
           "dark": "./icons/kimi-dark.svg"
         }
-      },
-      {
-        "command": "claude-code-terminal.kimi.color",
-        "title": "%command.kimi.title%",
-        "icon": "./icons/kimi-color.svg"
       },
       {
         "command": "claude-code-terminal.custom",
@@ -66,22 +56,12 @@
       "editor/title": [
         {
           "command": "claude-code-terminal.qwen",
-          "when": "resourceExtname != '' && claudeExtension.qwen.visible && !claudeExtension.useColorIcons",
-          "group": "navigation"
-        },
-        {
-          "command": "claude-code-terminal.qwen.color",
-          "when": "resourceExtname != '' && claudeExtension.qwen.visible && claudeExtension.useColorIcons",
+          "when": "resourceExtname != '' && claudeExtension.qwen.visible",
           "group": "navigation"
         },
         {
           "command": "claude-code-terminal.kimi",
-          "when": "resourceExtname != '' && claudeExtension.kimi.visible && !claudeExtension.useColorIcons",
-          "group": "navigation"
-        },
-        {
-          "command": "claude-code-terminal.kimi.color",
-          "when": "resourceExtname != '' && claudeExtension.kimi.visible && claudeExtension.useColorIcons",
+          "when": "resourceExtname != '' && claudeExtension.kimi.visible",
           "group": "navigation"
         },
         {
@@ -130,12 +110,6 @@
         "ClaudeCodeTerminal.custom.command": {
           "type": "string",
           "description": "%configuration.custom.command.description%",
-          "scope": "window"
-        },
-        "ClaudeCodeTerminal.useColorIcons": {
-          "type": "boolean",
-          "default": false,
-          "description": "%configuration.useColorIcons.description%",
           "scope": "window"
         }
       }

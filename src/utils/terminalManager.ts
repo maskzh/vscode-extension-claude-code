@@ -1,18 +1,16 @@
 import * as vscode from 'vscode';
+import { join } from 'path';
 import { TerminalCommand } from '../types';
 import { ConfigManager, ServiceType } from './configManager';
 import { i18n } from './i18n';
-import { IconManager } from './iconManager';
 
 export class TerminalManager {
   private static instance: TerminalManager;
   private terminalCommands: Map<string, TerminalCommand> = new Map();
   private configManager: ConfigManager;
-  public iconManager: IconManager;
 
   private constructor() {
     this.configManager = ConfigManager.getInstance();
-    this.iconManager = IconManager.getInstance();
   }
 
   initialize(context: vscode.ExtensionContext): void {
@@ -133,7 +131,7 @@ export class TerminalManager {
     try {
       const terminal = vscode.window.createTerminal({
         name: command.title,
-        iconPath: this.iconManager.getIconPath(id as ServiceType),
+        iconPath: this.getIconPath(id as ServiceType),
         location: { viewColumn: vscode.ViewColumn.Beside },
       });
 
@@ -248,5 +246,22 @@ export class TerminalManager {
     command: TerminalCommand
   ): Promise<void> {
     await this.configManager.configureApiKey(command.id as ServiceType);
+  }
+
+  private getIconPath(
+    serviceType: ServiceType
+  ): { light: vscode.Uri; dark: vscode.Uri } | vscode.ThemeIcon {
+    if (serviceType === 'custom') {
+      return new vscode.ThemeIcon('terminal');
+    }
+
+    return {
+      light: vscode.Uri.file(
+        join(__dirname, `../../icons/${serviceType}.svg`)
+      ),
+      dark: vscode.Uri.file(
+        join(__dirname, `../../icons/${serviceType}-dark.svg`)
+      ),
+    };
   }
 }
