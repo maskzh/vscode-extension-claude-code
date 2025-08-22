@@ -32,10 +32,12 @@ export class TerminalManager {
       kimiConfigured,
       customConfigured,
       deepseekConfigured,
+      copilotConfigured,
     ] = await Promise.all([
       this.configManager.isServiceConfigured('qwen'),
       this.configManager.isServiceConfigured('kimi'),
       this.configManager.isServiceConfigured('deepseek'),
+      this.configManager.isServiceConfigured('copilot'),
       this.configManager.isServiceConfigured('custom'),
     ]);
 
@@ -59,10 +61,16 @@ export class TerminalManager {
         order: 3,
       },
       {
+        id: 'copilot',
+        title: 'GitHub Copilot Code',
+        enabled: copilotConfigured,
+        order: 4,
+      },
+      {
         id: 'custom',
         title: 'Custom Code',
         enabled: customConfigured,
-        order: 4,
+        order: 5,
       },
     ];
 
@@ -94,11 +102,13 @@ export class TerminalManager {
       qwenConfigured,
       kimiConfigured,
       deepseekConfigured,
+      copilotConfigured,
       customConfigured,
     ] = await Promise.all([
       this.configManager.isServiceConfigured('qwen'),
       this.configManager.isServiceConfigured('kimi'),
       this.configManager.isServiceConfigured('deepseek'),
+      this.configManager.isServiceConfigured('copilot'),
       this.configManager.isServiceConfigured('custom'),
     ]);
 
@@ -125,6 +135,14 @@ export class TerminalManager {
         `DeepSeek${i18n.t('terminal.terminalStatus')}: ${
           deepseekTerminal.enabled
         }`
+      );
+    }
+
+    const copilotTerminal = this.terminalCommands.get('copilot');
+    if (copilotTerminal) {
+      copilotTerminal.enabled = copilotConfigured;
+      console.log(
+        `Copilot${i18n.t('terminal.terminalStatus')}: ${copilotTerminal.enabled}`
       );
     }
 
@@ -165,7 +183,7 @@ export class TerminalManager {
 
       let fullCommand = 'claude';
       const serviceType = id as ServiceType;
-      if (['qwen', 'kimi', 'deepseek', 'custom'].includes(serviceType)) {
+      if (['qwen', 'kimi', 'deepseek', 'copilot', 'custom'].includes(serviceType)) {
         const _baseUrl = this.configManager.getBaseUrl(serviceType);
         const _apiKey = await this.configManager.getApiKey(serviceType);
         const _command = this.configManager.getCommand(serviceType);
@@ -198,7 +216,7 @@ export class TerminalManager {
 
   private updateContexts() {
     console.log(i18n.t('terminal.updatingContexts'));
-    const terminalIds = ['qwen', 'kimi', 'deepseek', 'custom'];
+    const terminalIds = ['qwen', 'kimi', 'deepseek', 'copilot', 'custom'];
 
     terminalIds.forEach((terminalId) => {
       const command = this.terminalCommands.get(terminalId);

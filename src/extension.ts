@@ -22,6 +22,9 @@ export async function activate(context: vscode.ExtensionContext) {
         await terminalManager.executeTerminalCommand('deepseek');
       }
     ),
+    vscode.commands.registerCommand('claude-code-terminal.copilot', async () => {
+      await terminalManager.executeTerminalCommand('copilot');
+    }),
     vscode.commands.registerCommand('claude-code-terminal.custom', async () => {
       await terminalManager.executeTerminalCommand('custom');
     }),

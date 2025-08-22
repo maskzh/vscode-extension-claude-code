@@ -50,6 +50,14 @@
         }
       },
       {
+        "command": "claude-code-terminal.copilot",
+        "title": "%command.copilot.title%",
+        "icon": {
+          "light": "./icons/copilot.svg",
+          "dark": "./icons/copilot-dark.svg"
+        }
+      },
+      {
         "command": "claude-code-terminal.custom",
         "title": "%command.custom.title%",
         "icon": "$(terminal)"
@@ -75,6 +83,11 @@
         {
           "command": "claude-code-terminal.deepseek",
           "when": "resourceExtname != '' && claudeExtension.deepseek.visible",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.copilot",
+          "when": "resourceExtname != '' && claudeExtension.copilot.visible",
           "group": "navigation"
         },
         {
@@ -129,6 +142,17 @@
         "ClaudeCodeTerminal.deepseek.command": {
           "type": "string",
           "description": "%configuration.deepseek.command.description%",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.copilot.baseUrl": {
+          "type": "string",
+          "default": "https://api.github.com/copilot/anthropic",
+          "description": "%configuration.copilot.baseUrl.description%",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.copilot.command": {
+          "type": "string",
+          "description": "%configuration.copilot.command.description%",
           "scope": "window"
         },
         "ClaudeCodeTerminal.custom.command": {

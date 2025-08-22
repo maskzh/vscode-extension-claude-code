@@ -4,6 +4,7 @@
   "command.qwen.title": "通义千问 Code",
   "command.kimi.title": "月之暗面 Code",
   "command.deepseek.title": "DeepSeek Code",
+  "command.copilot.title": "GitHub Copilot Code",
   "command.custom.title": "自定义 Code",
   "command.configure.title": "配置 Claude Code 终端",
   "configuration.title": "Claude Code 终端",
@@ -11,8 +12,10 @@
   "configuration.kimi.baseUrl.description": "月之暗面 API 基础 URL",
   "configuration.custom.baseUrl.description": "自定义 API 基础 URL",
   "configuration.deepseek.baseUrl.description": "DeepSeek API 基础 URL",
+  "configuration.copilot.baseUrl.description": "GitHub Copilot API 基础 URL",
   "configuration.qwen.command.description": "通义千问终端执行的命令",
   "configuration.kimi.command.description": "月之暗面终端执行的命令",
   "configuration.deepseek.command.description": "DeepSeek终端执行的命令",
+  "configuration.copilot.command.description": "GitHub Copilot终端执行的命令",
   "configuration.custom.command.description": "自定义终端执行的命令"
 }
