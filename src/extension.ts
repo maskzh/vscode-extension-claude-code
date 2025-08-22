@@ -16,6 +16,12 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('claude-code-terminal.kimi', async () => {
       await terminalManager.executeTerminalCommand('kimi');
     }),
+    vscode.commands.registerCommand(
+      'claude-code-terminal.deepseek',
+      async () => {
+        await terminalManager.executeTerminalCommand('deepseek');
+      }
+    ),
     vscode.commands.registerCommand('claude-code-terminal.custom', async () => {
       await terminalManager.executeTerminalCommand('custom');
     }),
@@ -30,10 +36,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(configureDisposable, ...terminalDisposables);
 
-
   console.log('All terminal commands have been registered.');
 }
-
 
 export function deactivate() {
   console.log('Claude Code Terminal Extension Disabled');

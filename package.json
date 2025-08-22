@@ -42,6 +42,14 @@
         }
       },
       {
+        "command": "claude-code-terminal.deepseek",
+        "title": "%command.deepseek.title%",
+        "icon": {
+          "light": "./icons/deepseek.svg",
+          "dark": "./icons/deepseek-dark.svg"
+        }
+      },
+      {
         "command": "claude-code-terminal.custom",
         "title": "%command.custom.title%",
         "icon": "$(terminal)"
@@ -62,6 +70,11 @@
         {
           "command": "claude-code-terminal.kimi",
           "when": "resourceExtname != '' && claudeExtension.kimi.visible",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.deepseek",
+          "when": "resourceExtname != '' && claudeExtension.deepseek.visible",
           "group": "navigation"
         },
         {
@@ -105,6 +118,17 @@
         "ClaudeCodeTerminal.kimi.command": {
           "type": "string",
           "description": "%configuration.kimi.command.description%",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.deepseek.baseUrl": {
+          "type": "string",
+          "default": "https://api.deepseek.com/anthropic",
+          "description": "%configuration.deepseek.baseUrl.description%",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.deepseek.command": {
+          "type": "string",
+          "description": "%configuration.deepseek.command.description%",
           "scope": "window"
         },
         "ClaudeCodeTerminal.custom.command": {

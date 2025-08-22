@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { i18n } from './i18n';
 
-export type ServiceType = 'qwen' | 'kimi' | 'custom';
+export type ServiceType = 'qwen' | 'kimi' | 'deepseek' | 'custom';
 
 type ServiceConfig = {
   defaultBaseUrl: string;
@@ -33,6 +33,13 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
     displayName: 'Custom',
     secretKey: 'ClaudeCodeTerminal.custom.apiKey',
     configPrefix: 'custom',
+  },
+  deepseek: {
+    defaultBaseUrl: 'https://api.deepseek.com/anthropic',
+    defaultCommand: 'claude',
+    displayName: 'DeepSeek',
+    secretKey: 'ClaudeCodeTerminal.deepseek.apiKey',
+    configPrefix: 'deepseek',
   },
 };
 
@@ -70,7 +77,6 @@ export class ConfigManager {
       serviceConfig.defaultCommand
     );
   }
-
 
   async getApiKey(service: ServiceType): Promise<string> {
     if (!this.context) {

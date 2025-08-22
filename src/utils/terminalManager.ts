@@ -1,5 +1,5 @@
-import * as vscode from 'vscode';
 import { join } from 'path';
+import * as vscode from 'vscode';
 import { TerminalCommand } from '../types';
 import { ConfigManager, ServiceType } from './configManager';
 import { i18n } from './i18n';
@@ -27,12 +27,17 @@ export class TerminalManager {
   async initializeDefaultCommands() {
     console.log(i18n.t('terminal.initializingCommands'));
 
-    const [qwenConfigured, kimiConfigured, customConfigured] =
-      await Promise.all([
-        this.configManager.isServiceConfigured('qwen'),
-        this.configManager.isServiceConfigured('kimi'),
-        this.configManager.isServiceConfigured('custom'),
-      ]);
+    const [
+      qwenConfigured,
+      kimiConfigured,
+      customConfigured,
+      deepseekConfigured,
+    ] = await Promise.all([
+      this.configManager.isServiceConfigured('qwen'),
+      this.configManager.isServiceConfigured('kimi'),
+      this.configManager.isServiceConfigured('deepseek'),
+      this.configManager.isServiceConfigured('custom'),
+    ]);
 
     const fixedCommands: TerminalCommand[] = [
       {
@@ -48,10 +53,16 @@ export class TerminalManager {
         order: 2,
       },
       {
+        id: 'deepseek',
+        title: 'DeepSeek Code',
+        enabled: deepseekConfigured,
+        order: 3,
+      },
+      {
         id: 'custom',
         title: 'Custom Code',
         enabled: customConfigured,
-        order: 3,
+        order: 4,
       },
     ];
 
@@ -79,12 +90,17 @@ export class TerminalManager {
   private async refreshAITerminals() {
     console.log(i18n.t('terminal.configChanged'));
 
-    const [qwenConfigured, kimiConfigured, customConfigured] =
-      await Promise.all([
-        this.configManager.isServiceConfigured('qwen'),
-        this.configManager.isServiceConfigured('kimi'),
-        this.configManager.isServiceConfigured('custom'),
-      ]);
+    const [
+      qwenConfigured,
+      kimiConfigured,
+      deepseekConfigured,
+      customConfigured,
+    ] = await Promise.all([
+      this.configManager.isServiceConfigured('qwen'),
+      this.configManager.isServiceConfigured('kimi'),
+      this.configManager.isServiceConfigured('deepseek'),
+      this.configManager.isServiceConfigured('custom'),
+    ]);
 
     const qwenTerminal = this.terminalCommands.get('qwen');
     if (qwenTerminal) {
@@ -99,6 +115,16 @@ export class TerminalManager {
       kimiTerminal.enabled = kimiConfigured;
       console.log(
         `Kimi${i18n.t('terminal.terminalStatus')}: ${kimiTerminal.enabled}`
+      );
+    }
+
+    const deepseekTerminal = this.terminalCommands.get('deepseek');
+    if (deepseekTerminal) {
+      deepseekTerminal.enabled = deepseekConfigured;
+      console.log(
+        `DeepSeek${i18n.t('terminal.terminalStatus')}: ${
+          deepseekTerminal.enabled
+        }`
       );
     }
 
@@ -139,7 +165,7 @@ export class TerminalManager {
 
       let fullCommand = 'claude';
       const serviceType = id as ServiceType;
-      if (['qwen', 'kimi', 'custom'].includes(serviceType)) {
+      if (['qwen', 'kimi', 'deepseek', 'custom'].includes(serviceType)) {
         const _baseUrl = this.configManager.getBaseUrl(serviceType);
         const _apiKey = await this.configManager.getApiKey(serviceType);
         const _command = this.configManager.getCommand(serviceType);
@@ -172,7 +198,7 @@ export class TerminalManager {
 
   private updateContexts() {
     console.log(i18n.t('terminal.updatingContexts'));
-    const terminalIds = ['qwen', 'kimi', 'custom'];
+    const terminalIds = ['qwen', 'kimi', 'deepseek', 'custom'];
 
     terminalIds.forEach((terminalId) => {
       const command = this.terminalCommands.get(terminalId);
@@ -256,9 +282,7 @@ export class TerminalManager {
     }
 
     return {
-      light: vscode.Uri.file(
-        join(__dirname, `../../icons/${serviceType}.svg`)
-      ),
+      light: vscode.Uri.file(join(__dirname, `../../icons/${serviceType}.svg`)),
       dark: vscode.Uri.file(
         join(__dirname, `../../icons/${serviceType}-dark.svg`)
       ),
