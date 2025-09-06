@@ -35,7 +35,7 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
     configPrefix: 'deepseek',
   },
   copilot: {
-    defaultBaseUrl: '',
+    defaultBaseUrl: 'https://api.github.com/copilot/anthropic',
     defaultCommand: 'claude',
     displayName: 'GitHub Copilot',
     secretKey: 'ClaudeCodeTerminal.copilot.apiKey',
@@ -111,6 +111,13 @@ export class ConfigManager {
   async isServiceConfigured(service: ServiceType): Promise<boolean> {
     const apiKey = await this.getApiKey(service);
     const command = this.getCommand(service);
+    const baseUrl = this.getBaseUrl(service);
+    
+    // For copilot, if it has a default baseUrl, consider it configured
+    if (service === 'copilot' && baseUrl && baseUrl !== '') {
+      return true;
+    }
+    
     return this.isValidApiKey(apiKey) || this.isValidCommand(command);
   }
 
