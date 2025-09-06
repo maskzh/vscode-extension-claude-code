@@ -30,9 +30,9 @@ export class TerminalManager {
     const [
       qwenConfigured,
       kimiConfigured,
-      customConfigured,
       deepseekConfigured,
       copilotConfigured,
+      customConfigured,
     ] = await Promise.all([
       this.configManager.isServiceConfigured('qwen'),
       this.configManager.isServiceConfigured('kimi'),
