@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
+import { ServiceType } from '../types';
 import { i18n } from './i18n';
-
-export type ServiceType = 'qwen' | 'kimi' | 'deepseek' | 'copilot' | 'custom';
 
 type ServiceConfig = {
   defaultBaseUrl: string;
@@ -33,6 +32,13 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
     displayName: 'DeepSeek',
     secretKey: 'ClaudeCodeTerminal.deepseek.apiKey',
     configPrefix: 'deepseek',
+  },
+  zhipu: {
+    defaultBaseUrl: 'https://open.bigmodel.cn/api/anthropic',
+    defaultCommand: 'claude',
+    displayName: 'Zhipu',
+    secretKey: 'ClaudeCodeTerminal.zhipu.apiKey',
+    configPrefix: 'zhipu',
   },
   copilot: {
     defaultBaseUrl: 'https://api.github.com/copilot/anthropic',
@@ -111,7 +117,7 @@ export class ConfigManager {
   async isServiceConfigured(service: ServiceType): Promise<boolean> {
     const apiKey = await this.getApiKey(service);
     const command = this.getCommand(service);
-    
+
     return this.isValidApiKey(apiKey) || this.isValidCommand(command);
   }
 

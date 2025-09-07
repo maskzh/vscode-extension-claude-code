@@ -1,7 +1,7 @@
 import { join } from 'path';
 import * as vscode from 'vscode';
-import { TerminalCommand } from '../types';
-import { ConfigManager, ServiceType } from './configManager';
+import { ServiceType, TerminalCommand } from '../types';
+import { ConfigManager } from './configManager';
 import { i18n } from './i18n';
 
 export class TerminalManager {
@@ -31,12 +31,14 @@ export class TerminalManager {
       qwenConfigured,
       kimiConfigured,
       deepseekConfigured,
+      zhipuConfigured,
       copilotConfigured,
       customConfigured,
     ] = await Promise.all([
       this.configManager.isServiceConfigured('qwen'),
       this.configManager.isServiceConfigured('kimi'),
       this.configManager.isServiceConfigured('deepseek'),
+      this.configManager.isServiceConfigured('zhipu'),
       this.configManager.isServiceConfigured('copilot'),
       this.configManager.isServiceConfigured('custom'),
     ]);
@@ -61,16 +63,22 @@ export class TerminalManager {
         order: 3,
       },
       {
+        id: 'zhipu',
+        title: 'Zhipu Code',
+        enabled: zhipuConfigured,
+        order: 4,
+      },
+      {
         id: 'copilot',
         title: 'GitHub Copilot Code',
         enabled: copilotConfigured,
-        order: 4,
+        order: 5,
       },
       {
         id: 'custom',
         title: 'Custom Code',
         enabled: customConfigured,
-        order: 5,
+        order: 6,
       },
     ];
 
@@ -102,12 +110,14 @@ export class TerminalManager {
       qwenConfigured,
       kimiConfigured,
       deepseekConfigured,
+      zhipuConfigured,
       copilotConfigured,
       customConfigured,
     ] = await Promise.all([
       this.configManager.isServiceConfigured('qwen'),
       this.configManager.isServiceConfigured('kimi'),
       this.configManager.isServiceConfigured('deepseek'),
+      this.configManager.isServiceConfigured('zhipu'),
       this.configManager.isServiceConfigured('copilot'),
       this.configManager.isServiceConfigured('custom'),
     ]);
@@ -138,11 +148,21 @@ export class TerminalManager {
       );
     }
 
+    const zhipuTerminal = this.terminalCommands.get('zhipu');
+    if (zhipuTerminal) {
+      zhipuTerminal.enabled = zhipuConfigured;
+      console.log(
+        `Zhipu${i18n.t('terminal.terminalStatus')}: ${zhipuTerminal.enabled}`
+      );
+    }
+
     const copilotTerminal = this.terminalCommands.get('copilot');
     if (copilotTerminal) {
       copilotTerminal.enabled = copilotConfigured;
       console.log(
-        `Copilot${i18n.t('terminal.terminalStatus')}: ${copilotTerminal.enabled}`
+        `Copilot${i18n.t('terminal.terminalStatus')}: ${
+          copilotTerminal.enabled
+        }`
       );
     }
 
@@ -183,7 +203,11 @@ export class TerminalManager {
 
       let fullCommand = 'claude';
       const serviceType = id as ServiceType;
-      if (['qwen', 'kimi', 'deepseek', 'copilot', 'custom'].includes(serviceType)) {
+      if (
+        ['qwen', 'kimi', 'deepseek', 'zhipu', 'copilot', 'custom'].includes(
+          serviceType
+        )
+      ) {
         const _baseUrl = this.configManager.getBaseUrl(serviceType);
         const _apiKey = await this.configManager.getApiKey(serviceType);
         const _command = this.configManager.getCommand(serviceType);
@@ -216,7 +240,14 @@ export class TerminalManager {
 
   private updateContexts() {
     console.log(i18n.t('terminal.updatingContexts'));
-    const terminalIds = ['qwen', 'kimi', 'deepseek', 'copilot', 'custom'];
+    const terminalIds = [
+      'qwen',
+      'kimi',
+      'deepseek',
+      'zhipu',
+      'copilot',
+      'custom',
+    ];
 
     terminalIds.forEach((terminalId) => {
       const command = this.terminalCommands.get(terminalId);

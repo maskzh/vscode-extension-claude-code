@@ -50,6 +50,14 @@
         }
       },
       {
+        "command": "claude-code-terminal.zhipu",
+        "title": "%command.zhipu.title%",
+        "icon": {
+          "light": "./icons/zhipu.svg",
+          "dark": "./icons/zhipu-dark.svg"
+        }
+      },
+      {
         "command": "claude-code-terminal.copilot",
         "title": "%command.copilot.title%",
         "icon": {
@@ -83,6 +91,11 @@
         {
           "command": "claude-code-terminal.deepseek",
           "when": "resourceExtname != '' && claudeExtension.deepseek.visible",
+          "group": "navigation"
+        },
+        {
+          "command": "claude-code-terminal.zhipu",
+          "when": "resourceExtname != '' && claudeExtension.zhipu.visible",
           "group": "navigation"
         },
         {
@@ -123,6 +136,12 @@
           "description": "%configuration.deepseek.baseUrl.description%",
           "scope": "window"
         },
+        "ClaudeCodeTerminal.zhipu.baseUrl": {
+          "type": "string",
+          "default": "https://open.bigmodel.cn/api/anthropic",
+          "description": "%configuration.zhipu.baseUrl.description%",
+          "scope": "window"
+        },
         "ClaudeCodeTerminal.copilot.baseUrl": {
           "type": "string",
           "default": "https://api.github.com/copilot/anthropic",
@@ -148,6 +167,11 @@
         "ClaudeCodeTerminal.deepseek.command": {
           "type": "string",
           "description": "%configuration.deepseek.command.description%",
+          "scope": "window"
+        },
+        "ClaudeCodeTerminal.zhipu.command": {
+          "type": "string",
+          "description": "%configuration.zhipu.command.description%",
           "scope": "window"
         },
         "ClaudeCodeTerminal.copilot.command": {
