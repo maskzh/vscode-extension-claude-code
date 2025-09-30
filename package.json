@@ -80,37 +80,36 @@
       "editor/title": [
         {
           "command": "claude-code-terminal.qwen",
-          "when": "resourceExtname != '' && claudeExtension.qwen.visible",
+          "when": "claudeExtension.qwen.visible",
           "group": "navigation"
         },
         {
           "command": "claude-code-terminal.kimi",
-          "when": "resourceExtname != '' && claudeExtension.kimi.visible",
+          "when": "claudeExtension.kimi.visible",
           "group": "navigation"
         },
         {
           "command": "claude-code-terminal.deepseek",
-          "when": "resourceExtname != '' && claudeExtension.deepseek.visible",
+          "when": "claudeExtension.deepseek.visible",
           "group": "navigation"
         },
         {
           "command": "claude-code-terminal.zhipu",
-          "when": "resourceExtname != '' && claudeExtension.zhipu.visible",
+          "when": "claudeExtension.zhipu.visible",
           "group": "navigation"
         },
         {
           "command": "claude-code-terminal.copilot",
-          "when": "resourceExtname != '' && claudeExtension.copilot.visible",
+          "when": "claudeExtension.copilot.visible",
           "group": "navigation"
         },
         {
           "command": "claude-code-terminal.custom",
-          "when": "resourceExtname != '' && claudeExtension.custom.visible",
+          "when": "claudeExtension.custom.visible",
           "group": "navigation"
         },
         {
           "command": "claude-code-terminal.configure",
-          "when": "resourceExtname != ''",
           "group": "1_run"
         }
       ]
