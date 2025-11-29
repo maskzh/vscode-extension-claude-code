@@ -5,10 +5,19 @@ import { SERVICE_TYPES } from './constants';
 import { ServiceType, TerminalCommand } from './types';
 import { i18n } from './utils/i18n';
 
+interface TerminalState {
+  viewColumn?: vscode.ViewColumn;
+  tab?: vscode.Tab;
+  label?: string;
+  isPending: boolean;
+}
+
 export class TerminalManager {
   private static instance: TerminalManager;
   private terminalCommands: Map<string, TerminalCommand> = new Map();
   private configManager: ConfigManager;
+  private terminalState: TerminalState = { isPending: false };
+  private disposables: vscode.Disposable[] = [];
 
   private constructor() {
     this.configManager = ConfigManager.getInstance();
@@ -16,6 +25,16 @@ export class TerminalManager {
 
   initialize(context: vscode.ExtensionContext): void {
     this.configManager.initialize(context);
+
+    // 监听分栏变化
+    const tabGroupListener = vscode.window.tabGroups.onDidChangeTabGroups(
+      () => {
+        this.syncTerminalState();
+      }
+    );
+
+    this.disposables.push(tabGroupListener);
+    context.subscriptions.push(...this.disposables);
   }
 
   static getInstance(): TerminalManager {
@@ -28,70 +47,17 @@ export class TerminalManager {
   async initializeDefaultCommands() {
     console.log(i18n.t('terminal.initializingCommands'));
 
-    const [
-      qwenConfigured,
-      kimiConfigured,
-      deepseekConfigured,
-      zhipuConfigured,
-      minimaxConfigured,
-      copilotConfigured,
-      customConfigured,
-    ] = await Promise.all([
-      this.configManager.isServiceConfigured('qwen'),
-      this.configManager.isServiceConfigured('kimi'),
-      this.configManager.isServiceConfigured('deepseek'),
-      this.configManager.isServiceConfigured('zhipu'),
-      this.configManager.isServiceConfigured('minimax'),
-      this.configManager.isServiceConfigured('copilot'),
-      this.configManager.isServiceConfigured('custom'),
-    ]);
+    // 统一获取所有服务状态
+    const serviceStatuses = await this.getAllServiceStatuses();
 
-    const fixedCommands: TerminalCommand[] = [
-      {
-        id: 'qwen',
-        title: 'Qwen Code',
-        enabled: qwenConfigured,
-        order: 1,
-      },
-      {
-        id: 'kimi',
-        title: 'Kimi Code',
-        enabled: kimiConfigured,
-        order: 2,
-      },
-      {
-        id: 'deepseek',
-        title: 'DeepSeek Code',
-        enabled: deepseekConfigured,
-        order: 3,
-      },
-      {
-        id: 'zhipu',
-        title: 'Zhipu Code',
-        enabled: zhipuConfigured,
-        order: 4,
-      },
-      {
-        id: 'minimax',
-        title: 'Minimax Code',
-        enabled: minimaxConfigured,
-        order: 5,
-      },
-      {
-        id: 'copilot',
-        title: 'GitHub Copilot Code',
-        enabled: copilotConfigured,
-        order: 6,
-      },
-      {
-        id: 'custom',
-        title: 'Custom Code',
-        enabled: customConfigured,
-        order: 7,
-      },
-    ];
+    const commands = SERVICE_TYPES.map((serviceType, index) => ({
+      id: serviceType,
+      title: this.getServiceTitle(serviceType),
+      enabled: serviceStatuses[serviceType],
+      order: index + 1,
+    }));
 
-    fixedCommands.forEach((cmd) => {
+    commands.forEach((cmd) => {
       console.log(
         `${i18n.t('terminal.addingFixedCommand')}: ${cmd.id} - ${
           cmd.title
@@ -112,88 +78,48 @@ export class TerminalManager {
     });
   }
 
+  private async getAllServiceStatuses(): Promise<Record<ServiceType, boolean>> {
+    const results = await Promise.all(
+      SERVICE_TYPES.map(async (serviceType) => {
+        const isConfigured = await this.configManager.isServiceConfigured(
+          serviceType
+        );
+        return [serviceType, isConfigured] as const;
+      })
+    );
+
+    return Object.fromEntries(results) as Record<ServiceType, boolean>;
+  }
+
+  private getServiceTitle(serviceType: ServiceType): string {
+    const titles: Record<ServiceType, string> = {
+      qwen: 'Qwen Code',
+      kimi: 'Kimi Code',
+      deepseek: 'DeepSeek Code',
+      zhipu: 'Zhipu Code',
+      minimax: 'Minimax Code',
+      copilot: 'GitHub Copilot Code',
+      custom: 'Custom Code',
+    };
+    return titles[serviceType];
+  }
+
   private async refreshAITerminals() {
     console.log(i18n.t('terminal.configChanged'));
 
-    const [
-      qwenConfigured,
-      kimiConfigured,
-      deepseekConfigured,
-      zhipuConfigured,
-      minimaxConfigured,
-      copilotConfigured,
-      customConfigured,
-    ] = await Promise.all([
-      this.configManager.isServiceConfigured('qwen'),
-      this.configManager.isServiceConfigured('kimi'),
-      this.configManager.isServiceConfigured('deepseek'),
-      this.configManager.isServiceConfigured('zhipu'),
-      this.configManager.isServiceConfigured('minimax'),
-      this.configManager.isServiceConfigured('copilot'),
-      this.configManager.isServiceConfigured('custom'),
-    ]);
+    const serviceStatuses = await this.getAllServiceStatuses();
 
-    const qwenTerminal = this.terminalCommands.get('qwen');
-    if (qwenTerminal) {
-      qwenTerminal.enabled = qwenConfigured;
-      console.log(
-        `Qwen${i18n.t('terminal.terminalStatus')}: ${qwenTerminal.enabled}`
-      );
-    }
-
-    const kimiTerminal = this.terminalCommands.get('kimi');
-    if (kimiTerminal) {
-      kimiTerminal.enabled = kimiConfigured;
-      console.log(
-        `Kimi${i18n.t('terminal.terminalStatus')}: ${kimiTerminal.enabled}`
-      );
-    }
-
-    const deepseekTerminal = this.terminalCommands.get('deepseek');
-    if (deepseekTerminal) {
-      deepseekTerminal.enabled = deepseekConfigured;
-      console.log(
-        `DeepSeek${i18n.t('terminal.terminalStatus')}: ${
-          deepseekTerminal.enabled
-        }`
-      );
-    }
-
-    const zhipuTerminal = this.terminalCommands.get('zhipu');
-    if (zhipuTerminal) {
-      zhipuTerminal.enabled = zhipuConfigured;
-      console.log(
-        `Zhipu${i18n.t('terminal.terminalStatus')}: ${zhipuTerminal.enabled}`
-      );
-    }
-
-    const minimaxTerminal = this.terminalCommands.get('minimax');
-    if (minimaxTerminal) {
-      minimaxTerminal.enabled = minimaxConfigured;
-      console.log(
-        `Minimax${i18n.t('terminal.terminalStatus')}: ${
-          minimaxTerminal.enabled
-        }`
-      );
-    }
-
-    const copilotTerminal = this.terminalCommands.get('copilot');
-    if (copilotTerminal) {
-      copilotTerminal.enabled = copilotConfigured;
-      console.log(
-        `Copilot${i18n.t('terminal.terminalStatus')}: ${
-          copilotTerminal.enabled
-        }`
-      );
-    }
-
-    const customTerminal = this.terminalCommands.get('custom');
-    if (customTerminal) {
-      customTerminal.enabled = customConfigured;
-      console.log(
-        `Custom${i18n.t('terminal.terminalStatus')}: ${customTerminal.enabled}`
-      );
-    }
+    SERVICE_TYPES.forEach((serviceType) => {
+      const terminal = this.terminalCommands.get(serviceType);
+      if (terminal) {
+        terminal.enabled = serviceStatuses[serviceType];
+        console.log(
+          `${this.getServiceTitle(serviceType)}${i18n.t(
+            'terminal.terminalStatus'
+          )}: ${terminal.enabled}`
+        );
+      }
+    });
 
     this.updateContexts();
   }
@@ -214,36 +140,27 @@ export class TerminalManager {
     }
 
     try {
+      const targetColumn = this.getTargetViewColumn();
+
+      // 设置锁定状态
+      if (!this.terminalState.label) {
+        this.terminalState.isPending = true;
+        this.terminalState.viewColumn = targetColumn;
+        this.terminalState.label = command.title;
+      }
+
       const terminal = vscode.window.createTerminal({
         name: command.title,
         iconPath: this.getIconPath(id as ServiceType),
-        location: { viewColumn: vscode.ViewColumn.Beside },
+        location: { viewColumn: targetColumn },
       });
 
       terminal.show();
+      this.captureTerminalTab(command.title);
 
-      let fullCommand = 'claude';
-      const serviceType = id as ServiceType;
-      if (SERVICE_TYPES.includes(serviceType)) {
-        const _command = this.configManager.getCommand(serviceType);
-        const hasCustomCommand = this.configManager.isValidCommand(_command);
-
-        if (hasCustomCommand) {
-          // 用户自定义了命令，直接使用，不注入 env 变量
-          fullCommand = _command;
-        } else {
-          const _env = await this.configManager.getEnv(serviceType);
-          const envExports = Object.entries(_env)
-            .filter(([key, value]) => key && value !== undefined)
-            .map(([key, value]) => `export ${key}=${value}`);
-
-          fullCommand = [...envExports, _command || fullCommand]
-            .filter(Boolean)
-            .join(' && ');
-        }
-      }
-
+      const fullCommand = await this.buildCommand(id as ServiceType);
       terminal.sendText(fullCommand);
+
       console.log(
         `${i18n.t('terminal.executingCommand')}: ${
           command.title
@@ -260,8 +177,97 @@ export class TerminalManager {
     }
   }
 
-  private updateContexts() {
+  private async buildCommand(serviceType: ServiceType): Promise<string> {
+    const customCommand = this.configManager.getCommand(serviceType);
+
+    if (this.configManager.isValidCommand(customCommand)) {
+      return customCommand;
+    }
+
+    const env = await this.configManager.getEnv(serviceType);
+    const envExports = Object.entries(env)
+      .filter(([key, value]) => key && value !== undefined)
+      .map(([key, value]) => `export ${key}=${value}`);
+
+    return [...envExports, customCommand || 'claude']
+      .filter(Boolean)
+      .join(' && ');
+  }
+
+  private getTargetViewColumn(): vscode.ViewColumn {
+    this.syncTerminalState();
+    return this.terminalState.viewColumn ?? vscode.ViewColumn.Beside;
+  }
+
+  private captureTerminalTab(label: string): void {
+    if (this.terminalState.label && !this.terminalState.isPending) return;
+
+    const targetLabel = this.terminalState.label || label;
+
+    // 使用单次重试机制，避免多次setTimeout
+    const capture = (retry = false) => {
+      const found = this.findTerminalTab(targetLabel);
+      if (found) {
+        this.terminalState.viewColumn = found.group.viewColumn;
+        this.terminalState.label = targetLabel;
+        this.terminalState.tab = found.tab;
+        this.terminalState.isPending = false;
+      } else if (!retry) {
+        setTimeout(() => capture(true), 50);
+      }
+    };
+
+    capture();
+  }
+
+  private findTerminalTab(
+    label: string
+  ): { tab: vscode.Tab; group: vscode.TabGroup } | undefined {
+    for (const group of vscode.window.tabGroups.all) {
+      const tab = group.tabs.find(
+        (item) =>
+          item.label === label && item.input instanceof vscode.TabInputTerminal
+      );
+      if (tab) return { tab, group };
+    }
+    return undefined;
+  }
+
+  private syncTerminalState(): void {
+    if (!this.terminalState.label) return;
+
+    // 优先通过引用查找
+    if (this.terminalState.tab) {
+      const matchByRef = vscode.window.tabGroups.all.find((group) =>
+        group.tabs.some((tab) => tab === this.terminalState.tab)
+      );
+
+      if (matchByRef) {
+        this.terminalState.viewColumn = matchByRef.viewColumn;
+        this.terminalState.isPending = false;
+        return;
+      }
+    }
+
+    // 通过标签查找
+    const found = this.findTerminalTab(this.terminalState.label);
+    if (found) {
+      this.terminalState.viewColumn = found.group.viewColumn;
+      this.terminalState.tab = found.tab;
+      this.terminalState.isPending = false;
+      return;
+    }
+
+    // 如果还在等待创建，不要解锁
+    if (this.terminalState.isPending) return;
+
+    // 重置状态
+    this.terminalState = { isPending: false };
+  }
+
+  private updateContexts(): void {
     console.log(i18n.t('terminal.updatingContexts'));
+
     SERVICE_TYPES.forEach((terminalId) => {
       const command = this.terminalCommands.get(terminalId);
       const isVisible = command?.enabled || false;
@@ -296,13 +302,13 @@ export class TerminalManager {
       const statusIcon = hasToken
         ? '$(check)'
         : cmd.enabled
-          ? '$(terminal)'
-          : '$(key)';
+        ? '$(terminal)'
+        : '$(key)';
       const detail = hasToken
         ? i18n.t('common.configured')
         : cmd.enabled
-          ? i18n.t('common.commandOnlyConfigured')
-          : i18n.t('common.notConfigured');
+        ? i18n.t('common.commandOnlyConfigured')
+        : i18n.t('common.notConfigured');
 
       items.push({
         label: `${statusIcon} ${cmd.title}`,
@@ -328,15 +334,11 @@ export class TerminalManager {
         command: TerminalCommand;
       };
       if (item.command) {
-        await this.showTerminalConfiguration(item.command);
+        await this.configManager.configureApiKey(
+          item.command.id as ServiceType
+        );
       }
     }
-  }
-
-  private async showTerminalConfiguration(
-    command: TerminalCommand
-  ): Promise<void> {
-    await this.configManager.configureApiKey(command.id as ServiceType);
   }
 
   private getIconPath(
@@ -352,5 +354,10 @@ export class TerminalManager {
         join(__dirname, `../../icons/${serviceType}-dark.svg`)
       ),
     };
+  }
+
+  dispose(): void {
+    this.disposables.forEach((disposable) => disposable.dispose());
+    this.disposables = [];
   }
 }
