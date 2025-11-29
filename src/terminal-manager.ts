@@ -1,6 +1,7 @@
 import { join } from 'path';
 import * as vscode from 'vscode';
 import { ConfigManager } from './config-manager';
+import { SERVICE_TYPES } from './constants';
 import { ServiceType, TerminalCommand } from './types';
 import { i18n } from './utils/i18n';
 
@@ -170,7 +171,9 @@ export class TerminalManager {
     if (minimaxTerminal) {
       minimaxTerminal.enabled = minimaxConfigured;
       console.log(
-        `Minimax${i18n.t('terminal.terminalStatus')}: ${minimaxTerminal.enabled}`
+        `Minimax${i18n.t('terminal.terminalStatus')}: ${
+          minimaxTerminal.enabled
+        }`
       );
     }
 
@@ -221,17 +224,7 @@ export class TerminalManager {
 
       let fullCommand = 'claude';
       const serviceType = id as ServiceType;
-      if (
-        [
-          'qwen',
-          'kimi',
-          'deepseek',
-          'zhipu',
-          'minimax',
-          'copilot',
-          'custom',
-        ].includes(serviceType)
-      ) {
+      if (SERVICE_TYPES.includes(serviceType)) {
         const _baseUrl = this.configManager.getBaseUrl(serviceType);
         const _apiKey = await this.configManager.getApiKey(serviceType);
         const _command = this.configManager.getCommand(serviceType);
@@ -264,17 +257,7 @@ export class TerminalManager {
 
   private updateContexts() {
     console.log(i18n.t('terminal.updatingContexts'));
-    const terminalIds = [
-      'qwen',
-      'kimi',
-      'deepseek',
-      'zhipu',
-      'minimax',
-      'copilot',
-      'custom',
-    ];
-
-    terminalIds.forEach((terminalId) => {
+    SERVICE_TYPES.forEach((terminalId) => {
       const command = this.terminalCommands.get(terminalId);
       const isVisible = command?.enabled || false;
 

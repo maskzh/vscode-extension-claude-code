@@ -1,11 +1,6 @@
-export type ServiceType =
-  | 'qwen'
-  | 'kimi'
-  | 'deepseek'
-  | 'zhipu'
-  | 'copilot'
-  | 'minimax'
-  | 'custom';
+import { SERVICE_TYPES } from './constants';
+
+export type ServiceType = (typeof SERVICE_TYPES)[number];
 
 export interface TerminalCommand {
   id: string;
