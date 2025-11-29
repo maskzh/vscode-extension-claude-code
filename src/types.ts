@@ -12,3 +12,11 @@ export interface TerminalCommand {
   enabled: boolean;
   order: number;
 }
+
+export type ServiceConfig = {
+  defaultBaseUrl: string;
+  defaultCommand: string;
+  displayName: string;
+  secretKey: string;
+  configPrefix: string;
+};

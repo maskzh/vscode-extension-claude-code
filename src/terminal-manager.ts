@@ -1,8 +1,8 @@
 import { join } from 'path';
 import * as vscode from 'vscode';
-import { ServiceType, TerminalCommand } from '../types';
-import { ConfigManager } from './configManager';
-import { i18n } from './i18n';
+import { ConfigManager } from './config-manager';
+import { ServiceType, TerminalCommand } from './types';
+import { i18n } from './utils/i18n';
 
 export class TerminalManager {
   private static instance: TerminalManager;

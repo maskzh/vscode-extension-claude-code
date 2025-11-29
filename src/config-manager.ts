@@ -1,14 +1,6 @@
 import * as vscode from 'vscode';
-import { ServiceType } from '../types';
-import { i18n } from './i18n';
-
-type ServiceConfig = {
-  defaultBaseUrl: string;
-  defaultCommand: string;
-  displayName: string;
-  secretKey: string;
-  configPrefix: string;
-};
+import { ServiceConfig, ServiceType } from './types';
+import { i18n } from './utils/i18n';
 
 const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
   qwen: {

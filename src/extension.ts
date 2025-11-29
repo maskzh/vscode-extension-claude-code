@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { TerminalManager } from './utils/terminalManager';
+import { TerminalManager } from './terminal-manager';
 
 export async function activate(context: vscode.ExtensionContext) {
   console.log('Claude Code Terminal Extension Activated');
