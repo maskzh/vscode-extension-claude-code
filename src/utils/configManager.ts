@@ -16,49 +16,49 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
       'https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy',
     defaultCommand: 'claude',
     displayName: 'Qwen',
-    secretKey: 'ClaudeCodeTerminal.qwen.apiKey',
+    secretKey: 'claude-code-terminal.qwen.apiKey',
     configPrefix: 'qwen',
   },
   kimi: {
     defaultBaseUrl: 'https://api.moonshot.cn/anthropic',
     defaultCommand: 'claude',
     displayName: 'Kimi',
-    secretKey: 'ClaudeCodeTerminal.kimi.apiKey',
+    secretKey: 'claude-code-terminal.kimi.apiKey',
     configPrefix: 'kimi',
   },
   deepseek: {
     defaultBaseUrl: 'https://api.deepseek.com/anthropic',
     defaultCommand: 'claude',
     displayName: 'DeepSeek',
-    secretKey: 'ClaudeCodeTerminal.deepseek.apiKey',
+    secretKey: 'claude-code-terminal.deepseek.apiKey',
     configPrefix: 'deepseek',
   },
   zhipu: {
     defaultBaseUrl: 'https://open.bigmodel.cn/api/anthropic',
     defaultCommand: 'claude',
     displayName: 'Zhipu',
-    secretKey: 'ClaudeCodeTerminal.zhipu.apiKey',
+    secretKey: 'claude-code-terminal.zhipu.apiKey',
     configPrefix: 'zhipu',
   },
   copilot: {
     defaultBaseUrl: 'https://api.github.com/copilot/anthropic',
     defaultCommand: 'claude',
     displayName: 'GitHub Copilot',
-    secretKey: 'ClaudeCodeTerminal.copilot.apiKey',
+    secretKey: 'claude-code-terminal.copilot.apiKey',
     configPrefix: 'copilot',
   },
   custom: {
     defaultBaseUrl: '',
     defaultCommand: 'claude',
     displayName: 'Custom',
-    secretKey: 'ClaudeCodeTerminal.custom.apiKey',
+    secretKey: 'claude-code-terminal.custom.apiKey',
     configPrefix: 'custom',
   },
 };
 
 export class ConfigManager {
   private static instance: ConfigManager;
-  private readonly configSection = 'ClaudeCodeTerminal';
+  private readonly configSection = 'claude-code-terminal';
   private context: vscode.ExtensionContext | null = null;
   private secretsChangeCallbacks: (() => void)[] = [];
 
