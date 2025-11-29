@@ -81,6 +81,19 @@ Command override tips:
 - Leave the command empty to run bundled `claude` with env exports injected.
 - Set any non-empty command to run it directly (no env injection in this mode).
 - A model icon shows up only when it has an API Key + Base URL, **or** a custom command is set.
+- **Important:** If you set a custom command, the extension executes it verbatim and will not inject any env variables—include needed exports inside your command if required.
+- Why allow custom commands? You can keep API keys out of VS Code by defining a shell alias/function that exports env vars, then point the extension to that command. Example (`~/.zshrc`):
+  ```bash
+  function deepseek() {
+    ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic" \
+    ANTHROPIC_AUTH_TOKEN="$DEEPSEEK_API_KEY" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-chat" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-chat" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-chat" \
+    claude "$@"
+  }
+  ```
+  Then set the command to `deepseek` in settings.
 
 ## Development
 
@@ -202,6 +215,19 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 - 命令留空时，扩展会先注入环境变量再执行 `claude`。
 - 只要命令非空且不等于默认 `claude`，扩展就直接执行该命令（不再注入 env）。
 - 只要存有 API Key 且 Base URL 非空，或设置了自定义命令，对应模型的图标就会显示。
+- **重要提醒：** 一旦填写自定义命令，扩展会原样执行该命令，不再为你注入任何环境变量，如需变量请在命令中自行处理。
+- 为什么允许自定义命令？你可以不在 VS Code 里存 API Key，而是在 `~/.zshrc` 定义函数/别名自行导出变量，然后在设置里填这个命令。例如：
+  ```bash
+  function deepseek() {
+    ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic" \
+    ANTHROPIC_AUTH_TOKEN="$DEEPSEEK_API_KEY" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-chat" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-chat" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-chat" \
+    claude "$@"
+  }
+  ```
+  在扩展设置中把命令写成 `deepseek` 即可。
 
 ## 开发指南
 
