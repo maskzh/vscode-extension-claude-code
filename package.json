@@ -12,7 +12,7 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onLanguage"
   ],
   "main": "./out/extension.js",
   "repository": {
@@ -91,37 +91,37 @@
         {
           "command": "claudeCodeIntegration.qwen",
           "when": "claudeExtension.qwen.visible",
-          "group": "navigation"
+          "group": "navigation@-9"
         },
         {
           "command": "claudeCodeIntegration.kimi",
           "when": "claudeExtension.kimi.visible",
-          "group": "navigation"
+          "group": "navigation@-9"
         },
         {
           "command": "claudeCodeIntegration.deepseek",
           "when": "claudeExtension.deepseek.visible",
-          "group": "navigation"
+          "group": "navigation@-9"
         },
         {
           "command": "claudeCodeIntegration.minimax",
           "when": "claudeExtension.minimax.visible",
-          "group": "navigation"
+          "group": "navigation@-9"
         },
         {
           "command": "claudeCodeIntegration.zhipu",
           "when": "claudeExtension.zhipu.visible",
-          "group": "navigation"
+          "group": "navigation@-9"
         },
         {
           "command": "claudeCodeIntegration.copilot",
           "when": "claudeExtension.copilot.visible",
-          "group": "navigation"
+          "group": "navigation@-9"
         },
         {
           "command": "claudeCodeIntegration.custom",
           "when": "claudeExtension.custom.visible",
-          "group": "navigation"
+          "group": "navigation@-9"
         },
         {
           "command": "claudeCodeIntegration.configure",
