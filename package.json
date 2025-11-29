@@ -2,6 +2,7 @@
   "name": "claude-code-terminal",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
+  "icon": "icons/logo.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.102.0"
