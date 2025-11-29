@@ -26,7 +26,6 @@ export class TerminalManager {
   initialize(context: vscode.ExtensionContext): void {
     this.configManager.initialize(context);
 
-    // 监听分栏变化
     const tabGroupListener = vscode.window.tabGroups.onDidChangeTabGroups(
       () => {
         this.syncTerminalState();
@@ -47,7 +46,6 @@ export class TerminalManager {
   async initializeDefaultCommands() {
     console.log(i18n.t('terminal.initializingCommands'));
 
-    // 统一获取所有服务状态
     const serviceStatuses = await this.getAllServiceStatuses();
 
     const commands = SERVICE_TYPES.map((serviceType, index) => ({
@@ -69,7 +67,7 @@ export class TerminalManager {
     console.log(
       `${i18n.t('terminal.totalCommandsAdded')} ${
         this.terminalCommands.size
-      } 个命令`
+      } commands`
     );
     this.updateContexts();
 
@@ -142,7 +140,6 @@ export class TerminalManager {
     try {
       const targetColumn = this.getTargetViewColumn();
 
-      // 设置锁定状态
       if (!this.terminalState.label) {
         this.terminalState.isPending = true;
         this.terminalState.viewColumn = targetColumn;
@@ -204,8 +201,7 @@ export class TerminalManager {
 
     const targetLabel = this.terminalState.label || label;
 
-    // 使用单次重试机制，避免多次setTimeout
-    const capture = (retry = false) => {
+  const capture = (retry = false) => {
       const found = this.findTerminalTab(targetLabel);
       if (found) {
         this.terminalState.viewColumn = found.group.viewColumn;
@@ -236,7 +232,6 @@ export class TerminalManager {
   private syncTerminalState(): void {
     if (!this.terminalState.label) return;
 
-    // 优先通过引用查找
     if (this.terminalState.tab) {
       const matchByRef = vscode.window.tabGroups.all.find((group) =>
         group.tabs.some((tab) => tab === this.terminalState.tab)
@@ -249,7 +244,6 @@ export class TerminalManager {
       }
     }
 
-    // 通过标签查找
     const found = this.findTerminalTab(this.terminalState.label);
     if (found) {
       this.terminalState.viewColumn = found.group.viewColumn;
@@ -258,10 +252,8 @@ export class TerminalManager {
       return;
     }
 
-    // 如果还在等待创建，不要解锁
     if (this.terminalState.isPending) return;
 
-    // 重置状态
     this.terminalState = { isPending: false };
   }
 

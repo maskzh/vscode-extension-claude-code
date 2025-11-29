@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { ServiceConfig, ServiceType } from './types';
 import { i18n } from './utils/i18n';
 
-// 使用枚举避免魔法字符串
 enum ConfigKeys {
   COMMAND = 'command',
   ENV = 'env',
@@ -10,7 +9,6 @@ enum ConfigKeys {
   AUTH_TOKEN = 'ANTHROPIC_AUTH_TOKEN',
 }
 
-// 提取基础配置，只保留变化的字段
 interface BaseServiceConfig {
   displayName: string;
 }
@@ -25,7 +23,6 @@ const BASE_SERVICE_CONFIGS: Record<ServiceType, BaseServiceConfig> = {
   custom: { displayName: 'Custom' },
 };
 
-// 动态生成SERVICE_CONFIGS，减少重复
 const createServiceConfig = (serviceType: ServiceType): ServiceConfig => ({
   displayName: BASE_SERVICE_CONFIGS[serviceType].displayName,
   secretKey: `claudeCodeIntegration.${serviceType}.env.${ConfigKeys.AUTH_TOKEN}`,
@@ -71,10 +68,8 @@ export class ConfigManager {
     );
     const secretToken = await this.getAuthToken(service);
 
-    // 兜底：如果配置为空对象则回退到默认值，确保基础字段存在
     const merged = { ...(env && Object.keys(env).length > 0 ? env : {}) };
 
-    // 使用 Secret Storage 中的 token 覆盖配置中的明文值
     if (secretToken) {
       merged[ConfigKeys.AUTH_TOKEN] = secretToken;
     }
