@@ -146,10 +146,12 @@ export class TerminalManager {
         this.terminalState.label = command.title;
       }
 
+      const env = await this.configManager.getEnv(id as ServiceType);
       const terminal = vscode.window.createTerminal({
         name: command.title,
         iconPath: this.getIconPath(id as ServiceType),
         location: { viewColumn: targetColumn },
+        env: env
       });
 
       terminal.show();
@@ -181,14 +183,7 @@ export class TerminalManager {
       return customCommand;
     }
 
-    const env = await this.configManager.getEnv(serviceType);
-    const envExports = Object.entries(env)
-      .filter(([key, value]) => key && value !== undefined)
-      .map(([key, value]) => `export ${key}=${value}`);
-
-    return [...envExports, customCommand || 'claude']
-      .filter(Boolean)
-      .join(' && ');
+    return customCommand || 'claude';
   }
 
   private getTargetViewColumn(): vscode.ViewColumn {
