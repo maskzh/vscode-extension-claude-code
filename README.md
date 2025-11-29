@@ -265,12 +265,3 @@ pnpm run package
 1. 在 VS Code 中打开项目
 2. 按 `F5` 打开扩展开发主机
 3. 在新窗口中测试扩展
-
-## 更新日志
-
-### v0.0.1
-
-- 初始版本发布
-- 支持 Qwen、Kimi、DeepSeek、Zhipu、Minimax、GitHub Copilot 及自定义终端
-- 支持 API Key Secret Storage、默认 Base URL 与命令覆盖
-- 中英文界面支持
