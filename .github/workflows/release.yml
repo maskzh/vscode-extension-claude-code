@@ -1,0 +1,124 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'package.json'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Get package version
+        id: package-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Package version: $VERSION"
+
+      - name: Check if tag exists
+        id: check-tag
+        run: |
+          VERSION="${{ steps.package-version.outputs.version }}"
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Tag v$VERSION already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Tag v$VERSION does not exist"
+          fi
+
+      - name: Get previous version
+        id: previous-version
+        if: steps.check-tag.outputs.exists == 'false'
+        run: |
+          # Get the previous version from the last tag
+          PREVIOUS_VERSION=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+          if [ -z "$PREVIOUS_VERSION" ]; then
+            # If no previous tag, get from git history
+            PREVIOUS_VERSION=$(git show HEAD~1:package.json 2>/dev/null | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).version" 2>/dev/null || echo "")
+          fi
+          if [ -z "$PREVIOUS_VERSION" ]; then
+            PREVIOUS_VERSION="0.0.0"
+          fi
+          echo "previous-version=$PREVIOUS_VERSION" >> $GITHUB_OUTPUT
+          echo "Previous version: $PREVIOUS_VERSION"
+
+      - name: Generate changelog
+        id: changelog
+        if: steps.check-tag.outputs.exists == 'false'
+        run: |
+          VERSION="${{ steps.package-version.outputs.version }}"
+          PREVIOUS_VERSION="${{ steps.previous-version.outputs.previous-version }}"
+
+          # Get commit messages between versions
+          if [ "$PREVIOUS_VERSION" != "0.0.0" ] && git rev-parse "v$PREVIOUS_VERSION" >/dev/null 2>&1; then
+            COMMITS=$(git log v$PREVIOUS_VERSION..HEAD --pretty=format:"- %s")
+          else
+            # If no previous tag, get last 10 commits
+            COMMITS=$(git log -10 --pretty=format:"- %s")
+          fi
+
+          # Create changelog
+          CHANGELOG="## What's Changed\n\n$COMMITS\n\n**Full Changelog**: https://github.com/maskzh/vscode-extension-claude-code/compare/v$PREVIOUS_VERSION...v$VERSION"
+
+          # Save changelog to file
+          echo "$CHANGELOG" > CHANGELOG.md
+
+          # Set output for GitHub release
+          {
+            echo 'changelog<<EOF'
+            echo "$CHANGELOG"
+            echo EOF
+          } >> $GITHUB_OUTPUT
+
+      - name: Install dependencies
+        if: steps.check-tag.outputs.exists == 'false'
+        run: npm ci
+
+      - name: Compile TypeScript
+        if: steps.check-tag.outputs.exists == 'false'
+        run: npm run compile
+
+      - name: Package extension
+        if: steps.check-tag.outputs.exists == 'false'
+        run: npm run package
+
+      - name: Create Release
+        if: steps.check-tag.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.package-version.outputs.version }}
+          name: Release v${{ steps.package-version.outputs.version }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          files: |
+            *.vsix
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to VS Code Marketplace
+        if: steps.check-tag.outputs.exists == 'false'
+        # Only publish if VS Code Marketplace token is configured
+        run: |
+          if [ -n "${{ secrets.VSCE_PAT }}" ]; then
+            npx vsce publish --pat ${{ secrets.VSCE_PAT }}
+          else
+            echo "VSCE_PAT not configured, skipping VS Code Marketplace publishing"
+          fi
