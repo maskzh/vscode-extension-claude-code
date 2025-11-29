@@ -32,6 +32,7 @@ export class TerminalManager {
       kimiConfigured,
       deepseekConfigured,
       zhipuConfigured,
+      minimaxConfigured,
       copilotConfigured,
       customConfigured,
     ] = await Promise.all([
@@ -39,6 +40,7 @@ export class TerminalManager {
       this.configManager.isServiceConfigured('kimi'),
       this.configManager.isServiceConfigured('deepseek'),
       this.configManager.isServiceConfigured('zhipu'),
+      this.configManager.isServiceConfigured('minimax'),
       this.configManager.isServiceConfigured('copilot'),
       this.configManager.isServiceConfigured('custom'),
     ]);
@@ -69,16 +71,22 @@ export class TerminalManager {
         order: 4,
       },
       {
+        id: 'minimax',
+        title: 'Minimax Code',
+        enabled: minimaxConfigured,
+        order: 5,
+      },
+      {
         id: 'copilot',
         title: 'GitHub Copilot Code',
         enabled: copilotConfigured,
-        order: 5,
+        order: 6,
       },
       {
         id: 'custom',
         title: 'Custom Code',
         enabled: customConfigured,
-        order: 6,
+        order: 7,
       },
     ];
 
@@ -111,6 +119,7 @@ export class TerminalManager {
       kimiConfigured,
       deepseekConfigured,
       zhipuConfigured,
+      minimaxConfigured,
       copilotConfigured,
       customConfigured,
     ] = await Promise.all([
@@ -118,6 +127,7 @@ export class TerminalManager {
       this.configManager.isServiceConfigured('kimi'),
       this.configManager.isServiceConfigured('deepseek'),
       this.configManager.isServiceConfigured('zhipu'),
+      this.configManager.isServiceConfigured('minimax'),
       this.configManager.isServiceConfigured('copilot'),
       this.configManager.isServiceConfigured('custom'),
     ]);
@@ -153,6 +163,14 @@ export class TerminalManager {
       zhipuTerminal.enabled = zhipuConfigured;
       console.log(
         `Zhipu${i18n.t('terminal.terminalStatus')}: ${zhipuTerminal.enabled}`
+      );
+    }
+
+    const minimaxTerminal = this.terminalCommands.get('minimax');
+    if (minimaxTerminal) {
+      minimaxTerminal.enabled = minimaxConfigured;
+      console.log(
+        `Minimax${i18n.t('terminal.terminalStatus')}: ${minimaxTerminal.enabled}`
       );
     }
 
@@ -204,9 +222,15 @@ export class TerminalManager {
       let fullCommand = 'claude';
       const serviceType = id as ServiceType;
       if (
-        ['qwen', 'kimi', 'deepseek', 'zhipu', 'copilot', 'custom'].includes(
-          serviceType
-        )
+        [
+          'qwen',
+          'kimi',
+          'deepseek',
+          'zhipu',
+          'minimax',
+          'copilot',
+          'custom',
+        ].includes(serviceType)
       ) {
         const _baseUrl = this.configManager.getBaseUrl(serviceType);
         const _apiKey = await this.configManager.getApiKey(serviceType);
@@ -245,6 +269,7 @@ export class TerminalManager {
       'kimi',
       'deepseek',
       'zhipu',
+      'minimax',
       'copilot',
       'custom',
     ];

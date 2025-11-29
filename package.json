@@ -50,6 +50,14 @@
         }
       },
       {
+        "command": "claude-code-terminal.minimax",
+        "title": "%command.minimax.title%",
+        "icon": {
+          "light": "./icons/minimax.svg",
+          "dark": "./icons/minimax-dark.svg"
+        }
+      },
+      {
         "command": "claude-code-terminal.zhipu",
         "title": "%command.zhipu.title%",
         "icon": {
@@ -94,6 +102,11 @@
           "group": "navigation"
         },
         {
+          "command": "claude-code-terminal.minimax",
+          "when": "claudeExtension.minimax.visible",
+          "group": "navigation"
+        },
+        {
           "command": "claude-code-terminal.zhipu",
           "when": "claudeExtension.zhipu.visible",
           "group": "navigation"
@@ -135,6 +148,12 @@
           "description": "%configuration.deepseek.baseUrl.description%",
           "scope": "window"
         },
+        "claude-code-terminal.minimax.baseUrl": {
+          "type": "string",
+          "default": "https://api.minimax.io/anthropic",
+          "description": "%configuration.minimax.baseUrl.description%",
+          "scope": "window"
+        },
         "claude-code-terminal.zhipu.baseUrl": {
           "type": "string",
           "default": "https://open.bigmodel.cn/api/anthropic",
@@ -166,6 +185,11 @@
         "claude-code-terminal.deepseek.command": {
           "type": "string",
           "description": "%configuration.deepseek.command.description%",
+          "scope": "window"
+        },
+        "claude-code-terminal.minimax.command": {
+          "type": "string",
+          "description": "%configuration.minimax.command.description%",
           "scope": "window"
         },
         "claude-code-terminal.zhipu.command": {

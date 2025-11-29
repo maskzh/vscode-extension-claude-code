@@ -39,6 +39,13 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
     secretKey: 'claude-code-terminal.copilot.apiKey',
     configPrefix: 'copilot',
   },
+  minimax: {
+    defaultBaseUrl: 'https://api.minimax.io/anthropic',
+    defaultCommand: 'claude',
+    displayName: 'Minimax',
+    secretKey: 'claude-code-terminal.minimax.apiKey',
+    configPrefix: 'minimax',
+  },
   custom: {
     defaultBaseUrl: '',
     defaultCommand: 'claude',

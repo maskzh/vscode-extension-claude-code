@@ -4,6 +4,7 @@ export type ServiceType =
   | 'deepseek'
   | 'zhipu'
   | 'copilot'
+  | 'minimax'
   | 'custom';
 
 export interface TerminalCommand {
