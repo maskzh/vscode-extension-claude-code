@@ -226,15 +226,21 @@ export class TerminalManager {
       const serviceType = id as ServiceType;
       if (SERVICE_TYPES.includes(serviceType)) {
         const _command = this.configManager.getCommand(serviceType);
-        const _env = await this.configManager.getEnv(serviceType);
+        const hasCustomCommand = this.configManager.isValidCommand(_command);
 
-        const envExports = Object.entries(_env)
-          .filter(([key, value]) => key && value !== undefined)
-          .map(([key, value]) => `export ${key}=${value}`);
+        if (hasCustomCommand) {
+          // 用户自定义了命令，直接使用，不注入 env 变量
+          fullCommand = _command;
+        } else {
+          const _env = await this.configManager.getEnv(serviceType);
+          const envExports = Object.entries(_env)
+            .filter(([key, value]) => key && value !== undefined)
+            .map(([key, value]) => `export ${key}=${value}`);
 
-        fullCommand = [...envExports, _command || fullCommand]
-          .filter(Boolean)
-          .join(' && ');
+          fullCommand = [...envExports, _command || fullCommand]
+            .filter(Boolean)
+            .join(' && ');
+        }
       }
 
       terminal.sendText(fullCommand);
@@ -284,24 +290,27 @@ export class TerminalManager {
     ];
 
     const commands = this.getAllCommands();
-    items.push(
-      ...commands.map((cmd) => {
-        let statusIcon = '$(circle-outline)';
-        let detail = '';
-
-        statusIcon = cmd.enabled ? '$(check)' : '$(key)';
-        detail = cmd.enabled
-          ? i18n.t('common.configured')
+    for (const cmd of commands) {
+      const service = cmd.id as ServiceType;
+      const hasToken = await this.configManager.hasAuthToken(service);
+      const statusIcon = hasToken
+        ? '$(check)'
+        : cmd.enabled
+          ? '$(terminal)'
+          : '$(key)';
+      const detail = hasToken
+        ? i18n.t('common.configured')
+        : cmd.enabled
+          ? i18n.t('common.commandOnlyConfigured')
           : i18n.t('common.notConfigured');
 
-        return {
-          label: `${statusIcon} ${cmd.title}`,
-          description: '',
-          detail,
-          command: cmd,
-        } as vscode.QuickPickItem & { command: TerminalCommand };
-      })
-    );
+      items.push({
+        label: `${statusIcon} ${cmd.title}`,
+        description: '',
+        detail,
+        command: cmd,
+      } as vscode.QuickPickItem & { command: TerminalCommand });
+    }
 
     const selection = await vscode.window.showQuickPick(items, {
       placeHolder: i18n.t('terminal.selectTerminalToConfigure'),

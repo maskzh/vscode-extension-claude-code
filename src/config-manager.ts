@@ -134,10 +134,19 @@ export class ConfigManager {
   }
 
   async isServiceConfigured(service: ServiceType): Promise<boolean> {
-    const apiKey = await this.getAuthToken(service);
+    const hasToken = await this.hasAuthToken(service);
+    const env = await this.getEnv(service);
+    const hasBaseUrl =
+      typeof env.ANTHROPIC_BASE_URL === 'string' &&
+      env.ANTHROPIC_BASE_URL.trim().length > 0;
     const command = this.getCommand(service);
 
-    return this.isValidApiKey(apiKey) || this.isValidCommand(command);
+    return (hasToken && hasBaseUrl) || this.isValidCommand(command);
+  }
+
+  async hasAuthToken(service: ServiceType): Promise<boolean> {
+    const token = await this.getAuthToken(service);
+    return this.isValidApiKey(token);
   }
 
   async configureApiKey(service: ServiceType): Promise<void> {

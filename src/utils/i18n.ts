@@ -4,6 +4,7 @@ type I18nKey =
   | 'common.alwaysAvailable'
   | 'common.configured'
   | 'common.notConfigured'
+  | 'common.commandOnlyConfigured'
   | 'common.clickToReconfigure'
   | 'common.clickToConfigure'
   | 'terminal.initializingCommands'
@@ -57,6 +58,7 @@ export class I18nManager {
         'common.alwaysAvailable': '始终可用',
         'common.configured': '已配置 API Key，点击重新配置',
         'common.notConfigured': '点击配置 API Key',
+        'common.commandOnlyConfigured': '已配置命令，未配置 API Key',
         'common.clickToReconfigure': '点击重新配置',
         'common.clickToConfigure': '点击配置 API Key',
 
@@ -85,6 +87,7 @@ export class I18nManager {
         'common.alwaysAvailable': 'Always Available',
         'common.configured': 'API Key configured, click to reconfigure',
         'common.notConfigured': 'Click to configure API Key',
+        'common.commandOnlyConfigured': 'Command set, API Key not configured',
         'common.clickToReconfigure': 'Click to reconfigure',
         'common.clickToConfigure': 'Click to configure API Key',
 
