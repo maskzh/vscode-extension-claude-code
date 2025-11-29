@@ -10,37 +10,31 @@ export async function activate(context: vscode.ExtensionContext) {
   await terminalManager.initializeDefaultCommands();
 
   const terminalDisposables = [
-    vscode.commands.registerCommand('claude-code-terminal.qwen', async () => {
+    vscode.commands.registerCommand('claudeCodeTerminal.qwen', async () => {
       await terminalManager.executeTerminalCommand('qwen');
     }),
-    vscode.commands.registerCommand('claude-code-terminal.kimi', async () => {
+    vscode.commands.registerCommand('claudeCodeTerminal.kimi', async () => {
       await terminalManager.executeTerminalCommand('kimi');
     }),
-    vscode.commands.registerCommand(
-      'claude-code-terminal.deepseek',
-      async () => {
-        await terminalManager.executeTerminalCommand('deepseek');
-      }
-    ),
-    vscode.commands.registerCommand(
-      'claude-code-terminal.minimax',
-      async () => {
-        await terminalManager.executeTerminalCommand('minimax');
-      }
-    ),
-    vscode.commands.registerCommand('claude-code-terminal.zhipu', async () => {
+    vscode.commands.registerCommand('claudeCodeTerminal.deepseek', async () => {
+      await terminalManager.executeTerminalCommand('deepseek');
+    }),
+    vscode.commands.registerCommand('claudeCodeTerminal.minimax', async () => {
+      await terminalManager.executeTerminalCommand('minimax');
+    }),
+    vscode.commands.registerCommand('claudeCodeTerminal.zhipu', async () => {
       await terminalManager.executeTerminalCommand('zhipu');
     }),
-    vscode.commands.registerCommand('claude-code-terminal.copilot', async () => {
+    vscode.commands.registerCommand('claudeCodeTerminal.copilot', async () => {
       await terminalManager.executeTerminalCommand('copilot');
     }),
-    vscode.commands.registerCommand('claude-code-terminal.custom', async () => {
+    vscode.commands.registerCommand('claudeCodeTerminal.custom', async () => {
       await terminalManager.executeTerminalCommand('custom');
     }),
   ];
 
   const configureDisposable = vscode.commands.registerCommand(
-    'claude-code-terminal.configure',
+    'claudeCodeTerminal.configure',
     async () => {
       await terminalManager.showConfiguration();
     }

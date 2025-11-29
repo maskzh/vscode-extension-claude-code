@@ -321,7 +321,7 @@ export class TerminalManager {
     if (selection.label.includes('$(gear)')) {
       await vscode.commands.executeCommand(
         'workbench.action.openSettings',
-        'claude-code-terminal'
+        'claudeCodeTerminal'
       );
     } else {
       const item = selection as vscode.QuickPickItem & {
