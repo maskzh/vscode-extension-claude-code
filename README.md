@@ -73,8 +73,26 @@ Default base URLs (override as needed):
 | DeepSeek         | `https://api.deepseek.com/anthropic`                      |
 | Zhipu            | `https://open.bigmodel.cn/api/anthropic`                  |
 | Minimax          | `https://api.minimax.io/anthropic`                        |
-| GitHub Copilot   | `https://api.github.com/copilot/anthropic`                |
+| GitHub Copilot   | *(empty, see note below)*                                 |
 | Custom           | *(empty, fill your own)*                                  |
+
+### Complete Default Environment Variables
+
+Each service comes with pre-configured model names and settings:
+
+| Service | ANTHROPIC_BASE_URL | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL | Additional Variables |
+|---------|-------------------|----------------------------|----------------------------|----------------------------|-------------------|
+| **Qwen** | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus` | `qwen3-coder-plus` | `qwen3-coder-plus` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **Kimi** | `https://api.moonshot.cn/anthropic` | `kimi-k2-turbo-preview` | `kimi-k2-turbo-preview` | `kimi-k2-turbo-preview` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **DeepSeek** | `https://api.deepseek.com/anthropic` | `deepseek-chat` | `deepseek-chat` | `deepseek-chat` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **Zhipu** | `https://open.bigmodel.cn/api/anthropic` | `glm-4.6` | `glm-4.6` | `glm-4.6-air` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **Minimax** | `https://api.minimax.io/anthropic` | `MiniMax-M2` | `MiniMax-M2` | `MiniMax-M2` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **GitHub Copilot** | *(empty)* [^copilot] | `claude-opus-4.5` | `claude-sonnet-4.5` | `claude-haiku-4.5` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **Custom** | *(empty)* | `claude-3-opus-20240229` | `claude-3-sonnet-20240229` | `claude-3-haiku-20240307` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+
+**Note:** All services include `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` to optimize network usage.
+
+[^copilot]: Use [copilot-api](https://github.com/ericc-ch/copilot-api) to build your own GitHub Copilot proxy service.
 
 Command override tips:
 
@@ -207,8 +225,26 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 | DeepSeek          | `https://api.deepseek.com/anthropic`                     |
 | 智谱 Zhipu        | `https://open.bigmodel.cn/api/anthropic`                 |
 | Minimax           | `https://api.minimax.io/anthropic`                       |
-| GitHub Copilot    | `https://api.github.com/copilot/anthropic`               |
+| GitHub Copilot    | *(留空，见下方脚注)*                                     |
 | Custom            | *(留空，自行填写)*                                       |
+
+### 完整的默认环境变量配置
+
+每个服务都预配置了对应的模型名称和设置：
+
+| 服务 | ANTHROPIC_BASE_URL | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL | 其他变量 |
+|---------|-------------------|----------------------------|----------------------------|----------------------------|-------------------|
+| **通义千问** | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus` | `qwen3-coder-plus` | `qwen3-coder-plus` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **月之暗面** | `https://api.moonshot.cn/anthropic` | `kimi-k2-turbo-preview` | `kimi-k2-turbo-preview` | `kimi-k2-turbo-preview` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **DeepSeek** | `https://api.deepseek.com/anthropic` | `deepseek-chat` | `deepseek-chat` | `deepseek-chat` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **智谱** | `https://open.bigmodel.cn/api/anthropic` | `glm-4.6` | `glm-4.6` | `glm-4.6-air` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **Minimax** | `https://api.minimax.io/anthropic` | `MiniMax-M2` | `MiniMax-M2` | `MiniMax-M2` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **GitHub Copilot** | *(留空)* [^copilot] | `claude-opus-4.5` | `claude-sonnet-4.5` | `claude-haiku-4.5` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+| **Custom** | *(留空)* | `claude-3-opus-20240229` | `claude-3-sonnet-20240229` | `claude-3-haiku-20240307` | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` |
+
+**注意：** 所有服务都包含 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` 以优化网络使用。
+
+[^copilot]: 使用 [copilot-api](https://github.com/ericc-ch/copilot-api) 构建你自己的 GitHub Copilot 代理服务。
 
 命令覆盖要点：
 

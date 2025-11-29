@@ -140,7 +140,11 @@
         "claudeCodeIntegration.qwen.env": {
           "type": "object",
           "default": {
-            "ANTHROPIC_BASE_URL": "https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy"
+            "ANTHROPIC_BASE_URL": "https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "qwen3-coder-plus",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "qwen3-coder-plus",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "qwen3-coder-plus",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.qwen.env.description%",
           "scope": "window"
@@ -153,7 +157,11 @@
         "claudeCodeIntegration.kimi.env": {
           "type": "object",
           "default": {
-            "ANTHROPIC_BASE_URL": "https://api.moonshot.cn/anthropic"
+            "ANTHROPIC_BASE_URL": "https://api.moonshot.cn/anthropic",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "kimi-k2-turbo-preview",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "kimi-k2-turbo-preview",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "kimi-k2-turbo-preview",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.kimi.env.description%",
           "scope": "window"
@@ -166,7 +174,11 @@
         "claudeCodeIntegration.deepseek.env": {
           "type": "object",
           "default": {
-            "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic"
+            "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-chat",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-chat",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-chat",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.deepseek.env.description%",
           "scope": "window"
@@ -179,7 +191,11 @@
         "claudeCodeIntegration.minimax.env": {
           "type": "object",
           "default": {
-            "ANTHROPIC_BASE_URL": "https://api.minimax.io/anthropic"
+            "ANTHROPIC_BASE_URL": "https://api.minimax.io/anthropic",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "MiniMax-M2",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "MiniMax-M2",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "MiniMax-M2",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.minimax.env.description%",
           "scope": "window"
@@ -192,7 +208,11 @@
         "claudeCodeIntegration.zhipu.env": {
           "type": "object",
           "default": {
-            "ANTHROPIC_BASE_URL": "https://open.bigmodel.cn/api/anthropic"
+            "ANTHROPIC_BASE_URL": "https://open.bigmodel.cn/api/anthropic",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.6",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.6",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.6-air",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.zhipu.env.description%",
           "scope": "window"
@@ -205,7 +225,11 @@
         "claudeCodeIntegration.copilot.env": {
           "type": "object",
           "default": {
-            "ANTHROPIC_BASE_URL": "https://api.github.com/copilot/anthropic"
+            "ANTHROPIC_BASE_URL": "",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4.5",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4.5",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4.5",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.copilot.env.description%",
           "scope": "window"
@@ -218,7 +242,11 @@
         "claudeCodeIntegration.custom.env": {
           "type": "object",
           "default": {
-            "ANTHROPIC_BASE_URL": ""
+            "ANTHROPIC_BASE_URL": "",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4.5",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4.5",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4.5",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.custom.env.description%",
           "scope": "window"
