@@ -225,15 +225,14 @@ export class TerminalManager {
       let fullCommand = 'claude';
       const serviceType = id as ServiceType;
       if (SERVICE_TYPES.includes(serviceType)) {
-        const _baseUrl = this.configManager.getBaseUrl(serviceType);
-        const _apiKey = await this.configManager.getApiKey(serviceType);
         const _command = this.configManager.getCommand(serviceType);
+        const _env = await this.configManager.getEnv(serviceType);
 
-        fullCommand = [
-          _apiKey && `export ANTHROPIC_BASE_URL=${_baseUrl}`,
-          _apiKey && `export ANTHROPIC_AUTH_TOKEN=${_apiKey}`,
-          _command || fullCommand,
-        ]
+        const envExports = Object.entries(_env)
+          .filter(([key, value]) => key && value !== undefined)
+          .map(([key, value]) => `export ${key}=${value}`);
+
+        fullCommand = [...envExports, _command || fullCommand]
           .filter(Boolean)
           .join(' && ');
       }

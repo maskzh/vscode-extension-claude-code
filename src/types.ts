@@ -10,9 +10,8 @@ export interface TerminalCommand {
 }
 
 export type ServiceConfig = {
-  defaultBaseUrl: string;
-  defaultCommand: string;
   displayName: string;
   secretKey: string;
-  configPrefix: string;
+  defaultCommand: string;
+  defaultEnv: Record<string, string>;
 };
