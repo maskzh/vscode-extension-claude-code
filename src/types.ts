@@ -13,5 +13,4 @@ export type ServiceConfig = {
   displayName: string;
   secretKey: string;
   defaultCommand: string;
-  defaultEnv: Record<string, string>;
 };

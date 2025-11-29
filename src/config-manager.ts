@@ -2,65 +2,42 @@ import * as vscode from 'vscode';
 import { ServiceConfig, ServiceType } from './types';
 import { i18n } from './utils/i18n';
 
-const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
-  qwen: {
-    displayName: 'Qwen',
-    secretKey: 'claudeCodeIntegration.qwen.env.ANTHROPIC_AUTH_TOKEN',
-    defaultCommand: 'claude',
-    defaultEnv: {
-      ANTHROPIC_BASE_URL:
-        'https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy',
-    },
-  },
-  kimi: {
-    displayName: 'Kimi',
-    secretKey: 'claudeCodeIntegration.kimi.env.ANTHROPIC_AUTH_TOKEN',
-    defaultCommand: 'claude',
-    defaultEnv: {
-      ANTHROPIC_BASE_URL: 'https://api.moonshot.cn/anthropic',
-    },
-  },
-  deepseek: {
-    displayName: 'DeepSeek',
-    secretKey: 'claudeCodeIntegration.deepseek.env.ANTHROPIC_AUTH_TOKEN',
-    defaultCommand: 'claude',
-    defaultEnv: {
-      ANTHROPIC_BASE_URL: 'https://api.deepseek.com/anthropic',
-    },
-  },
-  zhipu: {
-    displayName: 'Zhipu',
-    secretKey: 'claudeCodeIntegration.zhipu.env.ANTHROPIC_AUTH_TOKEN',
-    defaultCommand: 'claude',
-    defaultEnv: {
-      ANTHROPIC_BASE_URL: 'https://open.bigmodel.cn/api/anthropic',
-    },
-  },
-  copilot: {
-    displayName: 'GitHub Copilot',
-    secretKey: 'claudeCodeIntegration.copilot.env.ANTHROPIC_AUTH_TOKEN',
-    defaultCommand: 'claude',
-    defaultEnv: {
-      ANTHROPIC_BASE_URL: 'https://api.github.com/copilot/anthropic',
-    },
-  },
-  minimax: {
-    displayName: 'Minimax',
-    secretKey: 'claudeCodeIntegration.minimax.env.ANTHROPIC_AUTH_TOKEN',
-    defaultCommand: 'claude',
-    defaultEnv: {
-      ANTHROPIC_BASE_URL: 'https://api.minimax.io/anthropic',
-    },
-  },
-  custom: {
-    displayName: 'Custom',
-    secretKey: 'claudeCodeIntegration.custom.env.ANTHROPIC_AUTH_TOKEN',
-    defaultCommand: 'claude',
-    defaultEnv: {
-      ANTHROPIC_BASE_URL: '',
-    },
-  },
+// 使用枚举避免魔法字符串
+enum ConfigKeys {
+  COMMAND = 'command',
+  ENV = 'env',
+  BASE_URL = 'ANTHROPIC_BASE_URL',
+  AUTH_TOKEN = 'ANTHROPIC_AUTH_TOKEN',
+}
+
+// 提取基础配置，只保留变化的字段
+interface BaseServiceConfig {
+  displayName: string;
+}
+
+const BASE_SERVICE_CONFIGS: Record<ServiceType, BaseServiceConfig> = {
+  qwen: { displayName: 'Qwen' },
+  kimi: { displayName: 'Kimi' },
+  deepseek: { displayName: 'DeepSeek' },
+  zhipu: { displayName: 'Zhipu' },
+  copilot: { displayName: 'GitHub Copilot' },
+  minimax: { displayName: 'Minimax' },
+  custom: { displayName: 'Custom' },
 };
+
+// 动态生成SERVICE_CONFIGS，减少重复
+const createServiceConfig = (serviceType: ServiceType): ServiceConfig => ({
+  displayName: BASE_SERVICE_CONFIGS[serviceType].displayName,
+  secretKey: `claudeCodeIntegration.${serviceType}.env.${ConfigKeys.AUTH_TOKEN}`,
+  defaultCommand: 'claude',
+});
+
+const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = Object.fromEntries(
+  Object.keys(BASE_SERVICE_CONFIGS).map((serviceType) => [
+    serviceType as ServiceType,
+    createServiceConfig(serviceType as ServiceType),
+  ])
+) as Record<ServiceType, ServiceConfig>;
 
 export class ConfigManager {
   private static instance: ConfigManager;
@@ -82,29 +59,24 @@ export class ConfigManager {
   getCommand(service: ServiceType): string {
     const config = vscode.workspace.getConfiguration(this.configSection);
     return config.get<string>(
-      `${service}.command`,
+      `${service}.${ConfigKeys.COMMAND}`,
       SERVICE_CONFIGS[service].defaultCommand
     );
   }
 
   async getEnv(service: ServiceType): Promise<Record<string, string>> {
     const config = vscode.workspace.getConfiguration(this.configSection);
-    const serviceConfig = SERVICE_CONFIGS[service];
     const env = config.get<Record<string, string>>(
-      `${service}.env`,
-      serviceConfig.defaultEnv
+      `${service}.${ConfigKeys.ENV}`
     );
     const secretToken = await this.getAuthToken(service);
 
     // 兜底：如果配置为空对象则回退到默认值，确保基础字段存在
-    const merged = {
-      ...serviceConfig.defaultEnv,
-      ...(env && Object.keys(env).length > 0 ? env : {}),
-    };
+    const merged = { ...(env && Object.keys(env).length > 0 ? env : {}) };
 
     // 使用 Secret Storage 中的 token 覆盖配置中的明文值
     if (secretToken) {
-      merged.ANTHROPIC_AUTH_TOKEN = secretToken;
+      merged[ConfigKeys.AUTH_TOKEN] = secretToken;
     }
 
     return merged;
@@ -137,8 +109,8 @@ export class ConfigManager {
     const hasToken = await this.hasAuthToken(service);
     const env = await this.getEnv(service);
     const hasBaseUrl =
-      typeof env.ANTHROPIC_BASE_URL === 'string' &&
-      env.ANTHROPIC_BASE_URL.trim().length > 0;
+      typeof env[ConfigKeys.BASE_URL] === 'string' &&
+      env[ConfigKeys.BASE_URL].trim().length > 0;
     const command = this.getCommand(service);
 
     return (hasToken && hasBaseUrl) || this.isValidCommand(command);
@@ -152,11 +124,7 @@ export class ConfigManager {
   async configureApiKey(service: ServiceType): Promise<void> {
     const serviceConfig = SERVICE_CONFIGS[service];
     const currentKey = await this.getAuthToken(service);
-    const maskedKey = currentKey
-      ? `${currentKey.substring(0, 8)}${'*'.repeat(
-          Math.max(0, currentKey.length - 8)
-        )}`
-      : '';
+    const maskedKey = this.maskApiKey(currentKey);
 
     const apiKey = await vscode.window.showInputBox({
       prompt: i18n.t('config.inputApiKey', serviceConfig.displayName),
@@ -168,24 +136,27 @@ export class ConfigManager {
 
     if (apiKey !== undefined) {
       await this.setAuthToken(service, apiKey);
-      if (apiKey.trim()) {
-        vscode.window.showInformationMessage(
-          i18n.t('config.apiKeySaved', serviceConfig.displayName)
-        );
-      } else {
-        vscode.window.showInformationMessage(
-          i18n.t('config.apiKeyCleared', serviceConfig.displayName)
-        );
-      }
+      const message = apiKey.trim()
+        ? i18n.t('config.apiKeySaved', serviceConfig.displayName)
+        : i18n.t('config.apiKeyCleared', serviceConfig.displayName);
+      vscode.window.showInformationMessage(message);
     }
   }
 
-  isValidApiKey(apiKey: string): boolean {
+  private isValidApiKey(apiKey: string): boolean {
     return apiKey.trim().length > 0;
   }
 
+  private maskApiKey(apiKey: string): string {
+    if (!apiKey) return '';
+    return `${apiKey.substring(0, 8)}${'*'.repeat(
+      Math.max(0, apiKey.length - 8)
+    )}`;
+  }
+
   isValidCommand(command: string): boolean {
-    return command.trim().length > 0 && command !== 'claude';
+    const trimmed = command.trim();
+    return trimmed.length > 0 && trimmed !== 'claude' && !trimmed.includes(' ');
   }
 
   onConfigurationChanged(callback: () => void): vscode.Disposable {
