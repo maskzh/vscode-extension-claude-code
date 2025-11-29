@@ -1,5 +1,5 @@
 {
-  "name": "claudeCodeTerminal",
+  "name": "claude-code-integration",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
   "icon": "icons/logo.png",
@@ -28,7 +28,7 @@
     ],
     "commands": [
       {
-        "command": "claudeCodeTerminal.qwen",
+        "command": "claudeCodeIntegration.qwen",
         "title": "%command.qwen.title%",
         "icon": {
           "light": "./icons/qwen.svg",
@@ -36,7 +36,7 @@
         }
       },
       {
-        "command": "claudeCodeTerminal.kimi",
+        "command": "claudeCodeIntegration.kimi",
         "title": "%command.kimi.title%",
         "icon": {
           "light": "./icons/kimi.svg",
@@ -44,7 +44,7 @@
         }
       },
       {
-        "command": "claudeCodeTerminal.deepseek",
+        "command": "claudeCodeIntegration.deepseek",
         "title": "%command.deepseek.title%",
         "icon": {
           "light": "./icons/deepseek.svg",
@@ -52,7 +52,7 @@
         }
       },
       {
-        "command": "claudeCodeTerminal.minimax",
+        "command": "claudeCodeIntegration.minimax",
         "title": "%command.minimax.title%",
         "icon": {
           "light": "./icons/minimax.svg",
@@ -60,7 +60,7 @@
         }
       },
       {
-        "command": "claudeCodeTerminal.zhipu",
+        "command": "claudeCodeIntegration.zhipu",
         "title": "%command.zhipu.title%",
         "icon": {
           "light": "./icons/zhipu.svg",
@@ -68,7 +68,7 @@
         }
       },
       {
-        "command": "claudeCodeTerminal.copilot",
+        "command": "claudeCodeIntegration.copilot",
         "title": "%command.copilot.title%",
         "icon": {
           "light": "./icons/copilot.svg",
@@ -76,12 +76,12 @@
         }
       },
       {
-        "command": "claudeCodeTerminal.custom",
+        "command": "claudeCodeIntegration.custom",
         "title": "%command.custom.title%",
         "icon": "$(terminal)"
       },
       {
-        "command": "claudeCodeTerminal.configure",
+        "command": "claudeCodeIntegration.configure",
         "title": "%command.configure.title%",
         "icon": "$(gear)"
       }
@@ -89,42 +89,42 @@
     "menus": {
       "editor/title": [
         {
-          "command": "claudeCodeTerminal.qwen",
+          "command": "claudeCodeIntegration.qwen",
           "when": "claudeExtension.qwen.visible",
           "group": "navigation"
         },
         {
-          "command": "claudeCodeTerminal.kimi",
+          "command": "claudeCodeIntegration.kimi",
           "when": "claudeExtension.kimi.visible",
           "group": "navigation"
         },
         {
-          "command": "claudeCodeTerminal.deepseek",
+          "command": "claudeCodeIntegration.deepseek",
           "when": "claudeExtension.deepseek.visible",
           "group": "navigation"
         },
         {
-          "command": "claudeCodeTerminal.minimax",
+          "command": "claudeCodeIntegration.minimax",
           "when": "claudeExtension.minimax.visible",
           "group": "navigation"
         },
         {
-          "command": "claudeCodeTerminal.zhipu",
+          "command": "claudeCodeIntegration.zhipu",
           "when": "claudeExtension.zhipu.visible",
           "group": "navigation"
         },
         {
-          "command": "claudeCodeTerminal.copilot",
+          "command": "claudeCodeIntegration.copilot",
           "when": "claudeExtension.copilot.visible",
           "group": "navigation"
         },
         {
-          "command": "claudeCodeTerminal.custom",
+          "command": "claudeCodeIntegration.custom",
           "when": "claudeExtension.custom.visible",
           "group": "navigation"
         },
         {
-          "command": "claudeCodeTerminal.configure",
+          "command": "claudeCodeIntegration.configure",
           "group": "1_run"
         }
       ]
@@ -132,12 +132,12 @@
     "configuration": {
       "title": "%configuration.title%",
       "properties": {
-        "claudeCodeTerminal.qwen.command": {
+        "claudeCodeIntegration.qwen.command": {
           "type": "string",
           "description": "%configuration.qwen.command.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.qwen.env": {
+        "claudeCodeIntegration.qwen.env": {
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy"
@@ -145,12 +145,12 @@
           "markdownDescription": "%configuration.qwen.env.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.kimi.command": {
+        "claudeCodeIntegration.kimi.command": {
           "type": "string",
           "description": "%configuration.kimi.command.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.kimi.env": {
+        "claudeCodeIntegration.kimi.env": {
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://api.moonshot.cn/anthropic"
@@ -158,12 +158,12 @@
           "markdownDescription": "%configuration.kimi.env.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.deepseek.command": {
+        "claudeCodeIntegration.deepseek.command": {
           "type": "string",
           "description": "%configuration.deepseek.command.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.deepseek.env": {
+        "claudeCodeIntegration.deepseek.env": {
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic"
@@ -171,12 +171,12 @@
           "markdownDescription": "%configuration.deepseek.env.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.minimax.command": {
+        "claudeCodeIntegration.minimax.command": {
           "type": "string",
           "description": "%configuration.minimax.command.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.minimax.env": {
+        "claudeCodeIntegration.minimax.env": {
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://api.minimax.io/anthropic"
@@ -184,12 +184,12 @@
           "markdownDescription": "%configuration.minimax.env.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.zhipu.command": {
+        "claudeCodeIntegration.zhipu.command": {
           "type": "string",
           "description": "%configuration.zhipu.command.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.zhipu.env": {
+        "claudeCodeIntegration.zhipu.env": {
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://open.bigmodel.cn/api/anthropic"
@@ -197,12 +197,12 @@
           "markdownDescription": "%configuration.zhipu.env.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.copilot.command": {
+        "claudeCodeIntegration.copilot.command": {
           "type": "string",
           "description": "%configuration.copilot.command.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.copilot.env": {
+        "claudeCodeIntegration.copilot.env": {
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://api.github.com/copilot/anthropic"
@@ -210,12 +210,12 @@
           "markdownDescription": "%configuration.copilot.env.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.custom.command": {
+        "claudeCodeIntegration.custom.command": {
           "type": "string",
           "description": "%configuration.custom.command.description%",
           "scope": "window"
         },
-        "claudeCodeTerminal.custom.env": {
+        "claudeCodeIntegration.custom.env": {
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": ""

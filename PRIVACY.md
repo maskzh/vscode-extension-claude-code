@@ -13,7 +13,7 @@
 - VS Code 自身可能记录常规扩展激活日志，但不包含您的 API Key 或对话内容。
 
 ## 清除与撤销
-- 通过命令面板 `Claude Code Terminal: Configure Claude Code Terminals` 选择模型并留空提交，可清除对应的 API Key。
+- 通过命令面板 `Claude Code Integration: Configure Claude Code Integrations` 选择模型并留空提交，可清除对应的 API Key。
 - 也可在 VS Code `设置 > 应用程序 > 安全性 > 秘密存储`（视版本路径不同）手动删除相关条目。
 
 ## 权限最小化建议

@@ -1,5 +1,5 @@
 {
-  "extension.displayName": "Claude Code Terminal",
+  "extension.displayName": "Claude Code Integration",
   "extension.description": "VS Code extension for Claude Code integration",
   "command.qwen.title": "Qwen Code",
   "command.kimi.title": "Kimi Code",
@@ -8,8 +8,8 @@
   "command.zhipu.title": "Zhipu Code",
   "command.copilot.title": "GitHub Copilot Code",
   "command.custom.title": "Custom Code",
-  "command.configure.title": "Configure Claude Code Terminals",
-  "configuration.title": "Claude Code Terminal",
+  "command.configure.title": "Configure Claude Code Integrations",
+  "configuration.title": "Claude Code Integration",
   "configuration.qwen.command.description": "Command to execute for Qwen terminal",
   "configuration.kimi.command.description": "Command to execute for Kimi terminal",
   "configuration.deepseek.command.description": "Command to execute for DeepSeek terminal",

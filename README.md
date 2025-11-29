@@ -1,4 +1,4 @@
-# Claude Code Terminal
+# Claude Code Integration
 
 [English](#english) | [中文](#中文)
 
@@ -8,12 +8,12 @@
 
 ## Overview
 
-Claude Code Terminal is a VS Code extension that launches multiple Anthropic-compatible AI terminals (Qwen, Kimi, DeepSeek, Zhipu, Minimax, GitHub Copilot, Custom) right from the editor title bar. Icons stay hidden until a model is configured, keeping the toolbar clean.
+Claude Code Integration is a VS Code extension that launches multiple Anthropic-compatible AI terminals (Qwen, Kimi, DeepSeek, Zhipu, Minimax, GitHub Copilot, Custom) right from the editor title bar. Icons stay hidden until a model is configured, keeping the toolbar clean.
 
 ## Features
 
 - Seven entries: Qwen, Kimi, DeepSeek, Zhipu, Minimax, GitHub Copilot, Custom (icons appear only after configuration)
-- Quick Configure: `Claude Code Terminal: Configure Claude Code Terminals` shows status and opens per-model API key input (stored in VS Code Secret Storage)
+- Quick Configure: `Claude Code Integration: Configure Claude Code Integrations` shows status and opens per-model API key input (stored in VS Code Secret Storage)
 - Per-model defaults: Pre-filled `ANTHROPIC_BASE_URL` values; fallback to sensible defaults if settings are cleared
 - Command override: If a custom command is set, it runs as-is; otherwise the extension injects env exports then runs `claude`
 - Theme-aware icons: Ships light/dark SVG variants for all built-in providers; VS Code switches automatically with your theme
@@ -25,7 +25,7 @@ Claude Code Terminal is a VS Code extension that launches multiple Anthropic-com
 
 1. Open VS Code
 2. Go to Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`)
-3. Search for "Claude Code Terminal"
+3. Search for "Claude Code Integration"
 4. Click Install
 
 ### Manual Installation
@@ -39,7 +39,7 @@ Claude Code Terminal is a VS Code extension that launches multiple Anthropic-com
 
 ### Quick Start
 
-1. Run `Claude Code Terminal: Configure Claude Code Terminals` (or click the gear icon in the editor title bar)
+1. Run `Claude Code Integration: Configure Claude Code Integrations` (or click the gear icon in the editor title bar)
 2. Pick a model and paste its API Key (stored securely); adjust base URL or command if needed
 3. Open any file and click a model icon in the editor title bar to open a side terminal
 4. Configure other providers as needed; only configured models show icons
@@ -61,8 +61,8 @@ Claude Code Terminal is a VS Code extension that launches multiple Anthropic-com
 
 Two ways:
 
-- Command Palette: `Claude Code Terminal: Configure Claude Code Terminals` → pick a model → enter API Key (hidden) or clear it.
-- Settings: `File > Preferences > Settings` → search `Claude Code Terminal`.
+- Command Palette: `Claude Code Integration: Configure Claude Code Integrations` → pick a model → enter API Key (hidden) or clear it.
+- Settings: `File > Preferences > Settings` → search `Claude Code Integration`.
 
 Default base URLs (override as needed):
 
@@ -129,12 +129,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 概述
 
-Claude Code Terminal 是一个 VS Code 扩展，可在编辑器标题栏一键启动多家 Anthropic 兼容模型终端：通义千问、月之暗面、DeepSeek、智谱、Minimax、GitHub Copilot 以及自定义端点。只有完成配置的模型才会显示图标，避免工具栏冗余。
+Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一键启动多家 Anthropic 兼容模型终端：通义千问、月之暗面、DeepSeek、智谱、Minimax、GitHub Copilot 以及自定义端点。只有完成配置的模型才会显示图标，避免工具栏冗余。
 
 ## 功能特性
 
 - 七个内置入口：Qwen、Kimi、DeepSeek、Zhipu、Minimax、GitHub Copilot、Custom（未配置时自动隐藏图标）
-- 快速配置面板：`Claude Code Terminal: Configure Claude Code Terminals` 列出各模型状态，可直接录入/清空 API Key（保存在 VS Code Secret Storage）
+- 快速配置面板：`Claude Code Integration: Configure Claude Code Integrations` 列出各模型状态，可直接录入/清空 API Key（保存在 VS Code Secret Storage）
 - 按模型预置 Base URL：默认填好 `ANTHROPIC_BASE_URL`，可随时修改
 - 命令覆盖策略：若填写自定义命令则直接执行；否则注入环境变量后运行默认 `claude`
 - 适配亮/暗主题：所有内置模型提供 light/dark SVG 图标，随 VS Code 主题自动切换
@@ -146,7 +146,7 @@ Claude Code Terminal 是一个 VS Code 扩展，可在编辑器标题栏一键�
 
 1. 打开 VS Code
 2. 进入扩展 (`Ctrl+Shift+X` / `Cmd+Shift+X`)
-3. 搜索 "Claude Code Terminal"
+3. 搜索 "Claude Code Integration"
 4. 点击安装
 
 ### 手动安装
@@ -160,7 +160,7 @@ Claude Code Terminal 是一个 VS Code 扩展，可在编辑器标题栏一键�
 
 ### 快速开始
 
-1. 运行命令面板 `Claude Code Terminal: Configure Claude Code Terminals`（或点标题栏齿轮）
+1. 运行命令面板 `Claude Code Integration: Configure Claude Code Integrations`（或点标题栏齿轮）
 2. 选择模型并粘贴 API Key；需要时修改 Base URL 或命令
 3. 打开任意文件，点击标题栏对应模型图标即可在侧边开启终端
 4. 对其他模型重复操作，未配置的模型不会显示图标
@@ -182,8 +182,8 @@ Claude Code Terminal 是一个 VS Code 扩展，可在编辑器标题栏一键�
 
 两种入口：
 
-- 命令面板：`Claude Code Terminal: Configure Claude Code Terminals` → 选择模型 → 输入或清空 API Key（输入会隐藏，存入 Secret Storage）。
-- 设置页：`文件 > 首选项 > 设置`，搜索 `Claude Code Terminal` 逐项编辑。
+- 命令面板：`Claude Code Integration: Configure Claude Code Integrations` → 选择模型 → 输入或清空 API Key（输入会隐藏，存入 Secret Storage）。
+- 设置页：`文件 > 首选项 > 设置`，搜索 `Claude Code Integration` 逐项编辑。
 
 默认 Base URL（可覆盖）：
 

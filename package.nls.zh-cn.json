@@ -1,5 +1,5 @@
 {
-  "extension.displayName": "Claude Code Terminal",
+  "extension.displayName": "Claude Code 集成",
   "extension.description": "Claude Code 集成的 VS Code 扩展",
   "command.qwen.title": "Qwen Code",
   "command.kimi.title": "Kimi Code",
@@ -8,8 +8,8 @@
   "command.zhipu.title": "Zhipu Code",
   "command.copilot.title": "GitHub Copilot Code",
   "command.custom.title": "Custom Code",
-  "command.configure.title": "配置 Claude Code Terminals",
-  "configuration.title": "Claude Code Terminal",
+  "command.configure.title": "配置 Claude Code 集成",
+  "configuration.title": "Claude Code 集成",
   "configuration.qwen.command.description": "Qwen 终端执行的命令",
   "configuration.kimi.command.description": "Kimi 终端执行的命令",
   "configuration.deepseek.command.description": "DeepSeek 终端执行的命令",

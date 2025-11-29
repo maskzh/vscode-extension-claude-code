@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { TerminalManager } from './terminal-manager';
 
 export async function activate(context: vscode.ExtensionContext) {
-  console.log('Claude Code Terminal Extension Activated');
+  console.log('Claude Code Integration Extension Activated');
 
   const terminalManager = TerminalManager.getInstance();
 
@@ -10,31 +10,43 @@ export async function activate(context: vscode.ExtensionContext) {
   await terminalManager.initializeDefaultCommands();
 
   const terminalDisposables = [
-    vscode.commands.registerCommand('claudeCodeTerminal.qwen', async () => {
+    vscode.commands.registerCommand('claudeCodeIntegration.qwen', async () => {
       await terminalManager.executeTerminalCommand('qwen');
     }),
-    vscode.commands.registerCommand('claudeCodeTerminal.kimi', async () => {
+    vscode.commands.registerCommand('claudeCodeIntegration.kimi', async () => {
       await terminalManager.executeTerminalCommand('kimi');
     }),
-    vscode.commands.registerCommand('claudeCodeTerminal.deepseek', async () => {
-      await terminalManager.executeTerminalCommand('deepseek');
-    }),
-    vscode.commands.registerCommand('claudeCodeTerminal.minimax', async () => {
-      await terminalManager.executeTerminalCommand('minimax');
-    }),
-    vscode.commands.registerCommand('claudeCodeTerminal.zhipu', async () => {
+    vscode.commands.registerCommand(
+      'claudeCodeIntegration.deepseek',
+      async () => {
+        await terminalManager.executeTerminalCommand('deepseek');
+      }
+    ),
+    vscode.commands.registerCommand(
+      'claudeCodeIntegration.minimax',
+      async () => {
+        await terminalManager.executeTerminalCommand('minimax');
+      }
+    ),
+    vscode.commands.registerCommand('claudeCodeIntegration.zhipu', async () => {
       await terminalManager.executeTerminalCommand('zhipu');
     }),
-    vscode.commands.registerCommand('claudeCodeTerminal.copilot', async () => {
-      await terminalManager.executeTerminalCommand('copilot');
-    }),
-    vscode.commands.registerCommand('claudeCodeTerminal.custom', async () => {
-      await terminalManager.executeTerminalCommand('custom');
-    }),
+    vscode.commands.registerCommand(
+      'claudeCodeIntegration.copilot',
+      async () => {
+        await terminalManager.executeTerminalCommand('copilot');
+      }
+    ),
+    vscode.commands.registerCommand(
+      'claudeCodeIntegration.custom',
+      async () => {
+        await terminalManager.executeTerminalCommand('custom');
+      }
+    ),
   ];
 
   const configureDisposable = vscode.commands.registerCommand(
-    'claudeCodeTerminal.configure',
+    'claudeCodeIntegration.configure',
     async () => {
       await terminalManager.showConfiguration();
     }
@@ -46,5 +58,5 @@ export async function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-  console.log('Claude Code Terminal Extension Disabled');
+  console.log('Claude Code Integration Extension Disabled');
 }

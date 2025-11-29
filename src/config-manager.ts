@@ -5,7 +5,7 @@ import { i18n } from './utils/i18n';
 const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
   qwen: {
     displayName: 'Qwen',
-    secretKey: 'claudeCodeTerminal.qwen.env.ANTHROPIC_AUTH_TOKEN',
+    secretKey: 'claudeCodeIntegration.qwen.env.ANTHROPIC_AUTH_TOKEN',
     defaultCommand: 'claude',
     defaultEnv: {
       ANTHROPIC_BASE_URL:
@@ -14,7 +14,7 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
   },
   kimi: {
     displayName: 'Kimi',
-    secretKey: 'claudeCodeTerminal.kimi.env.ANTHROPIC_AUTH_TOKEN',
+    secretKey: 'claudeCodeIntegration.kimi.env.ANTHROPIC_AUTH_TOKEN',
     defaultCommand: 'claude',
     defaultEnv: {
       ANTHROPIC_BASE_URL: 'https://api.moonshot.cn/anthropic',
@@ -22,7 +22,7 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
   },
   deepseek: {
     displayName: 'DeepSeek',
-    secretKey: 'claudeCodeTerminal.deepseek.env.ANTHROPIC_AUTH_TOKEN',
+    secretKey: 'claudeCodeIntegration.deepseek.env.ANTHROPIC_AUTH_TOKEN',
     defaultCommand: 'claude',
     defaultEnv: {
       ANTHROPIC_BASE_URL: 'https://api.deepseek.com/anthropic',
@@ -30,7 +30,7 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
   },
   zhipu: {
     displayName: 'Zhipu',
-    secretKey: 'claudeCodeTerminal.zhipu.env.ANTHROPIC_AUTH_TOKEN',
+    secretKey: 'claudeCodeIntegration.zhipu.env.ANTHROPIC_AUTH_TOKEN',
     defaultCommand: 'claude',
     defaultEnv: {
       ANTHROPIC_BASE_URL: 'https://open.bigmodel.cn/api/anthropic',
@@ -38,7 +38,7 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
   },
   copilot: {
     displayName: 'GitHub Copilot',
-    secretKey: 'claudeCodeTerminal.copilot.env.ANTHROPIC_AUTH_TOKEN',
+    secretKey: 'claudeCodeIntegration.copilot.env.ANTHROPIC_AUTH_TOKEN',
     defaultCommand: 'claude',
     defaultEnv: {
       ANTHROPIC_BASE_URL: 'https://api.github.com/copilot/anthropic',
@@ -46,7 +46,7 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
   },
   minimax: {
     displayName: 'Minimax',
-    secretKey: 'claudeCodeTerminal.minimax.env.ANTHROPIC_AUTH_TOKEN',
+    secretKey: 'claudeCodeIntegration.minimax.env.ANTHROPIC_AUTH_TOKEN',
     defaultCommand: 'claude',
     defaultEnv: {
       ANTHROPIC_BASE_URL: 'https://api.minimax.io/anthropic',
@@ -54,7 +54,7 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
   },
   custom: {
     displayName: 'Custom',
-    secretKey: 'claudeCodeTerminal.custom.env.ANTHROPIC_AUTH_TOKEN',
+    secretKey: 'claudeCodeIntegration.custom.env.ANTHROPIC_AUTH_TOKEN',
     defaultCommand: 'claude',
     defaultEnv: {
       ANTHROPIC_BASE_URL: '',
@@ -64,7 +64,7 @@ const SERVICE_CONFIGS: Record<ServiceType, ServiceConfig> = {
 
 export class ConfigManager {
   private static instance: ConfigManager;
-  private readonly configSection = 'claudeCodeTerminal';
+  private readonly configSection = 'claudeCodeIntegration';
   private context: vscode.ExtensionContext | null = null;
   private secretsChangeCallbacks: (() => void)[] = [];
 
