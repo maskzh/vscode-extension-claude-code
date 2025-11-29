@@ -94,7 +94,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.check-tag.outputs.exists == 'false'
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Compile TypeScript
         if: steps.check-tag.outputs.exists == 'false'
