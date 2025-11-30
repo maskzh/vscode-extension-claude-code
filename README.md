@@ -46,16 +46,16 @@ Claude Code Integration is a VS Code extension that launches multiple Anthropic-
 
 ### Commands
 
-| Command          | Description              | Entry point             |
-| ---------------- | ------------------------ | ----------------------- |
-| `Qwen`           | Launch Qwen Code         | Editor title-bar icon   |
-| `Kimi`           | Launch Kimi Code         | Editor title-bar icon   |
-| `DeepSeek`       | Launch DeepSeek Code     | Editor title-bar icon   |
-| `Zhipu`          | Launch Zhipu Code        | Editor title-bar icon   |
-| `Minimax`        | Launch Minimax Code      | Editor title-bar icon   |
-| `GitHub Copilot` | Launch Copilot Code      | Editor title-bar icon   |
-| `Custom`         | Launch Custom Code       | Editor title-bar icon   |
-| `Configure`      | Open configuration UI    | Editor title-bar gear   |
+| Command          | Description           | Entry point           |
+| ---------------- | --------------------- | --------------------- |
+| `Qwen`           | Launch Qwen Code      | Editor title-bar icon |
+| `Kimi`           | Launch Kimi Code      | Editor title-bar icon |
+| `DeepSeek`       | Launch DeepSeek Code  | Editor title-bar icon |
+| `Zhipu`          | Launch Zhipu Code     | Editor title-bar icon |
+| `Minimax`        | Launch Minimax Code   | Editor title-bar icon |
+| `GitHub Copilot` | Launch Copilot Code   | Editor title-bar icon |
+| `Custom`         | Launch Custom Code    | Editor title-bar icon |
+| `Configure`      | Open configuration UI | Editor title-bar gear |
 
 ### Configuration
 
@@ -68,15 +68,15 @@ Two ways:
 
 Each service comes with pre-configured model names and settings:
 
-| Service | ANTHROPIC_BASE_URL | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL |
-|---------|-------------------|----------------------------|----------------------------|----------------------------|
-| **Qwen** | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus` | `qwen3-coder-plus` | `qwen3-coder-plus` |
-| **Kimi** | `https://api.moonshot.cn/anthropic` | `kimi-k2-turbo-preview` | `kimi-k2-turbo-preview` | `kimi-k2-turbo-preview` |
-| **DeepSeek** | `https://api.deepseek.com/anthropic` | `deepseek-chat` | `deepseek-chat` | `deepseek-chat` |
-| **Zhipu** | `https://open.bigmodel.cn/api/anthropic` | `glm-4.6` | `glm-4.6` | `glm-4.6-air` |
-| **Minimax** | `https://api.minimax.io/anthropic` | `MiniMax-M2` | `MiniMax-M2` | `MiniMax-M2` |
-| **GitHub Copilot** | *(empty)* [^copilot] | `claude-opus-4.5` | `claude-sonnet-4.5` | `claude-haiku-4.5` |
-| **Custom** | *(empty)* | `claude-opus-4.5` | `claude-sonnet-4.5` | `claude-haiku-4.5` |
+| Service            | ANTHROPIC_BASE_URL                                             | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL |
+| ------------------ | -------------------------------------------------------------- | ---------------------------- | ------------------------------ | ----------------------------- |
+| **Qwen**           | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus`           | `qwen3-coder-plus`             | `qwen3-coder-plus`            |
+| **Kimi**           | `https://api.moonshot.cn/anthropic`                            | `kimi-k2-turbo-preview`      | `kimi-k2-turbo-preview`        | `kimi-k2-turbo-preview`       |
+| **DeepSeek**       | `https://api.deepseek.com/anthropic`                           | `deepseek-chat`              | `deepseek-chat`                | `deepseek-chat`               |
+| **Zhipu**          | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.6`                    | `glm-4.6`                      | `glm-4.6-air`                 |
+| **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2`                 | `MiniMax-M2`                   | `MiniMax-M2`                  |
+| **GitHub Copilot** | _(empty)_ [^copilot]                                           | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
+| **Custom**         | _(empty)_                                                      | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 
 **Note:** All services include `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` to optimize network usage.
 
@@ -107,7 +107,7 @@ Command override tips:
 
 - Node.js 18+
 - VS Code 1.102+
-- pnpm (recommended) or npm
+- npm
 
 ### Setup
 
@@ -117,19 +117,19 @@ git clone https://github.com/maskzh/vscode-extension-claude-code.git
 cd vscode-extension-claude-code
 
 # Install dependencies
-pnpm install
+npm install
 
 # Compile TypeScript
-pnpm run compile
+npm run compile
 
 # Watch for changes during development
-pnpm run watch
+npm run watch
 
 # Run linting
-pnpm run lint
+npm run lint
 
 # Package extension
-pnpm run package
+npm run package
 ```
 
 ### Debugging
@@ -137,6 +137,11 @@ pnpm run package
 1. Open project in VS Code
 2. Press `F5` to open Extension Development Host
 3. Test the extension in the new window
+
+### Additional Documentation
+
+- **[Privacy & Data Handling](PRIVACY.md)** - Learn how API keys are stored and data is handled securely
+- **[Development Guide](DEVELOPMENT.md)** - Comprehensive development documentation and contribution guidelines
 
 ## License
 
@@ -188,16 +193,16 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 
 ### 命令列表
 
-| 命令             | 描述                 | 默认入口           |
-| ---------------- | -------------------- | ------------------ |
-| `Qwen`           | 启动 Qwen Code       | 编辑器标题栏图标   |
-| `Kimi`           | 启动 Kimi Code       | 编辑器标题栏图标   |
-| `DeepSeek`       | 启动 DeepSeek Code   | 编辑器标题栏图标   |
-| `Zhipu`          | 启动 Zhipu Code      | 编辑器标题栏图标   |
-| `Minimax`        | 启动 Minimax Code    | 编辑器标题栏图标   |
-| `GitHub Copilot` | 启动 Copilot Code    | 编辑器标题栏图标   |
-| `Custom`         | 启动自定义 Code      | 编辑器标题栏图标   |
-| `Configure`      | 打开扩展设置         | 编辑器标题栏齿轮   |
+| 命令             | 描述               | 默认入口         |
+| ---------------- | ------------------ | ---------------- |
+| `Qwen`           | 启动 Qwen Code     | 编辑器标题栏图标 |
+| `Kimi`           | 启动 Kimi Code     | 编辑器标题栏图标 |
+| `DeepSeek`       | 启动 DeepSeek Code | 编辑器标题栏图标 |
+| `Zhipu`          | 启动 Zhipu Code    | 编辑器标题栏图标 |
+| `Minimax`        | 启动 Minimax Code  | 编辑器标题栏图标 |
+| `GitHub Copilot` | 启动 Copilot Code  | 编辑器标题栏图标 |
+| `Custom`         | 启动自定义 Code    | 编辑器标题栏图标 |
+| `Configure`      | 打开扩展设置       | 编辑器标题栏齿轮 |
 
 ### 配置说明
 
@@ -210,15 +215,15 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 
 每个服务都预配置了对应的模型名称和设置：
 
-| 服务 | ANTHROPIC_BASE_URL | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL |
-|---------|-------------------|----------------------------|----------------------------|----------------------------|
-| **通义千问** | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus` | `qwen3-coder-plus` | `qwen3-coder-plus` |
-| **月之暗面** | `https://api.moonshot.cn/anthropic` | `kimi-k2-turbo-preview` | `kimi-k2-turbo-preview` | `kimi-k2-turbo-preview` |
-| **DeepSeek** | `https://api.deepseek.com/anthropic` | `deepseek-chat` | `deepseek-chat` | `deepseek-chat` |
-| **智谱** | `https://open.bigmodel.cn/api/anthropic` | `glm-4.6` | `glm-4.6` | `glm-4.6-air` |
-| **Minimax** | `https://api.minimax.io/anthropic` | `MiniMax-M2` | `MiniMax-M2` | `MiniMax-M2` |
-| **GitHub Copilot** | *(留空)* [^copilot] | `claude-opus-4.5` | `claude-sonnet-4.5` | `claude-haiku-4.5` |
-| **Custom** | *(留空)* | `claude-3-opus-20240229` | `claude-3-sonnet-20240229` | `claude-3-haiku-20240307` |
+| 服务               | ANTHROPIC_BASE_URL                                             | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL |
+| ------------------ | -------------------------------------------------------------- | ---------------------------- | ------------------------------ | ----------------------------- |
+| **通义千问**       | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus`           | `qwen3-coder-plus`             | `qwen3-coder-plus`            |
+| **月之暗面**       | `https://api.moonshot.cn/anthropic`                            | `kimi-k2-turbo-preview`      | `kimi-k2-turbo-preview`        | `kimi-k2-turbo-preview`       |
+| **DeepSeek**       | `https://api.deepseek.com/anthropic`                           | `deepseek-chat`              | `deepseek-chat`                | `deepseek-chat`               |
+| **智谱**           | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.6`                    | `glm-4.6`                      | `glm-4.6-air`                 |
+| **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2`                 | `MiniMax-M2`                   | `MiniMax-M2`                  |
+| **GitHub Copilot** | _(留空)_ [^copilot]                                            | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
+| **Custom**         | _(留空)_                                                       | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 
 **注意：** 所有服务都包含 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` 以优化网络使用。
 
@@ -249,7 +254,7 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 
 - Node.js 18+
 - VS Code 1.102+
-- pnpm（推荐）或 npm
+- npm
 
 ### 开发设置
 
@@ -259,19 +264,19 @@ git clone https://github.com/maskzh/vscode-extension-claude-code.git
 cd vscode-extension-claude-code
 
 # 安装依赖
-pnpm install
+npm install
 
 # 编译 TypeScript
-pnpm run compile
+npm run compile
 
 # 开发时监听文件变化
-pnpm run watch
+npm run watch
 
 # 运行代码检查
-pnpm run lint
+npm run lint
 
 # 打包扩展
-pnpm run package
+npm run package
 ```
 
 ### 调试方法
@@ -279,3 +284,8 @@ pnpm run package
 1. 在 VS Code 中打开项目
 2. 按 `F5` 打开扩展开发主机
 3. 在新窗口中测试扩展
+
+### 更多文档
+
+- **[隐私与数据处理](PRIVACY.md)** - 了解 API Key 的存储方式和数据安全处理
+- **[开发指南](DEVELOPMENT.md)** - 完整的开发文档和贡献指南
