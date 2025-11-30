@@ -25,11 +25,6 @@ jobs:
         with:
           node-version: 'lts/*'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
       - name: Get package version
         id: package-version
         run: |
@@ -95,15 +90,15 @@ jobs:
 
       - name: Install dependencies
         if: steps.check-tag.outputs.exists == 'false'
-        run: pnpm install
+        run: npm install
 
       - name: Compile TypeScript
         if: steps.check-tag.outputs.exists == 'false'
-        run: pnpm run compile
+        run: npm run compile
 
       - name: Package extension
         if: steps.check-tag.outputs.exists == 'false'
-        run: pnpm run package
+        run: npm run package
 
       - name: Create Release
         if: steps.check-tag.outputs.exists == 'false'
@@ -124,7 +119,7 @@ jobs:
         # Only publish if VS Code Marketplace token is configured
         run: |
           if [ -n "${{ secrets.VSCE_PAT }}" ]; then
-            pnpm dlx vsce publish --pat ${{ secrets.VSCE_PAT }}
+            npx vsce publish --pat ${{ secrets.VSCE_PAT }}
           else
             echo "VSCE_PAT not configured, skipping VS Code Marketplace publishing"
           fi
