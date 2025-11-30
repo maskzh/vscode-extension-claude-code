@@ -3,7 +3,7 @@
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
   "icon": "icons/logo.png",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "maskzh",
   "engines": {
     "vscode": "^1.102.0"

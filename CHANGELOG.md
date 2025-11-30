@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.0.3...v0.0.4) (2025-11-30)
+
+
+### Features
+
+* 实现自动化版本管理和 conventional commits 工作流 ([532d638](https://github.com/maskzh/vscode-extension-claude-code/commit/532d638278b0daf7f1c462717c59410fd5c49442))
+
+
+### Bug Fixes
+
+* 修复 husky 配置和 eslint 警告 ([7c2da98](https://github.com/maskzh/vscode-extension-claude-code/commit/7c2da980b5db48123bc15e8a8ee83ff3c6e63dc0))
+
 ### 0.0.3 (2025-11-29)
 
 
