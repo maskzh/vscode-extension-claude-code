@@ -71,8 +71,8 @@ Each service comes with pre-configured model names and settings:
 | Service            | ANTHROPIC_BASE_URL                                             | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL |
 | ------------------ | -------------------------------------------------------------- | ---------------------------- | ------------------------------ | ----------------------------- |
 | **Qwen**           | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus`           | `qwen3-coder-plus`             | `qwen3-coder-plus`            |
-| **Kimi**           | `https://api.moonshot.cn/anthropic`                            | `kimi-k2-turbo-preview`      | `kimi-k2-turbo-preview`        | `kimi-k2-turbo-preview`       |
-| **DeepSeek**       | `https://api.deepseek.com/anthropic`                           | `deepseek-chat`              | `deepseek-chat`                | `deepseek-chat`               |
+| **Kimi**           | `https://api.moonshot.cn/anthropic`                            | `kimi-k2-thinking-turbo`     | `kimi-k2-turbo-preview`        | `kimi-k2-turbo-preview`       |
+| **DeepSeek**       | `https://api.deepseek.com/anthropic`                           | `deepseek-reasoner`          | `deepseek-chat`                | `deepseek-chat`               |
 | **Zhipu**          | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.6`                    | `glm-4.6`                      | `glm-4.6-air`                 |
 | **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2`                 | `MiniMax-M2`                   | `MiniMax-M2`                  |
 | **GitHub Copilot** | _(empty)_ [^copilot]                                           | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
@@ -93,7 +93,7 @@ Command override tips:
   function deepseek() {
     ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic" \
     ANTHROPIC_AUTH_TOKEN="$DEEPSEEK_API_KEY" \
-    ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-chat" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-reasoner" \
     ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-chat" \
     ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-chat" \
     claude "$@"
@@ -218,8 +218,8 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 | 服务               | ANTHROPIC_BASE_URL                                             | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL |
 | ------------------ | -------------------------------------------------------------- | ---------------------------- | ------------------------------ | ----------------------------- |
 | **通义千问**       | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus`           | `qwen3-coder-plus`             | `qwen3-coder-plus`            |
-| **月之暗面**       | `https://api.moonshot.cn/anthropic`                            | `kimi-k2-turbo-preview`      | `kimi-k2-turbo-preview`        | `kimi-k2-turbo-preview`       |
-| **DeepSeek**       | `https://api.deepseek.com/anthropic`                           | `deepseek-chat`              | `deepseek-chat`                | `deepseek-chat`               |
+| **月之暗面**       | `https://api.moonshot.cn/anthropic`                            | `kimi-k2-thinking-turbo`     | `kimi-k2-turbo-preview`        | `kimi-k2-turbo-preview`       |
+| **DeepSeek**       | `https://api.deepseek.com/anthropic`                           | `deepseek-reasoner`          | `deepseek-chat`                | `deepseek-chat`               |
 | **智谱**           | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.6`                    | `glm-4.6`                      | `glm-4.6-air`                 |
 | **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2`                 | `MiniMax-M2`                   | `MiniMax-M2`                  |
 | **GitHub Copilot** | _(留空)_ [^copilot]                                            | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
@@ -240,7 +240,7 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
   function deepseek() {
     ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic" \
     ANTHROPIC_AUTH_TOKEN="$DEEPSEEK_API_KEY" \
-    ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-chat" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-reasoner" \
     ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-chat" \
     ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-chat" \
     claude "$@"

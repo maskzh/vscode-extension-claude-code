@@ -158,7 +158,7 @@
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://api.moonshot.cn/anthropic",
-            "ANTHROPIC_DEFAULT_OPUS_MODEL": "kimi-k2-turbo-preview",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "kimi-k2-thinking-turbo",
             "ANTHROPIC_DEFAULT_SONNET_MODEL": "kimi-k2-turbo-preview",
             "ANTHROPIC_DEFAULT_HAIKU_MODEL": "kimi-k2-turbo-preview",
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
@@ -175,7 +175,7 @@
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
-            "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-chat",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-reasoner",
             "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-chat",
             "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-chat",
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
