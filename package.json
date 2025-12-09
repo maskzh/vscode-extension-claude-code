@@ -76,6 +76,14 @@
         }
       },
       {
+        "command": "claudeCodeIntegration.doubao",
+        "title": "%command.doubao.title%",
+        "icon": {
+          "light": "./icons/doubao.svg",
+          "dark": "./icons/doubao-dark.svg"
+        }
+      },
+      {
         "command": "claudeCodeIntegration.custom",
         "title": "%command.custom.title%",
         "icon": "$(terminal)"
@@ -116,6 +124,11 @@
         {
           "command": "claudeCodeIntegration.copilot",
           "when": "claudeExtension.copilot.visible",
+          "group": "navigation@-9"
+        },
+        {
+          "command": "claudeCodeIntegration.doubao",
+          "when": "claudeExtension.doubao.visible",
           "group": "navigation@-9"
         },
         {
@@ -232,6 +245,24 @@
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.copilot.env.description%",
+          "scope": "window"
+        },
+        "claudeCodeIntegration.doubao.command": {
+          "type": "string",
+          "description": "%configuration.doubao.command.description%",
+          "scope": "window"
+        },
+        "claudeCodeIntegration.doubao.env": {
+          "type": "object",
+          "default": {
+            "ANTHROPIC_BASE_URL": "https://ark.cn-beijing.volces.com/api/compatible",
+            "ANTHROPIC_MODEL": "doubao-seed-code-preview-latest",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "doubao-seed-code-preview-latest",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "doubao-seed-code-preview-latest",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "doubao-seed-code-preview-latest",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
+          },
+          "markdownDescription": "%configuration.doubao.env.description%",
           "scope": "window"
         },
         "claudeCodeIntegration.custom.command": {
