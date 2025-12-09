@@ -20,6 +20,7 @@ const BASE_SERVICE_CONFIGS: Record<ServiceType, BaseServiceConfig> = {
   zhipu: { displayName: 'Zhipu' },
   copilot: { displayName: 'GitHub Copilot' },
   minimax: { displayName: 'Minimax' },
+  doubao: { displayName: 'Doubao' },
   custom: { displayName: 'Custom' },
 };
 

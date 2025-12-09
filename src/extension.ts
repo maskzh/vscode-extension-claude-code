@@ -38,6 +38,12 @@ export async function activate(context: vscode.ExtensionContext) {
       }
     ),
     vscode.commands.registerCommand(
+      'claudeCodeIntegration.doubao',
+      async () => {
+        await terminalManager.executeTerminalCommand('doubao');
+      }
+    ),
+    vscode.commands.registerCommand(
       'claudeCodeIntegration.custom',
       async () => {
         await terminalManager.executeTerminalCommand('custom');

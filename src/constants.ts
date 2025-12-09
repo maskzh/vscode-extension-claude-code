@@ -5,5 +5,6 @@ export const SERVICE_TYPES = [
   'zhipu',
   'minimax',
   'copilot',
+  'doubao',
   'custom',
 ] as const;

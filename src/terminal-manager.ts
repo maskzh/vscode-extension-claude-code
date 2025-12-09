@@ -97,6 +97,7 @@ export class TerminalManager {
       zhipu: 'Zhipu Code',
       minimax: 'Minimax Code',
       copilot: 'GitHub Copilot Code',
+      doubao: 'Doubao Code',
       custom: 'Custom Code',
     };
     return titles[serviceType];
