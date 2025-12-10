@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.0.5...v0.0.6) (2025-12-10)
+
+
+### Features
+
+* add dark theme variant for Doubao icon ([b0d54fb](https://github.com/maskzh/vscode-extension-claude-code/commit/b0d54fb3aeaea11ea39ddb68973422a59cc430c4))
+* add Doubao-Seed-Code service provider ([5d3ef08](https://github.com/maskzh/vscode-extension-claude-code/commit/5d3ef08dd5fd23d17c8350daa0b6081deb9c32c8))
+* replace placeholder icons with official Doubao brand icons ([9c2ded5](https://github.com/maskzh/vscode-extension-claude-code/commit/9c2ded5ea36effb473500e43005748bff75a718d))
+
 ### [0.0.5](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.0.4...v0.0.5) (2025-12-07)
 
 ### [0.0.4](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.0.3...v0.0.4) (2025-11-30)
