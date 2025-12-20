@@ -8,11 +8,11 @@
 
 ## Overview
 
-Claude Code Integration is a VS Code extension that launches multiple Anthropic-compatible AI terminals (Qwen, Kimi, DeepSeek, Zhipu, Minimax, Doubao, GitHub Copilot, Custom) right from the editor title bar. Icons stay hidden until a model is configured, keeping the toolbar clean.
+Claude Code Integration is a VS Code extension that launches multiple Anthropic-compatible AI terminals (Qwen, Kimi, DeepSeek, Zhipu, Minimax, Doubao, OpenRouter, GitHub Copilot, Custom) right from the editor title bar. Icons stay hidden until a model is configured, keeping the toolbar clean.
 
 ## Features
 
-- Eight entries: Qwen, Kimi, DeepSeek, Zhipu, Minimax, Doubao, GitHub Copilot, Custom (icons appear only after configuration)
+- Nine entries: Qwen, Kimi, DeepSeek, Zhipu, Minimax, Doubao, OpenRouter, GitHub Copilot, Custom (icons appear only after configuration)
 - Quick Configure: `Claude Code Integration: Configure Claude Code Integrations` shows status and opens per-model API key input (stored in VS Code Secret Storage)
 - Per-model defaults: Pre-filled `ANTHROPIC_BASE_URL` values; fallback to sensible defaults if settings are cleared
 - Command override: If a custom command is set, it runs as-is; otherwise the extension injects env exports then runs `claude`
@@ -46,17 +46,18 @@ Claude Code Integration is a VS Code extension that launches multiple Anthropic-
 
 ### Commands
 
-| Command          | Description           | Entry point           |
-| ---------------- | --------------------- | --------------------- |
-| `Qwen`           | Launch Qwen Code      | Editor title-bar icon |
-| `Kimi`           | Launch Kimi Code      | Editor title-bar icon |
-| `DeepSeek`       | Launch DeepSeek Code  | Editor title-bar icon |
-| `Zhipu`          | Launch Zhipu Code     | Editor title-bar icon |
-| `Minimax`        | Launch Minimax Code   | Editor title-bar icon |
-| `Doubao`         | Launch Doubao Code    | Editor title-bar icon |
-| `GitHub Copilot` | Launch Copilot Code   | Editor title-bar icon |
-| `Custom`         | Launch Custom Code    | Editor title-bar icon |
-| `Configure`      | Open configuration UI | Editor title-bar gear |
+| Command          | Description            | Entry point           |
+| ---------------- | ---------------------- | --------------------- |
+| `Qwen`           | Launch Qwen Code       | Editor title-bar icon |
+| `Kimi`           | Launch Kimi Code       | Editor title-bar icon |
+| `DeepSeek`       | Launch DeepSeek Code   | Editor title-bar icon |
+| `Zhipu`          | Launch Zhipu Code      | Editor title-bar icon |
+| `Minimax`        | Launch Minimax Code    | Editor title-bar icon |
+| `Doubao`         | Launch Doubao Code     | Editor title-bar icon |
+| `OpenRouter`     | Launch OpenRouter Code | Editor title-bar icon |
+| `GitHub Copilot` | Launch Copilot Code    | Editor title-bar icon |
+| `Custom`         | Launch Custom Code     | Editor title-bar icon |
+| `Configure`      | Open configuration UI  | Editor title-bar gear |
 
 ### Configuration
 
@@ -77,6 +78,7 @@ Each service comes with pre-configured model names and settings:
 | **Zhipu**          | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.6`                    | `glm-4.6`                      | `glm-4.6-air`                 |
 | **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2`                 | `MiniMax-M2`                   | `MiniMax-M2`                  |
 | **Doubao**         | `https://ark.cn-beijing.volces.com/api/compatible`            | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` |
+| **OpenRouter**     | `https://openrouter.ai/api`                                    | `anthropic/claude-opus-4.5`  | `anthropic/claude-sonnet-4.5`  | `anthropic/claude-haiku-4.5`  |
 | **GitHub Copilot** | _(empty)_ [^copilot]                                           | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 | **Custom**         | _(empty)_                                                      | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 
@@ -157,11 +159,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 概述
 
-Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一键启动多家 Anthropic 兼容模型终端：通义千问、月之暗面、DeepSeek、智谱、Minimax、豆包、GitHub Copilot 以及自定义端点。只有完成配置的模型才会显示图标，避免工具栏冗余。
+Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一键启动多家 Anthropic 兼容模型终端：通义千问、月之暗面、DeepSeek、智谱、Minimax、豆包、OpenRouter、GitHub Copilot 以及自定义端点。只有完成配置的模型才会显示图标，避免工具栏冗余。
 
 ## 功能特性
 
-- 八个内置入口：Qwen、Kimi、DeepSeek、Zhipu、Minimax、Doubao、GitHub Copilot、Custom（未配置时自动隐藏图标）
+- 九个内置入口：Qwen、Kimi、DeepSeek、Zhipu、Minimax、Doubao、OpenRouter、GitHub Copilot、Custom（未配置时自动隐藏图标）
 - 快速配置面板：`Claude Code Integration: Configure Claude Code Integrations` 列出各模型状态，可直接录入/清空 API Key（保存在 VS Code Secret Storage）
 - 按模型预置 Base URL：默认填好 `ANTHROPIC_BASE_URL`，可随时修改
 - 命令覆盖策略：若填写自定义命令则直接执行；否则注入环境变量后运行默认 `claude`
@@ -195,17 +197,18 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 
 ### 命令列表
 
-| 命令             | 描述               | 默认入口         |
-| ---------------- | ------------------ | ---------------- |
-| `Qwen`           | 启动 Qwen Code     | 编辑器标题栏图标 |
-| `Kimi`           | 启动 Kimi Code     | 编辑器标题栏图标 |
-| `DeepSeek`       | 启动 DeepSeek Code | 编辑器标题栏图标 |
-| `Zhipu`          | 启动 Zhipu Code    | 编辑器标题栏图标 |
-| `Minimax`        | 启动 Minimax Code  | 编辑器标题栏图标 |
-| `Doubao`         | 启动 Doubao Code   | 编辑器标题栏图标 |
-| `GitHub Copilot` | 启动 Copilot Code  | 编辑器标题栏图标 |
-| `Custom`         | 启动自定义 Code    | 编辑器标题栏图标 |
-| `Configure`      | 打开扩展设置       | 编辑器标题栏齿轮 |
+| 命令             | 描述                  | 默认入口         |
+| ---------------- | --------------------- | ---------------- |
+| `Qwen`           | 启动 Qwen Code        | 编辑器标题栏图标 |
+| `Kimi`           | 启动 Kimi Code        | 编辑器标题栏图标 |
+| `DeepSeek`       | 启动 DeepSeek Code    | 编辑器标题栏图标 |
+| `Zhipu`          | 启动 Zhipu Code       | 编辑器标题栏图标 |
+| `Minimax`        | 启动 Minimax Code     | 编辑器标题栏图标 |
+| `Doubao`         | 启动 Doubao Code      | 编辑器标题栏图标 |
+| `OpenRouter`     | 启动 OpenRouter Code  | 编辑器标题栏图标 |
+| `GitHub Copilot` | 启动 Copilot Code     | 编辑器标题栏图标 |
+| `Custom`         | 启动自定义 Code       | 编辑器标题栏图标 |
+| `Configure`      | 打开扩展设置          | 编辑器标题栏齿轮 |
 
 ### 配置说明
 
@@ -226,6 +229,7 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 | **智谱**           | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.6`                    | `glm-4.6`                      | `glm-4.6-air`                 |
 | **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2`                 | `MiniMax-M2`                   | `MiniMax-M2`                  |
 | **豆包**           | `https://ark.cn-beijing.volces.com/api/compatible`            | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` |
+| **OpenRouter**     | `https://openrouter.ai/api`                                    | `anthropic/claude-opus-4.5`  | `anthropic/claude-sonnet-4.5`  | `anthropic/claude-haiku-4.5`  |
 | **GitHub Copilot** | _(留空)_ [^copilot]                                            | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 | **Custom**         | _(留空)_                                                       | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 
