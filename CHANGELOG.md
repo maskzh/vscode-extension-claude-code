@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.0.6...v0.1.0) (2025-12-20)
+
+
+### Features
+
+* add OpenRouter service provider ([393a7ab](https://github.com/maskzh/vscode-extension-claude-code/commit/393a7ab8ae62398cefa80c6f015f7a457103496a))
+
 ### [0.0.6](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.0.5...v0.0.6) (2025-12-10)
 
 
