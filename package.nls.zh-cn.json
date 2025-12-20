@@ -8,6 +8,7 @@
   "command.zhipu.title": "Zhipu Code",
   "command.copilot.title": "GitHub Copilot Code",
   "command.doubao.title": "Doubao Code",
+  "command.openrouter.title": "OpenRouter Code",
   "command.custom.title": "Custom Code",
   "command.configure.title": "配置 Claude Code 集成",
   "configuration.title": "Claude Code 集成",
@@ -18,6 +19,7 @@
   "configuration.zhipu.command.description": "Zhipu 终端执行的命令",
   "configuration.copilot.command.description": "GitHub Copilot 终端执行的命令",
   "configuration.doubao.command.description": "Doubao 终端执行的命令",
+  "configuration.openrouter.command.description": "OpenRouter 终端执行的命令",
   "configuration.custom.command.description": "Custom 终端执行的命令",
   "configuration.qwen.env.description": "为 Qwen 终端自定义环境变量",
   "configuration.kimi.env.description": "为 Kimi 终端自定义环境变量",
@@ -26,5 +28,6 @@
   "configuration.zhipu.env.description": "为 Zhipu 终端自定义环境变量",
   "configuration.copilot.env.description": "为 GitHub Copilot 终端自定义环境变量",
   "configuration.doubao.env.description": "为 Doubao 终端自定义环境变量",
+  "configuration.openrouter.env.description": "为 OpenRouter 终端自定义环境变量",
   "configuration.custom.env.description": "为 Custom 终端自定义环境变量"
 }

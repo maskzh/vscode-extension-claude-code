@@ -21,6 +21,7 @@ const BASE_SERVICE_CONFIGS: Record<ServiceType, BaseServiceConfig> = {
   copilot: { displayName: 'GitHub Copilot' },
   minimax: { displayName: 'Minimax' },
   doubao: { displayName: 'Doubao' },
+  openrouter: { displayName: 'OpenRouter' },
   custom: { displayName: 'Custom' },
 };
 

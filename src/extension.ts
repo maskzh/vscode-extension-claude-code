@@ -44,6 +44,12 @@ export async function activate(context: vscode.ExtensionContext) {
       }
     ),
     vscode.commands.registerCommand(
+      'claudeCodeIntegration.openrouter',
+      async () => {
+        await terminalManager.executeTerminalCommand('openrouter');
+      }
+    ),
+    vscode.commands.registerCommand(
       'claudeCodeIntegration.custom',
       async () => {
         await terminalManager.executeTerminalCommand('custom');

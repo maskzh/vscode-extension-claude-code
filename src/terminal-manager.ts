@@ -98,6 +98,7 @@ export class TerminalManager {
       minimax: 'Minimax Code',
       copilot: 'GitHub Copilot Code',
       doubao: 'Doubao Code',
+      openrouter: 'OpenRouter Code',
       custom: 'Custom Code',
     };
     return titles[serviceType];

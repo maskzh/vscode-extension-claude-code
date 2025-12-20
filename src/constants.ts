@@ -6,5 +6,6 @@ export const SERVICE_TYPES = [
   'minimax',
   'copilot',
   'doubao',
+  'openrouter',
   'custom',
 ] as const;

@@ -84,6 +84,14 @@
         }
       },
       {
+        "command": "claudeCodeIntegration.openrouter",
+        "title": "%command.openrouter.title%",
+        "icon": {
+          "light": "./icons/openrouter.svg",
+          "dark": "./icons/openrouter-dark.svg"
+        }
+      },
+      {
         "command": "claudeCodeIntegration.custom",
         "title": "%command.custom.title%",
         "icon": "$(terminal)"
@@ -129,6 +137,11 @@
         {
           "command": "claudeCodeIntegration.doubao",
           "when": "claudeExtension.doubao.visible",
+          "group": "navigation@-9"
+        },
+        {
+          "command": "claudeCodeIntegration.openrouter",
+          "when": "claudeExtension.openrouter.visible",
           "group": "navigation@-9"
         },
         {
@@ -263,6 +276,23 @@
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.doubao.env.description%",
+          "scope": "window"
+        },
+        "claudeCodeIntegration.openrouter.command": {
+          "type": "string",
+          "description": "%configuration.openrouter.command.description%",
+          "scope": "window"
+        },
+        "claudeCodeIntegration.openrouter.env": {
+          "type": "object",
+          "default": {
+            "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "anthropic/claude-opus-4.5",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "anthropic/claude-sonnet-4.5",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "anthropic/claude-haiku-4.5",
+            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
+          },
+          "markdownDescription": "%configuration.openrouter.env.description%",
           "scope": "window"
         },
         "claudeCodeIntegration.custom.command": {

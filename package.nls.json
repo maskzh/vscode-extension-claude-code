@@ -8,6 +8,7 @@
   "command.zhipu.title": "Zhipu Code",
   "command.copilot.title": "GitHub Copilot Code",
   "command.doubao.title": "Doubao Code",
+  "command.openrouter.title": "OpenRouter Code",
   "command.custom.title": "Custom Code",
   "command.configure.title": "Configure Claude Code Integrations",
   "configuration.title": "Claude Code Integration",
@@ -18,6 +19,7 @@
   "configuration.zhipu.command.description": "Command to execute for Zhipu terminal",
   "configuration.copilot.command.description": "Command to execute for GitHub Copilot terminal",
   "configuration.doubao.command.description": "Command to execute for Doubao terminal",
+  "configuration.openrouter.command.description": "Command to execute for OpenRouter terminal",
   "configuration.custom.command.description": "Command to execute for Custom terminal",
   "configuration.qwen.env.description": "Custom environment variables for Qwen terminal",
   "configuration.kimi.env.description": "Custom environment variables for Kimi terminal",
@@ -26,5 +28,6 @@
   "configuration.zhipu.env.description": "Custom environment variables for Zhipu terminal",
   "configuration.copilot.env.description": "Custom environment variables for GitHub Copilot terminal",
   "configuration.doubao.env.description": "Custom environment variables for Doubao terminal",
+  "configuration.openrouter.env.description": "Custom environment variables for OpenRouter terminal",
   "configuration.custom.env.description": "Custom environment variables for Custom terminal"
 }
