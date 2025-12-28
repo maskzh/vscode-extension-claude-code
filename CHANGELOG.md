@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.1.0...v0.1.1) (2025-12-28)
+
+
+### Bug Fixes
+
+* remove 'claude' command restriction in validation ([2e93ef6](https://github.com/maskzh/vscode-extension-claude-code/commit/2e93ef66ff5d9de6f42aa7d230256fd6ce159713))
+
 ## [0.1.0](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.0.6...v0.1.0) (2025-12-20)
 
 
