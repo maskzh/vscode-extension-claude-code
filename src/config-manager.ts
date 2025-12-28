@@ -153,7 +153,7 @@ export class ConfigManager {
 
   isValidCommand(command: string): boolean {
     const trimmed = command.trim();
-    return trimmed.length > 0 && trimmed !== 'claude' && !trimmed.includes(' ');
+    return trimmed.length > 0 && !trimmed.includes(' ');
   }
 
   onConfigurationChanged(callback: () => void): vscode.Disposable {
