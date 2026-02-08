@@ -73,16 +73,16 @@ Each service comes with pre-configured model names and settings:
 | Service            | ANTHROPIC_BASE_URL                                             | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL |
 | ------------------ | -------------------------------------------------------------- | ---------------------------- | ------------------------------ | ----------------------------- |
 | **Qwen**           | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus`           | `qwen3-coder-plus`             | `qwen3-coder-plus`            |
-| **Kimi**           | `https://api.moonshot.cn/anthropic`                            | `kimi-k2-thinking-turbo`     | `kimi-k2-turbo-preview`        | `kimi-k2-turbo-preview`       |
+| **Kimi**           | `https://api.moonshot.cn/anthropic`                            | `kimi-k2.5`                  | `kimi-k2.5`                    | `kimi-k2.5`                   |
 | **DeepSeek**       | `https://api.deepseek.com/anthropic`                           | `deepseek-reasoner`          | `deepseek-chat`                | `deepseek-chat`               |
-| **Zhipu**          | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.6`                    | `glm-4.6`                      | `glm-4.6-air`                 |
-| **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2`                 | `MiniMax-M2`                   | `MiniMax-M2`                  |
+| **Zhipu**          | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.7`                    | `glm-4.7`                      | `glm-4.7`                     |
+| **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2.1`               | `MiniMax-M2.1`                 | `MiniMax-M2.1`                |
 | **Doubao**         | `https://ark.cn-beijing.volces.com/api/compatible`            | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` |
 | **OpenRouter**     | `https://openrouter.ai/api`                                    | `anthropic/claude-opus-4.5`  | `anthropic/claude-sonnet-4.5`  | `anthropic/claude-haiku-4.5`  |
 | **GitHub Copilot** | _(empty)_ [^copilot]                                           | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 | **Custom**         | _(empty)_                                                      | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 
-**Note:** All services include `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` to optimize network usage.
+**Note:** All services include `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` and `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: 1` to optimize network usage and disable experimental features.
 
 [^copilot]: Use [copilot-api](https://github.com/ericc-ch/copilot-api) to build your own GitHub Copilot proxy service.
 
@@ -224,16 +224,16 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 | 服务               | ANTHROPIC_BASE_URL                                             | ANTHROPIC_DEFAULT_OPUS_MODEL | ANTHROPIC_DEFAULT_SONNET_MODEL | ANTHROPIC_DEFAULT_HAIKU_MODEL |
 | ------------------ | -------------------------------------------------------------- | ---------------------------- | ------------------------------ | ----------------------------- |
 | **通义千问**       | `https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy` | `qwen3-coder-plus`           | `qwen3-coder-plus`             | `qwen3-coder-plus`            |
-| **月之暗面**       | `https://api.moonshot.cn/anthropic`                            | `kimi-k2-thinking-turbo`     | `kimi-k2-turbo-preview`        | `kimi-k2-turbo-preview`       |
+| **月之暗面**       | `https://api.moonshot.cn/anthropic`                            | `kimi-k2.5`                  | `kimi-k2.5`                    | `kimi-k2.5`                   |
 | **DeepSeek**       | `https://api.deepseek.com/anthropic`                           | `deepseek-reasoner`          | `deepseek-chat`                | `deepseek-chat`               |
-| **智谱**           | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.6`                    | `glm-4.6`                      | `glm-4.6-air`                 |
-| **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2`                 | `MiniMax-M2`                   | `MiniMax-M2`                  |
+| **智谱**           | `https://open.bigmodel.cn/api/anthropic`                       | `glm-4.7`                    | `glm-4.7`                      | `glm-4.7`                     |
+| **Minimax**        | `https://api.minimax.io/anthropic`                             | `MiniMax-M2.1`               | `MiniMax-M2.1`                 | `MiniMax-M2.1`                |
 | **豆包**           | `https://ark.cn-beijing.volces.com/api/compatible`            | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` |
 | **OpenRouter**     | `https://openrouter.ai/api`                                    | `anthropic/claude-opus-4.5`  | `anthropic/claude-sonnet-4.5`  | `anthropic/claude-haiku-4.5`  |
 | **GitHub Copilot** | _(留空)_ [^copilot]                                            | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 | **Custom**         | _(留空)_                                                       | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
 
-**注意：** 所有服务都包含 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` 以优化网络使用。
+**注意：** 所有服务都包含 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` 和 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: 1` 以优化网络使用并禁用实验性功能。
 
 [^copilot]: 使用 [copilot-api](https://github.com/ericc-ch/copilot-api) 构建你自己的 GitHub Copilot 代理服务。
 
