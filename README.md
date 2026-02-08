@@ -14,7 +14,7 @@ Claude Code Integration is a VS Code extension that launches multiple Anthropic-
 
 - Nine entries: Qwen, Kimi, DeepSeek, Zhipu, Minimax, Doubao, OpenRouter, GitHub Copilot, Custom (icons appear only after configuration)
 - Quick Configure: `Claude Code Integration: Configure Claude Code Integrations` shows status and opens per-model API key input (stored in VS Code Secret Storage)
-- Per-model defaults: Pre-filled `ANTHROPIC_BASE_URL` values; fallback to sensible defaults if settings are cleared
+- Per-model defaults: Built-in providers come with pre-filled `ANTHROPIC_BASE_URL` and model values; `Custom` starts with an empty env object (`{}`)
 - Command override: If a custom command is set, it runs as-is; otherwise the extension injects env exports then runs `claude`
 - Theme-aware icons: Ships light/dark SVG variants for all built-in providers; VS Code switches automatically with your theme
 - i18n: Auto switches between English and Chinese based on VS Code language
@@ -80,9 +80,9 @@ Each service comes with pre-configured model names and settings:
 | **Doubao**         | `https://ark.cn-beijing.volces.com/api/compatible`            | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` |
 | **OpenRouter**     | `https://openrouter.ai/api`                                    | `anthropic/claude-opus-4.5`  | `anthropic/claude-sonnet-4.5`  | `anthropic/claude-haiku-4.5`  |
 | **GitHub Copilot** | _(empty)_ [^copilot]                                           | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
-| **Custom**         | _(empty)_                                                      | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
+| **Custom**         | _(empty)_                                                      | _(empty)_                    | _(empty)_                      | _(empty)_                     |
 
-**Note:** All services include `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` and `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: 1` to optimize network usage and disable experimental features.
+**Note:** Built-in providers include `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` and `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: 1` by default; `Custom` has no preset env keys.
 
 [^copilot]: Use [copilot-api](https://github.com/ericc-ch/copilot-api) to build your own GitHub Copilot proxy service.
 
@@ -165,7 +165,7 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 
 - 九个内置入口：Qwen、Kimi、DeepSeek、Zhipu、Minimax、Doubao、OpenRouter、GitHub Copilot、Custom（未配置时自动隐藏图标）
 - 快速配置面板：`Claude Code Integration: Configure Claude Code Integrations` 列出各模型状态，可直接录入/清空 API Key（保存在 VS Code Secret Storage）
-- 按模型预置 Base URL：默认填好 `ANTHROPIC_BASE_URL`，可随时修改
+- 按模型提供预置环境：内置服务默认填好 `ANTHROPIC_BASE_URL` 与模型名；`Custom` 默认环境对象为空（`{}`）
 - 命令覆盖策略：若填写自定义命令则直接执行；否则注入环境变量后运行默认 `claude`
 - 适配亮/暗主题：所有内置模型提供 light/dark SVG 图标，随 VS Code 主题自动切换
 - 自动多语言：根据 VS Code 语言自动切换中英文提示
@@ -231,9 +231,9 @@ Claude Code Integration 是一个 VS Code 扩展，可在编辑器标题栏一�
 | **豆包**           | `https://ark.cn-beijing.volces.com/api/compatible`            | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` | `doubao-seed-code-preview-latest` |
 | **OpenRouter**     | `https://openrouter.ai/api`                                    | `anthropic/claude-opus-4.5`  | `anthropic/claude-sonnet-4.5`  | `anthropic/claude-haiku-4.5`  |
 | **GitHub Copilot** | _(留空)_ [^copilot]                                            | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
-| **Custom**         | _(留空)_                                                       | `claude-opus-4.5`            | `claude-sonnet-4.5`            | `claude-haiku-4.5`            |
+| **Custom**         | _(留空)_                                                       | _(留空)_                     | _(留空)_                       | _(留空)_                      |
 
-**注意：** 所有服务都包含 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` 和 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: 1` 以优化网络使用并禁用实验性功能。
+**注意：** 内置服务默认包含 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1` 与 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS: 1`；`Custom` 不预置任何环境变量。
 
 [^copilot]: 使用 [copilot-api](https://github.com/ericc-ch/copilot-api) 构建你自己的 GitHub Copilot 代理服务。
 

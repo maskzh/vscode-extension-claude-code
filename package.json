@@ -1,23 +1,43 @@
 {
   "name": "claude-code-integration",
   "displayName": "%extension.displayName%",
-  "description": "%extension.description%",
-  "icon": "icons/logo.png",
   "version": "0.1.2",
-  "publisher": "maskzh",
-  "engines": {
-    "vscode": "^1.102.0"
-  },
+  "description": "%extension.description%",
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onLanguage"
-  ],
-  "main": "./out/extension.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/maskzh/vscode-extension-claude-code.git"
+  },
+  "publisher": "maskzh",
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts && npx commitlint --from=HEAD~1 --to=HEAD --verbose",
+    "package": "vsce package",
+    "release": "standard-version",
+    "release:patch": "standard-version --release-as patch",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:dry": "standard-version --dry-run",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@types/node": "24.1.0",
+    "@types/vscode": "^1.102.0",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "@vscode/vsce": "^3.7.1",
+    "eslint": "^9.32.0",
+    "husky": "^9.1.7",
+    "standard-version": "^9.5.0",
+    "typescript": "^5.8.3"
   },
   "contributes": {
     "languages": [
@@ -310,45 +330,18 @@
         },
         "claudeCodeIntegration.custom.env": {
           "type": "object",
-          "default": {
-            "ANTHROPIC_BASE_URL": "",
-            "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4.5",
-            "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4.5",
-            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4.5",
-            "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1,
-            "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": 1
-          },
+          "default": {},
           "markdownDescription": "%configuration.custom.env.description%",
           "scope": "window"
         }
       }
     }
   },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts && npx commitlint --from=HEAD~1 --to=HEAD --verbose",
-    "package": "vsce package",
-    "release": "standard-version",
-    "release:patch": "standard-version --release-as patch",
-    "release:minor": "standard-version --release-as minor",
-    "release:major": "standard-version --release-as major",
-    "release:dry": "standard-version --dry-run",
-    "prepare": "husky install"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^20.1.0",
-    "@commitlint/config-conventional": "^20.0.0",
-    "@types/node": "24.1.0",
-    "@types/vscode": "^1.102.0",
-    "@typescript-eslint/eslint-plugin": "^8.38.0",
-    "@typescript-eslint/parser": "^8.38.0",
-    "@vscode/vsce": "^3.7.1",
-    "eslint": "^9.32.0",
-    "husky": "^9.1.7",
-    "standard-version": "^9.5.0",
-    "typescript": "^5.8.3"
+  "activationEvents": [
+    "onLanguage"
+  ],
+  "icon": "icons/logo.png",
+  "engines": {
+    "vscode": "^1.102.0"
   }
 }
