@@ -184,9 +184,9 @@
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://api.moonshot.cn/anthropic",
-            "ANTHROPIC_DEFAULT_OPUS_MODEL": "kimi-k2-thinking-turbo",
-            "ANTHROPIC_DEFAULT_SONNET_MODEL": "kimi-k2-turbo-preview",
-            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "kimi-k2-turbo-preview",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "kimi-k2.5-thinking",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "kimi-k2.5",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "kimi-k2.5",
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.kimi.env.description%",
@@ -202,8 +202,8 @@
           "default": {
             "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
             "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-reasoner",
-            "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-chat",
-            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-chat",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v3",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v3",
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.deepseek.env.description%",
@@ -218,9 +218,9 @@
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://api.minimax.io/anthropic",
-            "ANTHROPIC_DEFAULT_OPUS_MODEL": "MiniMax-M2",
-            "ANTHROPIC_DEFAULT_SONNET_MODEL": "MiniMax-M2",
-            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "MiniMax-M2",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "MiniMax-Text-01",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "MiniMax-Text-01",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "MiniMax-Text-01",
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.minimax.env.description%",
@@ -235,9 +235,9 @@
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://open.bigmodel.cn/api/anthropic",
-            "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.6",
-            "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.6",
-            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.6-air",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4-plus",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4-plus",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4-flash",
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
           },
           "markdownDescription": "%configuration.zhipu.env.description%",
@@ -252,7 +252,7 @@
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "",
-            "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4.5",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4.6",
             "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4.5",
             "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4.5",
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
@@ -287,7 +287,7 @@
           "type": "object",
           "default": {
             "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
-            "ANTHROPIC_DEFAULT_OPUS_MODEL": "anthropic/claude-opus-4.5",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "anthropic/claude-opus-4.6",
             "ANTHROPIC_DEFAULT_SONNET_MODEL": "anthropic/claude-sonnet-4.5",
             "ANTHROPIC_DEFAULT_HAIKU_MODEL": "anthropic/claude-haiku-4.5",
             "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
