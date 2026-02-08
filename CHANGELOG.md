@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.1.2...v0.1.3) (2026-02-08)
+
+
+### Bug Fixes
+
+* set custom env default to empty object and sync README ([f0028be](https://github.com/maskzh/vscode-extension-claude-code/commit/f0028beca218b470beb485cfaa1643c03efcb36a))
+
 ### [0.1.2](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.1.1...v0.1.2) (2026-02-01)
 
 ### [0.1.1](https://github.com/maskzh/vscode-extension-claude-code/compare/v0.1.0...v0.1.1) (2025-12-28)
